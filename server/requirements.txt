@@ -1,0 +1,7 @@
+django
+channels
+djangorestframework
+djangorestframework-simplejwt
+channels-redis
+psycopg2-binary
+bcrypt
