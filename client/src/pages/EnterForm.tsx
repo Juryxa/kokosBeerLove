@@ -3,8 +3,8 @@ import { Context } from "../index";
 import { observer } from "mobx-react-lite";
 import Header from "../components/Header";
 import background from "../images/Rectangle2.png";
-import { Box, Button, TextField, Typography  } from '@mui/material';
-import '../index.css';
+import { Box, Button, TextField, Typography, } from '@mui/material';
+
 
 const EnterForm: FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -13,10 +13,6 @@ const EnterForm: FC = () => {
     const [name, setName] = useState<string>(''); // Поле для имени при регистрации
     const [confirmPassword, setConfirmPassword] = useState<string>(''); // Подтверждение пароля
     const { store } = useContext(Context);
-
-
-   
-
 
     const handleSubmit = () => {
         if (isLogin) {
@@ -31,7 +27,7 @@ const EnterForm: FC = () => {
     };
 
     return (
-        
+
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '15px' }}>
             <Header />
             <Box
@@ -67,7 +63,7 @@ const EnterForm: FC = () => {
                     {/* Поле для имени, отображается только при регистрации */}
                     {!isLogin && (
                         <TextField
-                            
+
                             sx={{
                                 mb: 2,height:"51px",width:"300px",
                                 '& .MuiOutlinedInput-root': {
@@ -86,7 +82,7 @@ const EnterForm: FC = () => {
                     )}
 
                     <TextField
-                        
+
                         sx={{
                             mb: 2,height:"51px",width:"300px",
                             '& .MuiOutlinedInput-root': {
@@ -104,7 +100,7 @@ const EnterForm: FC = () => {
                     />
 
                     <TextField
-                        
+
                         sx={{
                             mb: 2,height:"51px",width:"300px",
                             '& .MuiOutlinedInput-root': {
@@ -125,7 +121,7 @@ const EnterForm: FC = () => {
                     {/* Поле подтверждения пароля, отображается только при регистрации */}
                     {!isLogin && (
                         <TextField
-                            
+
                             sx={{
                                 mb: 2,height:"51px",width:"300px",
                                 '& .MuiOutlinedInput-root': {
@@ -145,7 +141,7 @@ const EnterForm: FC = () => {
                     )}
 
                     <Button
-                        
+
                         variant="contained"
                         sx={{ mb: 2, backgroundColor: '#E62526', color: 'white',borderRadius: '12px',height:"51px",width:"300px"}}
                         onClick={handleSubmit}
@@ -155,7 +151,7 @@ const EnterForm: FC = () => {
 
                     {isLogin ? (
                         <Button
-                            
+
                             variant="text"
                             sx={{ mb: 2, backgroundColor: '#E62526',color: 'white',borderRadius: '12px',height:"51px",width:"300px" }}
                             onClick={() => setIsLogin(false)}
@@ -164,7 +160,7 @@ const EnterForm: FC = () => {
                         </Button>
                     ) : (
                         <Button
-                            
+
                             variant="text"
                             sx={{ mb: 2, backgroundColor: '#E62526',color: 'white',borderRadius: '12px',height:"51px",width:"300px" }}
                             onClick={() => setIsLogin(true)}
@@ -175,7 +171,7 @@ const EnterForm: FC = () => {
                 </Box>
             </Box>
         </div>
-       
+
     );
 };
 
