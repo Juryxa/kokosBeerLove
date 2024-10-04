@@ -4,6 +4,24 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from auth_microservice.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+@swagger_auto_schema(
+    method='post',
+    operation_description="Логин пользователя",
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email пользователя'),
+            'password': openapi.Schema(type=openapi.TYPE_STRING, description='Пароль пользователя'),
+        }
+    ),
+    responses={
+        200: openapi.Response('Успешная аутентификация'),
+        401: openapi.Response('Неверный email или пароль'),
+    }
+)
 
 
 @api_view(['POST'])

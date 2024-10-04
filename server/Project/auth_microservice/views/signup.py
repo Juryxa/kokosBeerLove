@@ -4,9 +4,20 @@ from rest_framework.decorators import api_view
 from auth_microservice.models import CustomUser, RefreshToken
 from auth_microservice.serializers import SignupSerializer
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from django.utils import timezone
 from datetime import timedelta
 
+@swagger_auto_schema(
+    method='post',
+    operation_description="Регистрация нового пользователя",
+    request_body=SignupSerializer,
+    responses={
+        201: openapi.Response('Успешная регистрация', SignupSerializer),
+        400: openapi.Response('Ошибка при регистрации')
+    }
+)
 @api_view(['POST'])
 def signup(request):
     data = request.data
@@ -44,4 +55,3 @@ def signup(request):
         return response
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import './App.css';
 import MainPage from './pages/MainPage';
 import FanPage from './pages/FanPage';

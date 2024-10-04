@@ -35,10 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'rest_framework',
     'auth_microservice',
+    'drf_yasg',
+    'django.contrib.staticfiles',
     # 'django.contrib.sessions'
     # 'django.contrib.messages'
     # 'django.contrib.admin'
-    # 'django.contrib.staticfiles'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Project.urls'
+
 
 TEMPLATES = [
     {
@@ -68,6 +70,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'Project.wsgi.application'
 
@@ -121,7 +124,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -136,6 +140,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project API documentation',
+    'VERSION': '1.0.0',
 }
 
 from datetime import timedelta

@@ -3,26 +3,32 @@ import { Context } from "../index";
 import { observer } from "mobx-react-lite";
 import Header from "../components/Header";
 import background from "../images/Rectangle2.png";
-import { Box, Button, TextField, Typography, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, TextField, Typography, } from '@mui/material';
 
 
 const EnterForm: FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [name, setName] = useState<string>(''); // Поле для имени при регистрации
+    const [confirmPassword, setConfirmPassword] = useState<string>(''); // Подтверждение пароля
     const { store } = useContext(Context);
 
     const handleSubmit = () => {
         if (isLogin) {
             store.login(email, password);
         } else {
-            store.registration(email, password);
+            if (password !== confirmPassword) {
+                alert("Пароли не совпадают!");
+                return;
+            }
+            store.registration(email, password); // Передаём имя при регистрации
         }
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '15px' }}>
             <Header />
             <Box
                 sx={{
@@ -32,36 +38,61 @@ const EnterForm: FC = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     position: 'relative',
-                    width:"1380px",
-                    marginTop:'15px'
+                    width: "1380px",
+                    marginTop: '15px'
                 }}
             >
                 <Box
                     sx={{
                         backgroundColor: 'rgba(255, 255, 255, 0.6)',
+                        backdropFilter: 'blur(10px)',
                         borderRadius: '12px',
                         padding: '30px',
                         width: '400px',
                         textAlign: 'center',
                         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                         position: 'relative',
+                        display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
+
                     }}
                 >
-                    {/* Иконка закрытия */}
-                    <IconButton
-                        sx={{ position: 'absolute', top: 16, right: 16 }}
-                        onClick={() => console.log('Close form')}
-                    >
-                        <CloseIcon sx={{ color: 'red' }} />
-                    </IconButton>
-
-                    <Typography variant="h5" sx={{ mb: 2, color: 'red' }}>
-                        Авторизация
+                    <Typography variant="h5" sx={{ mb: 2, color: '#E62526', fontSize: "30px" }}>
+                        {isLogin ? "Авторизация" : "Регистрация"}
                     </Typography>
 
+                    {/* Поле для имени, отображается только при регистрации */}
+                    {!isLogin && (
+                        <TextField
+
+                            sx={{
+                                mb: 2,height:"51px",width:"300px",
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                    '&:hover fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                    '&.Mui-focused fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                },
+                                '& .MuiInputLabel-root': { color: '#E62526' },
+                                '& .MuiInputLabel-root.Mui-focused': { color: '#E62526' }
+                            }}
+                            label="Имя"
+                            variant="outlined"
+                            onChange={e => setName(e.target.value)}
+                            value={name}
+                        />
+                    )}
+
                     <TextField
-                        fullWidth
-                        sx={{ mb: 2 }}
+
+                        sx={{
+                            mb: 2,height:"51px",width:"300px",
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                '&:hover fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px,'},
+                                '&.Mui-focused fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px'},
+                            },
+                            '& .MuiInputLabel-root': { color: '#E62526' },
+                            '& .MuiInputLabel-root.Mui-focused': { color: '#E62526' }
+                        }}
                         label="Email"
                         variant="outlined"
                         onChange={e => setEmail(e.target.value)}
@@ -69,8 +100,17 @@ const EnterForm: FC = () => {
                     />
 
                     <TextField
-                        fullWidth
-                        sx={{ mb: 2 }}
+
+                        sx={{
+                            mb: 2,height:"51px",width:"300px",
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                '&:hover fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                '&.Mui-focused fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                            },
+                            '& .MuiInputLabel-root': { color: '#E62526' },
+                            '& .MuiInputLabel-root.Mui-focused': { color: '#E62526' }
+                        }}
                         label="Пароль"
                         variant="outlined"
                         type="password"
@@ -78,10 +118,32 @@ const EnterForm: FC = () => {
                         value={password}
                     />
 
+                    {/* Поле подтверждения пароля, отображается только при регистрации */}
+                    {!isLogin && (
+                        <TextField
+
+                            sx={{
+                                mb: 2,height:"51px",width:"300px",
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                    '&:hover fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                    '&.Mui-focused fieldset': { borderColor: '#E62526',borderWidth: '3px', borderRadius: '12px',},
+                                },
+                                '& .MuiInputLabel-root': { color: '#E62526' },
+                                '& .MuiInputLabel-root.Mui-focused': { color: '#E62526' }
+                            }}
+                            label="Подтвердите пароль"
+                            variant="outlined"
+                            type="password"
+                            onChange={e => setConfirmPassword(e.target.value)}
+                            value={confirmPassword}
+                        />
+                    )}
+
                     <Button
-                        fullWidth
+
                         variant="contained"
-                        sx={{ mb: 2, backgroundColor: 'red', color: 'white' }}
+                        sx={{ mb: 2, backgroundColor: '#E62526', color: 'white',borderRadius: '12px',height:"51px",width:"300px"}}
                         onClick={handleSubmit}
                     >
                         {isLogin ? 'Авторизоваться' : 'Зарегистрироваться'}
@@ -89,18 +151,18 @@ const EnterForm: FC = () => {
 
                     {isLogin ? (
                         <Button
-                            fullWidth
+
                             variant="text"
-                            sx={{ color: 'red' }}
+                            sx={{ mb: 2, backgroundColor: '#E62526',color: 'white',borderRadius: '12px',height:"51px",width:"300px" }}
                             onClick={() => setIsLogin(false)}
                         >
                             Зарегистрироваться
                         </Button>
                     ) : (
                         <Button
-                            fullWidth
+
                             variant="text"
-                            sx={{ color: 'red' }}
+                            sx={{ mb: 2, backgroundColor: '#E62526',color: 'white',borderRadius: '12px',height:"51px",width:"300px" }}
                             onClick={() => setIsLogin(true)}
                         >
                             Войти
@@ -109,6 +171,7 @@ const EnterForm: FC = () => {
                 </Box>
             </Box>
         </div>
+
     );
 };
 
