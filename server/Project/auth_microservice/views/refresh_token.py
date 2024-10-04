@@ -2,8 +2,29 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
+@swagger_auto_schema(
+    method='post',
+    operation_description="Обновление access токена с использованием refresh токена",
+    manual_parameters=[
+        openapi.Parameter(
+            'refresh_token', openapi.IN_HEADER,
+            description="Refresh токен, передаваемый в заголовке (или cookie, если клиентская часть поддерживает это)",
+            type=openapi.TYPE_STRING
+        )
+    ],
+    responses={
+        200: openapi.Response(description="Новый access токен", examples={
+            "application/json": {
+                "access": "новый access токен"
+            }
+        }),
+        401: openapi.Response(description="Недействительный или отсутствующий refresh токен")
+    }
+)
 @api_view(['POST'])
 def refresh_token(request):
     refresh_token = request.COOKIES.get('refresh_token')  # Получаем refresh токен из cookie
