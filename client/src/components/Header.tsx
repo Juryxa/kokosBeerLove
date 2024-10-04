@@ -42,27 +42,33 @@ const Header = () => {
                 {/* Язык и Тема */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Switch color="default" />
-                  <Typography>Язык:</Typography>
-                  <MenuItem onClick={handleLanguageChange}>{language}</MenuItem>
+                  <Typography style={{color:"white"}}>Язык:</Typography>
+                  <MenuItem onClick={handleLanguageChange} style={{color:"white"}}>{language}</MenuItem>
                 </Box>
                 {/* Социальные сети */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <IconButton color="inherit"><Facebook /></IconButton>
-                  <IconButton color="inherit"><YouTube /></IconButton>
-                  <IconButton color="inherit"><Telegram /></IconButton>
-                  <IconButton color="inherit"><WhatsApp /></IconButton>
-                  <IconButton color="inherit"><VkIcon /></IconButton>
+                  <IconButton sx={{ color: 'white' }}><Facebook /></IconButton>
+                  <IconButton sx={{ color: 'white' }}><YouTube /></IconButton>
+                  <IconButton sx={{ color: 'white' }}><Telegram /></IconButton>
+                  <IconButton sx={{ color: 'white' }}><WhatsApp /></IconButton>
+                  <IconButton sx={{ color: 'white' }}><VkIcon /></IconButton>
                 </Box>
               </div>
             </div>
             <div className='LowLine' style={{
+               border: '2px solid red', 
+               borderRadius: '15px', 
+               boxShadow: '0 0 3px rgba(0, 0, 0, 0.2)', 
+
+
+
                 width: "1380px",
-                
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: '0', // Убедитесь, что отступ сверху равен 0
                 padding: '10px',
+                
             }}>
               {/* Логотип */}
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -80,8 +86,8 @@ const Header = () => {
               <MenuItem component={Link} to="/contacts">Контакты</MenuItem>
                 
               </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-                <IconButton><Typography>Search</Typography></IconButton>
+              <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto',color:"white" }}>
+                <IconButton><Typography >Search</Typography></IconButton>
                 <IconButton><Typography>Login</Typography></IconButton>
               </Box>
             </div>
