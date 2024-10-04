@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AuthmicroserviceConfig(AppConfig):
+class auth_microserviceConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'AuthMicroservice'
+    name = 'auth_microservice'
