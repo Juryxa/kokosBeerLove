@@ -88,8 +88,8 @@ const Header = () => {
                 
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto',color:"white" }}>
-                <IconButton><Typography >Search</Typography></IconButton>
-                <IconButton><Typography>Login</Typography></IconButton>
+                <IconButton ><Typography >Search</Typography></IconButton>
+                <IconButton component={Link} to="/enter"><Typography>Login</Typography></IconButton>
               </Box>
             </div>
           </div>
