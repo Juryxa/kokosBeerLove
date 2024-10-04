@@ -6,6 +6,7 @@ import background from "../images/Rectangle2.png";
 import { Box, Button, TextField, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+
 const EnterForm: FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [email, setEmail] = useState<string>('');
@@ -21,7 +22,7 @@ const EnterForm: FC = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' ,marginTop:'15px'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
             <Header />
             <Box
                 sx={{
