@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+
 @swagger_auto_schema(
     method='post',
     operation_description="Логин пользователя",
@@ -22,8 +23,6 @@ from drf_yasg import openapi
         401: openapi.Response('Неверный email или пароль'),
     }
 )
-
-
 @api_view(['POST'])
 def login(request):
     email = request.data.get('email')
@@ -47,9 +46,20 @@ def login(request):
     refresh = JWTRefreshToken.for_user(user)
     access_token = refresh.access_token
 
-    # Возвращаем успех и информацию о пользователе
-    return Response({
+    # Устанавливаем refresh токен в HTTP-only cookie
+    response = Response({
         'access': str(access_token),
-        'refresh': str(refresh),
         'is_superuser': is_superuser
     }, status=status.HTTP_200_OK)
+
+    # Настройка cookie для refresh токена
+    response.set_cookie(
+        key='refresh_token',
+        value=str(refresh),
+        httponly=True,  # Защита от JavaScript доступа
+        secure=False,  # Для production среды установите True (для HTTPS)
+        samesite='Lax',  # Защита от CSRF
+        max_age=60 * 60 * 24 * 60  # Время жизни refresh токена (60 дней)
+    )
+
+    return response
