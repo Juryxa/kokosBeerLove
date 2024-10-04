@@ -6,9 +6,10 @@ import {Route, Routes} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import EnterForm from "./pages/EnterForm";
+import Matches from './pages/Matches';
 
 function App() {
-  
+
   const tabloinfo = {
     title:"Высший дивизион 25 ТУР",
     data: "20:10:2024", 
@@ -16,11 +17,7 @@ function App() {
     time: "14:00" ,
     score:"2 - 1"
 };
-  return (
-    <div className="App">
-    <MainPage tabloinfo={tabloinfo} />
-    </div>
-  );
+  
     const {store} = useContext(Context);
 
     useEffect(() => {
@@ -38,6 +35,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage tabloinfo={tabloinfo}/>} />
                 <Route path="/enter" element={store.isAuth ? <FanPage /> : <EnterForm />} />
+                <Route path="/matches" element={<Matches/>} />
             </Routes>
         </div>
     );
