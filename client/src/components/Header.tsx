@@ -19,7 +19,7 @@ const Header = () => {
     return (
         <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: 'blue', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
             <div className='HighLine' style={{
                 width: "1380px",
                 backgroundColor: 'red',
@@ -29,11 +29,12 @@ const Header = () => {
                 border: '1px solid #ccc',
                 borderRadius: '10px',
                 padding: '10px',
-                marginBottom: '0', // Убедитесь, что отступ снизу равен 0
+                marginBottom: '1', // Убедитесь, что отступ снизу равен 0
+                marginTop:'1'
             }}>
               <div className='Highline_Elements' style={{
                   width: "1140px",
-                  backgroundColor: "purple",
+                  
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "space-between"
@@ -56,27 +57,28 @@ const Header = () => {
             </div>
             <div className='LowLine' style={{
                 width: "1380px",
-                backgroundColor: 'green',
+                
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: '0', // Убедитесь, что отступ сверху равен 0
-                padding: '0',
+                padding: '10px',
             }}>
               {/* Логотип */}
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <IconButton>
-                  <img src="../assets/images/image1.png" alt="Logo" style={{ height: '30px' }} />
+                <IconButton component={Link} to="/" sx={{ padding: 0 }}>
+                  <img src="images/image1.png" alt="Logo" style={{ height: '30px' }} />
                 </IconButton>
               </Box>
               {/* Навигация */}
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <MenuItem component={Link} to="/shop">Магазин</MenuItem>
-                <MenuItem component={Link} to="/team">Команда</MenuItem>
-                <MenuItem component={Link} to="/about">О клубе</MenuItem>
-                <MenuItem component={Link} to="/matches">Матчи</MenuItem>
-                <MenuItem component={Link} to="/contacts">Контакты</MenuItem>
-                <MenuItem component={Link} to="/news">Новости</MenuItem>
+              <MenuItem component={Link} to="/matches">Матчи</MenuItem>
+              <MenuItem component={Link} to="/news">Новости</MenuItem>
+              <MenuItem component={Link} to="/about">О клубе</MenuItem>
+              <MenuItem component={Link} to="/team">Команда</MenuItem>
+              <MenuItem component={Link} to="/shop">Магазин</MenuItem>
+              <MenuItem component={Link} to="/contacts">Контакты</MenuItem>
+                
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                 <IconButton><Typography>Search</Typography></IconButton>
