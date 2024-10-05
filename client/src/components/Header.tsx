@@ -2,7 +2,7 @@ import React from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography} from '@mui/material';
 import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
 import {Link} from 'react-router-dom';
-
+import logo from "../images/image1.png"
 
 const Header = () => {
     return (
@@ -72,7 +72,7 @@ const Header = () => {
                     {/* Логотип */}
                     <Box sx={{display: 'flex', alignItems: 'center'}}>
                         <IconButton component={Link} to="/" sx={{padding: 0}}>
-                            <img src="../images/image1.png" alt="Logo" style={{height: '30px'}}/>
+                            <img src={logo} alt="Logo" style={{height: '30px'}}/>
                         </IconButton>
                     </Box>
                     {/* Навигация */}

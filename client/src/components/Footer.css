@@ -1,0 +1,49 @@
+.footer {
+    background: linear-gradient(240deg, #a50b0b, #d11d1d); /* Градиент */
+    color: white;
+    padding: 5px 0 20px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width:  1291px;
+    width: 100%;
+    padding: 0 40px 0 40px;
+  }
+  
+  .social-icons i {
+    /* margin: 0 10px; */
+    font-size: 24px;
+  }
+  
+  .footer p {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .footer{
+    position: absolute;
+    bottom: 0;
+    
+}
+.contacts_koks{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.icon_section img {
+ 
+    height: 19px;
+  
+}

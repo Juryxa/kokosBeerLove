@@ -4,6 +4,7 @@ import img1 from '../images/rectangle1.png';
 import logoTeam1 from '../images/logoteam1.png';
 import logoTeam2 from '../images/logo2.png';
 import './MainPage.css';
+import Footer from '../components/Footer';
 
 interface tabloinfo {
     title: string;
@@ -92,8 +93,11 @@ const MainPage: React.FC<MainPageProps> = ({tabloinfo}) => {
                     <div className='prevMatch'></div>
                     <div className='stat'></div>
                 </div>
+                
             </div>
+           
         </div>
+        
     )
         ;
 };
