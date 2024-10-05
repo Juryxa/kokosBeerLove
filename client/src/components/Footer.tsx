@@ -9,19 +9,19 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        
+
         <div className="contacts_koks">
         <h2>КОНТАКТЫ</h2>
         <img src={logokokos} alt="error"/>
           </div>
-          
+
           <div className='icon_section'>
-            <h3><img src={phone} alt="error" /> +7988552222222</h3>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <h3><img src={phone} alt="error"/><a href="tel:+7988552222222">+7 (988) 552 - 22 - 22</a></h3>
+            <Box sx={{display: 'flex', alignItems: 'center' }}>
           <IconButton color="inherit">
               <MailOutline />
-          </IconButton> 
-          
+          </IconButton>
+
             <IconButton color="inherit">
               <YouTube />
             </IconButton>

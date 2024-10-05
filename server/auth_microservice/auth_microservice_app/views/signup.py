@@ -12,6 +12,10 @@ from datetime import timedelta
 from ..models import CustomUser, RefreshToken, VerificationCode
 from ..serializers import SignupSerializer, VerifyEmailSerializer
 from django.conf import settings
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
+
 
 
 def check_email_exists(email):
@@ -27,7 +31,7 @@ def check_email_exists(email):
         server.helo(server.local_hostname)
 
         # Указание отправителя
-        server.mail('noreply@yourdomain.com')  # Замените на действующий адрес вашего сервера или приложения
+        server.mail('conopi12@mail.ru')  # Замените на действующий адрес вашего сервера или приложения
 
         # Проверка email
         code, message = server.rcpt(email)
@@ -38,6 +42,23 @@ def check_email_exists(email):
         return code == 250
     except Exception:
         return False
+
+
+# Описание для функции signup
+@swagger_auto_schema(
+    method='post',
+    operation_description="Регистрация нового пользователя",
+    request_body=SignupSerializer,
+    responses={
+        201: openapi.Response(description="Пользователь успешно зарегистрирован, код отправлен на почту", examples={
+            "application/json": {
+                "message": "Код отправлен на почту"
+            }
+        }),
+        400: openapi.Response(description="Некорректные данные запроса"),
+        409: openapi.Response(description="Email уже существует"),
+    }
+)
 
 
 @api_view(['POST'])
@@ -106,6 +127,22 @@ def signup(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Описание для функции verify_email
+@swagger_auto_schema(
+    method='post',
+    operation_description="Подтверждение email с помощью кода",
+    request_body=VerifyEmailSerializer,
+    responses={
+        200: openapi.Response(description="Email успешно подтвержден", examples={
+            "application/json": {
+                "message": "Email успешно подтвержден"
+            }
+        }),
+        400: openapi.Response(description="Неверный код или некорректные данные запроса"),
+    }
+)
+
+
 
 @api_view(['POST'])
 def verify_email(request):
@@ -124,6 +161,27 @@ def verify_email(request):
         except VerificationCode.DoesNotExist:
             return Response({'error': 'Неверный код'}, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Описание для функции resend_verification_code
+@swagger_auto_schema(
+    method='post',
+    operation_description="Повторная отправка кода подтверждения на email",
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        required=['email'],
+        properties={
+            'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email пользователя')
+        }
+    ),
+    responses={
+        200: openapi.Response(description="Код повторно отправлен на email", examples={
+            "application/json": {
+                "message": "Код повторно отправлен на email"
+            }
+        }),
+        400: openapi.Response(description="Пользователь с таким email не существует"),
+    }
+)
 
 
 @api_view(['POST'])

@@ -1,0 +1,37 @@
+.count {
+    font-size: 80px;
+    margin: 0 20px;
+    color: white;
+    text-align: center;
+}
+.titleMatch{
+    font-size: 25px;
+    color: white;
+    text-align: center;
+}
+.dateInfo{
+    font-size: 25px;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+}
+{
+    width: 60px;
+    height: auto;
+}
+@media screen and (max-width: 500px) {
+    .matchBlock .titleMatch {
+        font-size: 17px;
+        font-weight: normal;
+    }
+    .matchBlock .dateInfo div {
+        font-size: 18px;
+        font-weight: normal;
+    }
+    .matchBlock .count{
+        font-size: 33px;
+    }
+    .logosTeams img {
+        width: 40px;
+    }
+}

@@ -1,23 +1,15 @@
 import React, {useContext, useEffect} from 'react';
 import './App.css';
 import MainPage from './pages/MainPage';
-import FanPage from './pages/FanPage';
 import {Route, Routes} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
-import EnterForm from "./pages/EnterForm";
 import Matches from './pages/Matches';
-import Header from './components/Header';
+import AdminPage from "./pages/AdminPage";
+import FanPage from "./pages/FanPage";
 
 
 function App() {
-    const tabloinfo = {
-        title: "Высший дивизион 25 ТУР",
-        date: "20.10.2024",
-        day: 'Четверг',
-        time: "14:00",
-        score: "2 - 1"
-    };
 
     const {store} = useContext(Context);
 
@@ -33,12 +25,12 @@ function App() {
 
     return (
         <div className="App">
-           
+
             <Routes>
-                <Route path="/" element={<MainPage tabloinfo={tabloinfo}/>}/>
-                <Route path="/enter" element={store.isAuth ? <FanPage/> : <EnterForm/>}/>
+                <Route path="/" element={<MainPage/>}/>
                 <Route path="/matches" element={<Matches/>}/>
-                
+                <Route path='/admin' element={<AdminPage/>}/>
+                <Route path='/fan' element={<FanPage/>}/>
             </Routes>
         </div>
     );

@@ -1,107 +1,45 @@
 import React from 'react';
 import Header from '../components/Header';
-import img1 from '../images/rectangle1.png';
-import logoTeam1 from '../images/logoteam1.png';
-import logoTeam2 from '../images/logo2.png';
-import './MainPage.css';
 import Footer from '../components/Footer';
+import NearestMatch from "../components/NearestMatch";
+import MatchesPreview from "../components/MatchesPreview";
+import NewsPreview from "../components/NewsPreview";
 
-interface tabloinfo {
-    title: string;
-    date: string,
-    day: string,
-    time: string,
-    score: string,
-}
+const tabloinfo = {
+    title: "Высший дивизион 25 ТУР",
+    date: "20.10.2024",
+    day: 'Четверг',
+    time: "14:00",
+    score: "2 - 1"
+};
 
-interface MainPageProps {
-    tabloinfo: tabloinfo;
-}
-
-
-const MainPage: React.FC<MainPageProps> = ({tabloinfo}) => {
+const MainPage: React.FC = () => {
 
     return (
-
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            width: '100%'
+        }}>
             <Header/>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    height: '100%',
-                    width: '100%',
-                    background: 'linear-gradient(180deg, rgba(227, 39, 38, 0) 0%, rgba(227, 39, 38, 0.5) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
-                }}>
-                <div style={{
-                    borderTopLeftRadius: '10px',
-                    borderTopRightRadius: '10px',
-                    backgroundImage: `url(${img1})`,
-                    backgroundRepeat:"no-repeat",
-                    height: '80vh',
-                    width: '80%',
-                    zIndex: '1',
-
-                }}>
-
-                    <div className='matchBlock' style={{
-                        display: 'flex', height: "80%",
-                        flexDirection: 'column', alignItems: 'center', justifyContent: "space-between", padding: "5px"
-                    }}>
-                        <div className='titleWrapper'
-                             style={{width: '100%', display: 'flex', justifyContent: 'flex-start', marginLeft: '15px'}}>
-                            <div className='titleMatch' style={{color: "white", fontSize: "25px"}}>
-                                <h1>{tabloinfo.title.toUpperCase()}</h1>
-                            </div>
-                        </div>
-                        <div className='dateInfo'>
-                            <div style={{
-                                fontSize: "25px",
-                                fontWeight: "extra-bold",
-                                color: "white"
-                            }}>{tabloinfo.date} — {tabloinfo.day} — {tabloinfo.time}</div>
-                        </div>
-                        {/* Логотипы команд */}
-                        <div style={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
-                            <img src={logoTeam1} alt="Team 1" style={{
-                                width: '60px',
-                                height: 'auto',
-                                marginRight: '10px'
-                            }}/> {/* Увеличиваем размер */}
-                            <h1 style={{
-                                fontSize: '80px',
-                                margin: '0 20px',
-                                color: "white"
-                            }}>{tabloinfo.score}</h1> {/* Счет */}
-                            <img src={logoTeam2} alt="Team 2" style={{
-                                width: '60px',
-                                height: 'auto',
-                                marginRight: '10px'
-                            }}/> {/* Увеличиваем размер */}
-                        </div>
-                        {/* Дополнительные элементы, например, кнопка "О матче" */}
-                        <button style={{
-                            padding: '10px 50px',
-                            fontSize: '20px',
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                        }}>
-                            О матче
-                        </button>
-                    </div>
-                    <div className='nextMatch'></div>
-                    <div className='prevMatch'></div>
-                    <div className='stat'></div>
-                </div>
-                
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+                background: `linear-gradient(180deg, rgba(227,39,38,0) 0%, rgba(0,0,0,0) 0%, rgba(227,38,39,0.5) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(227,39,38,0.5) 50%, rgba(0,0,0,0) 100%, rgba(227,39,38,0) 100%)`
+            }}>
+                <NearestMatch tabloinfo={tabloinfo}/>
+                <MatchesPreview/>
+                <NewsPreview/>
             </div>
-           <Footer/>
+            <Footer/>
         </div>
-        
-    )
-        ;
+    );
 };
 
 export default MainPage;

@@ -1,0 +1,94 @@
+.news-section {
+    background-color: #f8f8f8;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.news-section h1{
+    margin-left: 20px;
+}
+
+.news-title {
+    font-size: 18px;
+    color: #E62526; /* Цвет заголовка */
+    margin-bottom: 10px;
+}
+
+.news-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.more-button {
+    background-color: #E62526; /* Цвет кнопки */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 20px
+}
+
+.news-cards-container {
+    margin: 0 15px 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Разделяет карточки */
+    gap: 50px; /* Промежуток между карточками */
+}
+
+.news-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: row;
+    width: calc(50% - 25px); /* Занимает 50% ширины с учётом отступов */
+}
+
+.news-card:hover {
+    transform: scale(1.05); /* Эффект при наведении */
+}
+
+.news-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* Обеспечивает обрезку изображения по размеру блока */
+}
+
+.news-content-text {
+    padding: 15px;
+    flex-grow: 1; /* Позволяет текстовому блоку занимать оставшуюся ширину */
+}
+
+.news-content-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 15px;
+}
+@media screen and (max-width: 800px){
+    .news-cards-container {
+        flex-direction: column;
+    }
+    .news-card{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 400px){
+    .news-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover; /* Обеспечивает обрезку изображения по размеру блока */
+    }
+    .news-title{
+        font-size: 15px;
+    }
+    .news-text{
+        font-size: 12px;
+    }
+}

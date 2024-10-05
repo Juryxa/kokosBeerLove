@@ -1,0 +1,33 @@
+{
+    "matches": [
+      {
+        "type": "Следующий матч",
+        "division": "Высший дивизион - 25 тур",
+        "date": "05 октября суббота 15:50",
+        "score": "0 - 0",
+        "team1": "LFC Porters",
+        "team2": "K",
+        "location": "Вернадка Парк",
+        "logo1":"logo1",
+        "logo2":"logo2"
+    },
+      {
+        "type": "Предыдущий матч",
+        "division": "Суперлига F 'Лето 2024'",
+        "date": "30 августа пятница 21:00",
+        "score": "1 - 0",
+        "team1": "LFC Porters",
+        "team2": "K",
+        "location": "Вернадка Парк",
+        "logo1":"logo1",
+        "logo2":"logo2"
+      }
+    ],
+    "stats": {
+      "games": 9,
+      "wins": 5,
+      "goals": 17,
+      "tournaments": 1
+    }
+  }
+  
