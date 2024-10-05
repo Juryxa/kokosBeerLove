@@ -7,6 +7,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import EnterForm from "./pages/EnterForm";
 import Matches from './pages/Matches';
+import Header from './components/Header';
 
 
 function App() {
@@ -32,10 +33,12 @@ function App() {
 
     return (
         <div className="App">
+           
             <Routes>
                 <Route path="/" element={<MainPage tabloinfo={tabloinfo}/>}/>
                 <Route path="/enter" element={store.isAuth ? <FanPage/> : <EnterForm/>}/>
                 <Route path="/matches" element={<Matches/>}/>
+                
             </Routes>
         </div>
     );
