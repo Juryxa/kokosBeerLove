@@ -3,6 +3,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './Matches.css';
 import MatchesPreview from '../components/MatchesPreview';
+import NewsPreview from '../components/NewsPreview';
+
+
+
 
 const Matches: FC = () => {
     return (
@@ -22,8 +26,9 @@ const Matches: FC = () => {
                  Voluptate inventore alias hic nobis, cum, vero nostrum quaerat aut consequuntur nesciunt vo
                  luptates, fugiat assumenda aliquid ratione ut totam quis mollitia quas?
                  </div>
-                 <MatchesPreview/>
+                 <NewsPreview/>
                  </div>
+                 
        <Footer/>
         </div>
     );
