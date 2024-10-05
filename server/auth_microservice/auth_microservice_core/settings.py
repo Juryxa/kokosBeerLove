@@ -54,7 +54,7 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
-ROOT_URLCONF = 'auth_microservice_app.urls'
+ROOT_URLCONF = 'auth_microservice_core.urls'
 
 
 TEMPLATES = [
