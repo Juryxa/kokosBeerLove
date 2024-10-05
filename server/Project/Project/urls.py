@@ -1,4 +1,4 @@
-
+from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
@@ -20,6 +20,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('api/', include('auth_microservice.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

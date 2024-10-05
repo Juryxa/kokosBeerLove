@@ -5,17 +5,12 @@ from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from auth_microservice.serializers import RefreshTokenSerializer
 
 @swagger_auto_schema(
     method='post',
     operation_description="Обновление access токена с использованием refresh токена",
-    manual_parameters=[
-        openapi.Parameter(
-            'refresh_token', openapi.IN_HEADER,
-            description="Refresh токен, передаваемый в заголовке (или cookie, если клиентская часть поддерживает это)",
-            type=openapi.TYPE_STRING
-        )
-    ],
+    request_body=RefreshTokenSerializer,
     responses={
         200: openapi.Response(description="Новый access токен", examples={
             "application/json": {
