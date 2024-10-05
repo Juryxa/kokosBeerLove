@@ -22,7 +22,7 @@ const EnterForm: FC = () => {
                 alert("Пароли не совпадают!");
                 return;
             }
-            store.registration(email, password); // Передаём имя при регистрации
+            store.registration(name, email, password); // Передаём имя при регистрации
         }
     };
 
