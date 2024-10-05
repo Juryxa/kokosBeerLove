@@ -7,17 +7,10 @@ import {observer} from "mobx-react-lite";
 import {Context} from "./index";
 import EnterForm from "./pages/EnterForm";
 import Matches from './pages/Matches';
-import Header from './components/Header';
+
 
 
 function App() {
-    const tabloinfo = {
-        title: "Высший дивизион 25 ТУР",
-        date: "20.10.2024",
-        day: 'Четверг',
-        time: "14:00",
-        score: "2 - 1"
-    };
 
     const {store} = useContext(Context);
 
@@ -33,12 +26,12 @@ function App() {
 
     return (
         <div className="App">
-           
+
             <Routes>
-                <Route path="/" element={<MainPage tabloinfo={tabloinfo}/>}/>
+                <Route path="/" element={<MainPage/>}/>
                 <Route path="/enter" element={store.isAuth ? <FanPage/> : <EnterForm/>}/>
                 <Route path="/matches" element={<Matches/>}/>
-                
+
             </Routes>
         </div>
     );

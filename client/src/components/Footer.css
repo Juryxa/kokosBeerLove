@@ -7,9 +7,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    
+    position: static;
   }
-  
+
   .footer-content {
     display: flex;
     justify-content: space-between;
@@ -18,22 +18,18 @@
     width: 100%;
     padding: 0 40px 0 40px;
   }
-  
+
   .social-icons i {
     /* margin: 0 10px; */
     font-size: 24px;
   }
-  
+
   .footer p {
     font-weight: bold;
     text-transform: uppercase;
   }
-  
-  .footer{
-    position: absolute;
-    bottom: 0;
-    
-}
+
+
 .contacts_koks{
   display: flex;
   justify-content: flex-start;
@@ -43,7 +39,24 @@
 }
 
 .icon_section img {
- 
+    margin-right: 5px;
     height: 19px;
-  
+
+}
+.icon_section a {
+    text-decoration: none;
+    color: white;
+}
+@media screen and (max-width: 500px) {
+    .footer{
+        font-size: 13px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .footer{
+        font-size: 9px;
+    }
+    .icon_section button{
+        padding: 5px;
+    }
 }
