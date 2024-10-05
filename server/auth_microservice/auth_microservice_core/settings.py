@@ -170,9 +170,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000/']
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
