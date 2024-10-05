@@ -1,28 +1,29 @@
 import React, {useState, useContext} from 'react';
-import {Modal, Box, Button, TextField, Typography} from '@mui/material';
+import {Modal, Box, Button, TextField, Typography,IconButton} from '@mui/material';
 import {Context} from '../index';
 import {observer} from 'mobx-react-lite';
+import CloseIcon from '@mui/icons-material/Close';
 
-const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = ({open, handleClose}) => {
-    const [isLogin, setIsLogin] = useState<boolean>(true);
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [name, setName] = useState<string>(''); // Поле для имени при регистрации
-    const [confirmPassword, setConfirmPassword] = useState<string>(''); // Подтверждение пароля
-    const {store} = useContext(Context);
+const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>(''); // Поле для имени при регистрации
+  const [confirmPassword, setConfirmPassword] = useState<string>(''); // Подтверждение пароля
+  const { store } = useContext(Context);
 
-    const handleSubmit = () => {
-        if (isLogin) {
-            store.login(email, password);
-        } else {
-            if (password !== confirmPassword) {
-                alert("Пароли не совпадают!");
-                return;
-            }
-            store.registration(email, password);
-        }
-        handleClose(); // Закрыть модальное окно после регистрации/логина
-    };
+  const handleSubmit = () => {
+    if (isLogin) {
+      store.login(email, password);
+    } else {
+      if (password !== confirmPassword) {
+        alert("Пароли не совпадают!");
+        return;
+      }
+      store.registration(email, password);
+    }
+    handleClose(); // Закрыть модальное окно после регистрации/логина
+  };
 
     return (
         <Modal open={open} onClose={handleClose}>
@@ -43,6 +44,17 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
 
                 }}
             >
+              <IconButton
+          onClick={handleClose} // Закрываем модальное окно
+          sx={{ 
+            position: 'absolute', 
+            top: 8, 
+            right: 8, 
+            color:"red"
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
                 <Typography variant="h5" sx={{mb: 2, color: '#E62526', fontSize: "30px"}}>
                     {isLogin ? "Авторизация" : "Регистрация"}
                 </Typography>
