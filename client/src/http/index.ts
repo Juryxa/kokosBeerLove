@@ -11,8 +11,11 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-    // @ts-ignore
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    // Проверка, если это не запрос на регистрацию
+    if (config.url !== '/signup/') {
+        // @ts-ignore
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    }
     return config;
 })
 
@@ -24,7 +27,7 @@ $api.interceptors.response.use((config) => {
         originalRequest._isRetry = true;
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh/`, {withCredentials: true})
-            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('token', response.data.access);
             return $api.request(originalRequest);
         } catch (e) {
             console.log('НЕ АВТОРИЗОВАН')

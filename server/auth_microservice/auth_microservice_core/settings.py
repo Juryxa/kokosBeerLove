@@ -63,6 +63,21 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
 # Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
 CORS_ALLOW_ALL_ORIGINS = False # False для безопасности в продакшене
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+    'Content-Type',
+    'Set-Cookie',
+    'X-CSRFToken',
+    'X-Requested-With',
+]
 
 ROOT_URLCONF = 'auth_microservice_core.urls'
 
@@ -153,6 +168,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Для открытых API
+    ],
+
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
