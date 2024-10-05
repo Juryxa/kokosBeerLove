@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NearestMatch from "../components/NearestMatch";
+import MatchesPreview from "../components/MatchesPreview";
 
 const tabloinfo = {
     title: "Высший дивизион 25 ТУР",
@@ -14,9 +15,26 @@ const tabloinfo = {
 const MainPage: React.FC = () => {
 
     return (
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            width: '100%'
+        }}>
             <Header/>
-            <NearestMatch tabloinfo={tabloinfo}/>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+                background: `linear-gradient(180deg, rgba(227,39,38,0) 0%, rgba(0,0,0,0) 0%, rgba(227,38,39,0.5) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(227,39,38,0.5) 50%, rgba(0,0,0,0) 100%, rgba(227,39,38,0) 100%)`
+            }}>
+                <NearestMatch tabloinfo={tabloinfo}/>
+                <MatchesPreview/>
+            </div>
             <Footer/>
         </div>
     );

@@ -4,6 +4,7 @@ import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
 import {Link} from 'react-router-dom';
 import logo from "../images/logo.jpg"
 import RegistrationModal from './RegistrationModal';
+import './Header.css';
 
 const Header = () => {
     const [open, setOpen] = useState(false);
@@ -46,11 +47,11 @@ const Header = () => {
                         {/* Логотип */}
                         <Box sx={{display: 'flex', alignItems: 'center'}}>
                             <IconButton component={Link} to="/" sx={{padding: 0}}>
-                                <img src={logo} alt="Logo" style={{height: '30px'}}/>
+                                <img src={logo} alt="Logo" style={{height: '50px'}}/>
                             </IconButton>
                         </Box>
                         {/* Навигация */}
-                        <Box sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                        <Box className='links' sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
                             <MenuItem component={Link} to="/news">Новости</MenuItem>
                             <MenuItem component={Link} to="/matches">Матчи</MenuItem>
                             <MenuItem component={Link} to="/team">Команда</MenuItem>
