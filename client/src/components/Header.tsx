@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography} from '@mui/material';
 import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
 import {Link} from 'react-router-dom';
 import logo from "../images/logo.jpg"
+import RegistrationModal from './RegistrationModal';
 
 const Header = () => {
+    const [open, setOpen] = useState(false);
 
-
-    // Обработчик прокрутки
-
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
     return (
         <AppBar position="static" color="transparent" elevation={0}>
@@ -97,6 +98,7 @@ const Header = () => {
                         <IconButton color="inherit">
                             <YouTube/>
                         </IconButton>
+                        <RegistrationModal open={open} handleClose={handleClose} />
                         <IconButton color="inherit">
                             <Telegram/>
                         </IconButton>
