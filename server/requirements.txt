@@ -9,3 +9,4 @@ drf-spectacular
 locust # для нагрузочного тестирования
 django-silk # профилировщик
 Pillow
+django-cors-headers
