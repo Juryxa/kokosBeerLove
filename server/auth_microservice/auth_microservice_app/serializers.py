@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import CustomUser
 
+
 class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -17,13 +18,20 @@ class SignupSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
+
 class RefreshTokenSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
+
 
 class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
 
+
+class VerifyEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(max_length=6)
