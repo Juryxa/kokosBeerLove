@@ -16,3 +16,13 @@ class SignupSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])  # Шифруем пароль
         user.save()
         return user
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+class RefreshTokenSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()
+
+class LogoutSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()

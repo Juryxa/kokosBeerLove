@@ -5,10 +5,12 @@ from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from auth_microservice.serializers import LogoutSerializer
 
 @swagger_auto_schema(
     method='post',
     operation_description="Выход пользователя. Refresh токен передаётся в cookie.",
+    request_body=LogoutSerializer,
     responses={
         204: openapi.Response('Успешный выход'),
         400: openapi.Response('Токен не предоставлен'),
