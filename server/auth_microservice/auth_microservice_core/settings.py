@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fc_kokoc_db',
+        'NAME': 'kokos',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
+        'PASSWORD': 'Maksim1516',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -166,3 +166,14 @@ SIMPLE_JWT = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Настройка SMTP-сервера
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдера
+EMAIL_PORT = 587  # Порт для TLS
+EMAIL_USE_TLS = True  # Включить TLS (SSL)
+EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
+EMAIL_HOST_PASSWORD = '5WPgBLxmtAnkPFDmWcd3'  # Ваш пароль от Email
+
+# Настройка стандартного адреса для отправки писем
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
