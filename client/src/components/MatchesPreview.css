@@ -1,0 +1,69 @@
+.container_matches{
+    display:flex ;
+    justify-content:center;
+    
+    flex-direction: row;
+    margin: 25px;
+  }
+  
+  .card {
+    
+    border-radius: 8px;
+    margin: 25px;
+    width: 100%;
+    
+    text-align: center;
+    min-width: 364px;
+    min-height: 248px;
+    background-color: #FFFFFF; /* Белый фон для карточек */
+   
+    background-image: url("../images/Subtract.png");
+    background-size: cover; /* Масштабируем изображение, чтобы заполнить весь блок */
+  /* Центрируем изображение */
+ /* Устанавливаем фиксированную высоту блока (можно изменить) */
+    
+  }
+  
+  
+  .stats-card {
+    border-radius: 8px;
+    margin: 25px;
+    width: 100%;
+    
+    text-align: center;
+    min-width: 364px;
+    min-height: 248px;
+    background-color: #FFFFFF; /* Белый фон для карточек */
+   
+    background-image: url("../images/Subtract.png");
+    background-size: cover; /* Масштабируем изображение, чтобы заполнить весь блок */
+  /* Центрируем изображение */
+ /* Устанавливаем фиксированную высоту блока (можно изменить) */
+    
+  }
+  
+
+  h6 {
+    margin: 15px 0 0 0;
+    font-size: 18px;
+  }
+  h5 {
+    margin: 8px 0 0 0;
+    font-size: 22px;
+  }
+  
+  h4 {
+    color: #E62526;
+    margin: 8px 0;
+    font-size: 36px; /* Размер заголовка */
+  }
+  
+
+.card-content{
+    
+}
+
+
+  .stats-card-content{
+
+  }
