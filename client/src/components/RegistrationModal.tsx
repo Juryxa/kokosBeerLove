@@ -46,17 +46,17 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
             >
               <IconButton
           onClick={handleClose} // Закрываем модальное окно
-          sx={{ 
-            position: 'absolute', 
-            top: 8, 
-            right: 8, 
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
             color:"red"
           }}
         >
           <CloseIcon />
         </IconButton>
                 <Typography variant="h5" sx={{mb: 2, color: '#E62526', fontSize: "30px"}}>
-                    {isLogin ? "Авторизация" : "Регистрация"}
+                    {isLogin ? "Вход" : "Регистрация"}
                 </Typography>
 
                 {/* Поле для имени, отображается только при регистрации */}
@@ -168,7 +168,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                     }}
                     onClick={handleSubmit}
                 >
-                    {isLogin ? 'Авторизоваться' : 'Зарегистрироваться'}
+                    {isLogin ? 'Войти' : 'Зарегистрироваться'}
                 </Button>
 
                 {isLogin ? (
@@ -201,7 +201,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                         }}
                         onClick={() => setIsLogin(true)}
                     >
-                        Войти
+                        Войти в аккаунт
                     </Button>
                 )}
             </Box>
