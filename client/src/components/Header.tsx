@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography} from '@mui/material';
 import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
 import {Link} from 'react-router-dom';
 import logo from "../images/image1.png"
+import RegistrationModal from './RegistrationModal';
 
 const Header = () => {
+    const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
     return (
         <AppBar position="sticky" color="transparent" elevation={0}>
             <Toolbar
@@ -94,9 +100,10 @@ const Header = () => {
                             </svg>
                             <Typography color={'#E62526'}> Поиск</Typography>
                         </IconButton>
-                        <IconButton component={Link} to="/enter">
+                        <IconButton onClick={handleOpen}>
                             <Typography color={'#E62526'}>Вход</Typography>
                         </IconButton>
+                        <RegistrationModal open={open} handleClose={handleClose} />
                     </Box>
                 </Box>
             </Toolbar>
