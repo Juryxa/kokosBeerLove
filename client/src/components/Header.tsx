@@ -98,7 +98,6 @@ const Header = () => {
                         <IconButton color="inherit">
                             <YouTube/>
                         </IconButton>
-                        <RegistrationModal open={open} handleClose={handleClose} />
                         <IconButton color="inherit">
                             <Telegram/>
                         </IconButton>
