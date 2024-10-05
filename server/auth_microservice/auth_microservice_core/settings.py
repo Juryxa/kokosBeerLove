@@ -96,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
