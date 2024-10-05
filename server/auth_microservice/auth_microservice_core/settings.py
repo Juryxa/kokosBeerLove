@@ -96,7 +96,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'dima15042004',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -171,8 +171,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
