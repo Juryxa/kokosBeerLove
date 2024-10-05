@@ -11,8 +11,11 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-    // @ts-ignore
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    // Проверка, если это не запрос на регистрацию
+    if (config.url !== '/signup/') {
+        // @ts-ignore
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    }
     return config;
 })
 

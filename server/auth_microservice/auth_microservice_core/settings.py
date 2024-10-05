@@ -63,6 +63,21 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
 # Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
 CORS_ALLOW_ALL_ORIGINS = False # False для безопасности в продакшене
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+    'Content-Type',
+    'Set-Cookie',
+    'X-CSRFToken',
+    'X-Requested-With',
+]
 
 ROOT_URLCONF = 'auth_microservice_core.urls'
 
@@ -96,7 +111,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'dima15042004',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -153,6 +168,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Для открытых API
+    ],
+
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
@@ -170,7 +189,8 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000/']
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
-
