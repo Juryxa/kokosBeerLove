@@ -68,14 +68,14 @@ const Header = () => {
                                 </svg>
                                 <Typography color={'#E62526'}> Поиск</Typography>
                             </IconButton>
-                            <IconButton component={Link} to="/enter">
+                            <IconButton onClick={handleOpen}  >
                                 <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
                                         fill="#E62526"/>
                                 </svg>
-                                <Typography color={'#E62526'}>Вход</Typography>
+                                <Typography color={'#E62526'} >Вход</Typography>
                             </IconButton>
                         </Box>
                     </Box>
@@ -114,6 +114,7 @@ const Header = () => {
                     </Box>
                 </Box>
             </Toolbar>
+            <RegistrationModal open={open} handleClose={handleClose} />
         </AppBar>);
 };
 
