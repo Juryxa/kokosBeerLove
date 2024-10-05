@@ -9,5 +9,6 @@ drf-spectacular
 locust # для нагрузочного тестирования
 django-silk # профилировщик
 Pillow
+django-cors-headers
 smtplib # для проверки email
 dnspython # для проверки email

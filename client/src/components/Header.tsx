@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography} from '@mui/material';
 import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import logo from "../images/logo.jpg"
 import RegistrationModal from './RegistrationModal';
 import './Header.css';
+import {store} from "../index";
+
 
 const Header = () => {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    const handleClick = () => {
+        if (store.isAuth) {
+            navigate('/admin');
+        } else {
+            handleOpen();
+        }
+    };
 
     return (
         <AppBar position="static" color="transparent" elevation={0}>
@@ -69,14 +79,14 @@ const Header = () => {
                                 </svg>
                                 <Typography color={'#E62526'}> Поиск</Typography>
                             </IconButton>
-                            <IconButton onClick={handleOpen}  >
+                            <IconButton onClick={handleClick}>
                                 <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
                                         fill="#E62526"/>
                                 </svg>
-                                <Typography color={'#E62526'} >Вход</Typography>
+                                <Typography color={'#E62526'}>Вход</Typography>
                             </IconButton>
                         </Box>
                     </Box>
@@ -115,7 +125,7 @@ const Header = () => {
                     </Box>
                 </Box>
             </Toolbar>
-            <RegistrationModal open={open} handleClose={handleClose} />
+            <RegistrationModal open={open} handleClose={handleClose}/>
         </AppBar>);
 };
 

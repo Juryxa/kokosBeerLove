@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'auth_microservice_app',
     'drf_yasg',
+    'corsheaders',
     # 'silk', # для профилирования
 ]
 
@@ -51,8 +52,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
+# Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
+CORS_ALLOW_ALL_ORIGINS = False # False для безопасности в продакшене
 
 ROOT_URLCONF = 'auth_microservice_core.urls'
 
@@ -160,7 +170,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000/']
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
 
