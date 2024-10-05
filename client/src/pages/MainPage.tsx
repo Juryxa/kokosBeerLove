@@ -37,9 +37,11 @@ const MainPage: React.FC<MainPageProps> = ({tabloinfo}) => {
                     borderTopLeftRadius: '10px',
                     borderTopRightRadius: '10px',
                     backgroundImage: `url(${img1})`,
+                    backgroundRepeat:"no-repeat",
                     height: '80vh',
                     width: '80%',
-                    zIndex: '1'
+                    zIndex: '1',
+
                 }}>
 
                     <div className='matchBlock' style={{
@@ -95,7 +97,7 @@ const MainPage: React.FC<MainPageProps> = ({tabloinfo}) => {
                 </div>
                 
             </div>
-           
+           <Footer/>
         </div>
         
     )
