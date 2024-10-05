@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.signup import signup
+from .views.signup import signup, verify_email, resend_verification_code
 from .views.refresh_token import refresh_token
 from .views.login import login
 from .views.logout import logout
@@ -18,6 +18,9 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path('signup/', signup, name='signup'),
+    path('verify-email/', verify_email, name='verify_email'),
+    path('resend-verification-code/', resend_verification_code,
+         name='resend_verification_code'),
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     path('refresh/', refresh_token, name='refresh_token'),

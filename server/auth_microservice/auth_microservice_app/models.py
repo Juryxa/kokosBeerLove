@@ -26,11 +26,23 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(
+        unique=True,
+        error_messages={
+            'unique': "Email уже занят.",
+        }
+    )
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        error_messages={
+            'unique': "Никнейм уже занят.",
+        }
+    )
     password = models.CharField(max_length=128)  # Хешированный пароль
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)  # Новое поле для статуса подтверждения email
 
     objects = CustomUserManager()
 
@@ -39,6 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'auth_microservice_registered_users'
+
     def __str__(self):
         return self.email
 
@@ -49,7 +62,6 @@ class RefreshToken(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
 
-
     def __str__(self):
         return f"Refresh token for {self.user.email}"
 
@@ -57,3 +69,11 @@ class RefreshToken(models.Model):
     def is_expired(self):
         return timezone.now() > self.expires_at
 
+
+class VerificationCode(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Verification code for {self.email}"
