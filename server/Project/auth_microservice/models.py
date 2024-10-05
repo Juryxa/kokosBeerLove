@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -20,15 +20,17 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, username, password):
         user = self.create_user(email, username, password)
         user.is_superuser = True
+        user.is_staff = True  # Даем доступ к админке
         user.save(using=self._db)
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=128)  # Хешированный пароль
-    is_superuser = models.BooleanField(default=False)  # Нужно для суперпользователей
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 

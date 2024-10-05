@@ -40,10 +40,11 @@ def signup(request):
         expires_at = timezone.now() + timedelta(days=60)  # Время жизни refresh токена
         RefreshToken.objects.create(user=user, token=str(refresh), expires_at=expires_at)
 
-        # Устанавливаем refresh токен в HTTP-only cookie
+
         response = Response({
             'access': str(access_token),
         }, status=status.HTTP_201_CREATED)
+
         response.set_cookie(
             key='refresh_token',
             value=str(refresh),
