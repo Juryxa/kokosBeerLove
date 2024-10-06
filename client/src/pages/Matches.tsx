@@ -4,7 +4,9 @@ import Footer from '../components/Footer';
 import './Matches.css';
 import MatchesPreview from '../components/MatchesPreview';
 import NewsPreview from '../components/NewsPreview';
-import Shop from '../components/Shop';
+import Shop from '../components/ClubPreview';
+import Carousel from '../components/Carousel';
+import ShopPreview from '../components/ShopPreview';
 
 
 
@@ -27,7 +29,8 @@ const Matches: FC = () => {
                  Voluptate inventore alias hic nobis, cum, vero nostrum quaerat aut consequuntur nesciunt vo
                  luptates, fugiat assumenda aliquid ratione ut totam quis mollitia quas?
                  </div>
-                 <Shop/>
+                 
+                 
                  </div>
                  
        <Footer/>

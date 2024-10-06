@@ -1,0 +1,117 @@
+.carousel-container {
+    width: 97vw;
+    min-height: 917px;
+    height: auto; /* Адаптируем под количество карточек */
+    background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row; /* Расположение элементов по бокам */
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    
+}
+.carousel-item h5 {
+    font-size: 20px; /* Уменьшаем размер текста заголовка */
+    margin: 0; /* Убираем отступы для заголовка */
+}
+
+.carousel-container::before {
+    content: '';
+    position: absolute; /* Позиционируем над фоном */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1)); /* Градиент от прозрачного к белому */
+    z-index: 1; /* Убедимся, что градиент выше фона, но ниже контента */
+  }
+
+  .carousel-content {
+    width: 100%;
+    max-width: 1240px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Центрируем элементы в контейнере */
+    overflow-y: auto; /* Добавляем вертикальный скролл */
+    scrollbar-width: thin; /* Уменьшаем ширину скролла для Firefox */
+    scrollbar-color: #ff5a5a #e0e0e0; /* Цвет скролла и его фона для Firefox */
+}
+
+.carousel-item {
+    width: 214px;
+    height: 255px;
+    cursor: pointer;
+    margin: 10px;
+    position: relative;
+    overflow: hidden; /* Изменяем на hidden, чтобы избежать переполнения */
+    z-index: 2;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 20px; /* Радиус границ */
+    transition: transform 0.3s, box-shadow 0.3s; /* Плавные переходы для трансформации и теней */
+}
+.carousel-item:hover {
+    transform: scale(1.05); /* Увеличиваем карточку при наведении */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Добавляем тень при наведении */
+}
+
+.carousel-image {
+    width: 80%;
+    height: auto;
+    position: absolute;
+    top: 30px;
+    left: 10%;
+    z-index: -1;
+    border-radius: 20px; 
+}
+
+.carousel-buttons {
+    display: flex;
+    flex-direction: column; /* Расположение кнопок по вертикали */
+    justify-content: center; /* Центрируем кнопки по вертикали */
+    margin: 0 20px; /* Промежуток между кнопками и контентом */
+    z-index: 1;
+    opacity: 0.7; /* Устанавливаем начальную прозрачность */
+    transition: opacity 0.3s; /* Плавный переход для прозрачности */
+}
+
+.carousel-buttons:hover {
+    opacity: 1; /* Полная непрозрачность при наведении */
+}
+
+
+.carousel-content::-webkit-scrollbar {
+    width: 8px; /* Ширина скролла */
+}
+
+.carousel-content::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Цвет фона скролла */
+    border-radius: 10px; /* Закругление углов */
+}
+
+.carousel-content::-webkit-scrollbar-thumb {
+    background-color: #ff5a5a; /* Цвет скролла */
+    border-radius: 10px; /* Закругление углов */
+}
+
+.carousel-content::-webkit-scrollbar-thumb:hover {
+    background-color: #ff4040; /* Цвет скролла при наведении */
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* расстояние между карточками */
+    transition: transform 0.5s ease; /* Плавный переход для анимации */
+    will-change: transform; /* Оптимизация для производительности */
+}
+
+.card-container.animate {
+    transform: translateX(-100%); /* Сдвиг при анимации */
+}

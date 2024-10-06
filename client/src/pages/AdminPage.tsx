@@ -1,11 +1,13 @@
 import React, {FC} from 'react';
-import {store} from "../index";
+import AdminNav from "./adminPages/adminPageComponents/AdminNav";
+import {Outlet} from "react-router-dom";
+
 
 const AdminPage: FC = () => {
     return (
         <div>
-            Это панель админа
-            <button onClick={() => store.logout()}>Выйти</button>
+            <AdminNav/>
+            <Outlet />
         </div>
     );
 };

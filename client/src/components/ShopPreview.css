@@ -1,0 +1,108 @@
+.shop-container{
+    background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
+    width: 97vw;
+    min-height: 934px;
+    height: 100%;
+    background-size: cover; /* Растягивает изображение по всему блоку */
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем элементы */
+    padding: 20px;
+    position: relative;
+
+}
+
+.shop-container::before {
+    content: '';
+  position: absolute; /* Позиционируем над фоном */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7); 
+  backdrop-filter: blur(10px); 
+  z-index: 0;
+  }
+
+
+
+  .shop-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+    z-index: 1;
+  }
+  .title-links a {
+    color: black; /* Черный цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: color 0.3s, text-decoration 0.3s;
+    text-decoration: underline; /* Плавный переход цвета и подчеркивания */
+}
+
+.title-links a:hover {
+    color: #4D4D4D; 
+    text-decoration: none;
+}
+
+.shop-content {
+    display: flex;
+    flex-direction: column;
+  
+    
+    z-index: 1;
+}
+  
+  .title-links {
+    margin-bottom: 100px;
+    z-index: 1;
+    display: flex;
+    
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px; /* расстояние между карточками */
+    
+  }
+  
+  .shop-card {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.7); 
+  }
+  
+  .shop-card-image {
+    width: 100%; /* Занимает 100% ширины карточки */
+    height: 400px; /* Устанавливаем фиксированную высоту для изображений */
+    object-fit: cover; /* Обеспечиваем правильное соотношение сторон */
+}
+  
+.shop-card-button:hover {
+    background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
+}
+.shop-card-button {
+    width: 95%; /* Ширина кнопки 95% от карточки */
+    background: linear-gradient(to right, #ff0000, #8a1a1a); /* Красный градиент */
+    color: white; /* Цвет текста на кнопке */
+    margin: 0 auto; /* Центрируем кнопку */
+    transition: background 0.3s; /* Плавный переход цвета фона */
+}
+
+
+
+.shop-card {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.7); 
+    border-radius: 20px; /* Добавляем радиус скругления к карточкам */
+    transition: transform 0.5s ease; /* Плавный переход для трансформации */
+}
+
+.shop-card:hover {
+    transform: scale(1.05); /* Увеличение карточки при наведении */
+}
