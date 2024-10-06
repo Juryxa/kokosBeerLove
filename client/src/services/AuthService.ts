@@ -1,9 +1,10 @@
 import $api from "../http";
 
 import {AuthResponse} from "../models/response/AuthResponse";
+import {CodeResponse} from "../models/response/CodeResponse";
 
 export default class AuthService {
-    static async login(email: string, password: string){
+    static async login(email: string, password: string) {
         return $api.post<AuthResponse>('/login/', {email, password})
     }
 
@@ -13,6 +14,10 @@ export default class AuthService {
 
     static async logout(): Promise<unknown> {
         return $api.post('/logout/')
+    }
+
+    static async verify(email: string) {
+        return $api.post<CodeResponse>('/verify-email/', {email})
     }
 
 }

@@ -7,7 +7,9 @@ import {API_URL} from "../http";
 
 export default class Store {
     user = {} as IUser;
+    code = 0;
     isAuth = false;
+    isSuperUser = false;
     isLoading = false;
 
     constructor() {
@@ -22,6 +24,16 @@ export default class Store {
         this.user = user;
     }
 
+    setCode(code: number) {
+        this.code = code;
+    }
+    getCode() {
+        return this.code;
+    }
+    setSuperUser(bool:boolean){
+        this.isSuperUser = bool;
+    }
+
     setLoading(bool: boolean) {
         this.isLoading = bool;
     }
@@ -29,10 +41,20 @@ export default class Store {
     async login(email: string, password: string) {
         try {
             const response = await AuthService.login(email, password);
-            console.log(response)
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
+            this.setSuperUser(response.data.is_superuser)
             this.setUser(response.data.user);
+        } catch (e) {
+            // @ts-ignore
+            console.log(e.response?.data?.message);
+        }
+    }
+
+    async verify(email: string) {
+        try {
+            const response = await AuthService.verify(email);
+            this.setCode(response.data.code);
         } catch (e) {
             // @ts-ignore
             console.log(e.response?.data?.message);
@@ -42,7 +64,6 @@ export default class Store {
     async registration(username: string, email: string, password: string) {
         try {
             const response = await AuthService.registration(username, email, password);
-            console.log(response)
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -67,7 +88,6 @@ export default class Store {
         this.setLoading(true);
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh/`, {withCredentials: true})
-            console.log(response);
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
             this.setUser(response.data.user);

@@ -56,6 +56,8 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
@@ -81,7 +83,6 @@ CORS_ALLOW_HEADERS = [
 
 ROOT_URLCONF = 'auth_microservice_core.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -99,7 +100,6 @@ TEMPLATES = [
 ]
 
 
-#WSGI_APPLICATION = 'auth_microservice_app.wsgi.application'
 WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 
 
@@ -109,9 +109,15 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< HEAD
         'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
         'PASSWORD': 'root',
+=======
+        'NAME': 'kokocDB_auth_microservice',
+        'USER': 'postgres',
+        'PASSWORD': '',
+>>>>>>> 7acbe9f8646bfc3342d35a2c77ceef4ba1965892
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -159,8 +165,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 AUTH_USER_MODEL = 'auth_microservice_app.CustomUser'
 
 
@@ -190,8 +194,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
-
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
 
@@ -204,7 +206,11 @@ EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдер
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Включить TLS (SSL)
 EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
+<<<<<<< HEAD
 EMAIL_HOST_PASSWORD = 'BJ1svRppsqyb40jSfScZ'  # Ваш пароль от Email
+=======
+EMAIL_HOST_PASSWORD = 'jkts1VXfd0zmkPKUqezp'  # Ваш пароль от Email
+>>>>>>> 7acbe9f8646bfc3342d35a2c77ceef4ba1965892
 
 # Настройка стандартного адреса для отправки писем
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

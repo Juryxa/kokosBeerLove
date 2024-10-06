@@ -1,44 +1,43 @@
-.carousel-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1));
-    z-index: 1;
-}
-
-
-
-
 .carousel-container {
     width: 97vw;
     min-height: 917px;
-    height: auto; /* Изменяем на auto, чтобы контейнер адаптировался под количество карточек */
+    height: auto; /* Адаптируем под количество карточек */
     background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row; /* Расположение элементов по бокам */
     padding: 20px;
     position: relative;
     overflow: hidden;
-   
-    gap: 20px; /* Добавляем промежутки между строками и колонками */
-
+    
+}
+.carousel-item h5 {
+    font-size: 20px; /* Уменьшаем размер текста заголовка */
+    margin: 0; /* Убираем отступы для заголовка */
 }
 
+.carousel-container::before {
+    content: '';
+    position: absolute; /* Позиционируем над фоном */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1)); /* Градиент от прозрачного к белому */
+    z-index: 1; /* Убедимся, что градиент выше фона, но ниже контента */
+  }
 
-.carousel-content{
+.carousel-content {
     width: 100%;
     max-width: 1240px;
-    background-color: blue;
+    
     display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* Центрируем элементы в контейнере */
 }
-
 
 .carousel-item {
     width: 214px;
@@ -47,12 +46,13 @@
     margin: 10px;
     position: relative;
     overflow: visible;
-    border-radius: 10px;
+    
     z-index: 2;
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Текст будет располагаться внизу карточки */
+    justify-content: flex-end;
+    border-radius: 20px; 
 }
 
 .carousel-image {
@@ -62,19 +62,15 @@
     top: 30px;
     left: 10%;
     z-index: -1;
+    border-radius: 20px; 
 }
-
 
 .carousel-buttons {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1240px;
-    margin-top: 20px;
-}
-
-.carousel-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Расположение кнопок по вертикали */
+    justify-content: center; /* Центрируем кнопки по вертикали */
+    margin: 0 20px; /* Промежуток между кнопками и контентом */
+    z-index: 1;
+    opacity: 0.7; /* Устанавливаем начальную прозрачность */
+    transition: opacity 0.3s;
 }

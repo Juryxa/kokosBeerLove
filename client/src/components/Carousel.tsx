@@ -1,7 +1,14 @@
 import React from 'react';
 import { Box, Card, CardContent, Typography, Button } from '@mui/material';
 import './Carousel.css';
+
+
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import footboler1 from '../images/footboler1.png';
+
+import back from '../images/icons/Vector 5.png'
+import next from '../images/icons/Vector 4.png'
 
 interface Item {
   id: number;
@@ -49,20 +56,17 @@ const items: Item[] = [
 ];
 
 const Carousel: React.FC = () => {
-  const [currentPage, setCurrentPage] = React.useState(0); // Состояние для текущей страницы
-  const itemsPerPage = 10; // Количество элементов на странице
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const itemsPerPage = 10;
 
-  // Рассчитываем максимальное количество страниц
   const maxPages = Math.ceil(items.length / itemsPerPage) - 1;
 
-  // Переключение на следующую страницу
   const handleNextPage = () => {
     if (currentPage < maxPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Переключение на предыдущую страницу
   const handlePrevPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -70,17 +74,23 @@ const Carousel: React.FC = () => {
   };
 
   const startIndex = currentPage * itemsPerPage;
-  const visibleItems = items.slice(startIndex, startIndex + itemsPerPage); // Видимые элементы
+  const visibleItems = items.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="carousel-container">
+         <div  className="carousel-buttons" style={{ minWidth: '30px', padding: '0',width: '91px', height: '182px' }}>
+         {currentPage > 0 && ( // Отображаем кнопку "Назад" только если это не первая страница
+          <Button
+            onClick={handlePrevPage}
+            style={{ minWidth: '30px', padding: '0',width: '91px', height: '182px' }} // Убираем лишние отступы
+          >
+            <img src={back} alt='Назад'  />
+          </Button>
+        )}</div>
+
       <Box className="carousel-content">
         {visibleItems.map((item) => (
-          <Card
-            key={item.id}
-            className="carousel-item"
-            onClick={() => console.log(item.id)}
-          >
+          <Card key={item.id} className="carousel-item" onClick={() => console.log(item.id)}>
             <img src={item.image} alt={item.title} className="carousel-image" />
             <CardContent>
               <Typography variant="h5">{item.title}</Typography>
@@ -89,23 +99,20 @@ const Carousel: React.FC = () => {
         ))}
       </Box>
 
-      <div className="carousel-buttons">
-        <Button
-          variant="contained"
-          onClick={handlePrevPage}
-          disabled={currentPage === 0}
-        >
-          Предыдущие
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleNextPage}
-          disabled={currentPage === maxPages}
-        >
-          Следующие
-        </Button>
+      
+       
+        <div className="carousel-buttons" style={{ minWidth: '30px', padding: '0',width: '91px', height: '182px' }}>
+      {currentPage < maxPages && ( // Отображаем кнопку "Вперёд" только если это не последняя страница
+          <Button
+            onClick={handleNextPage}
+            
+          >
+            <img src={next} alt='Вперёд'  />
+          </Button>
+        )}
+        </div>
       </div>
-    </div>
+    
   );
 };
 
