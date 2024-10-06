@@ -12,6 +12,7 @@ const AdminNav = () => {
     }
     return (
         <div className='nav'>
+            <Link to='/'>На главную</Link>
             <Link to='news'>Новости</Link>
             <Link to='matches'>Матчи</Link>
             <Link to='contacts'>Контакты</Link>

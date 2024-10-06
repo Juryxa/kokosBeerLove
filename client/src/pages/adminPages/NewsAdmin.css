@@ -1,0 +1,120 @@
+/* Основной контейнер админки */
+.news-admin-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок страницы */
+.news-admin-title {
+    font-size: 24px;
+    color: #e62526;
+    margin-bottom: 20px;
+}
+
+/* Поле ввода для заголовка */
+.news-admin-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Текстовая область для содержания */
+.news-admin-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 100px;
+}
+
+/* Лейбл для загрузки файла */
+.news-admin-file-label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e62526;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+/* Инпут для загрузки файла */
+.news-admin-file-input {
+    display: none;
+}
+
+/* Отображение имени загруженного файла */
+.news-admin-image-name {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Кнопка добавления/редактирования новости */
+.news-admin-button {
+    background-color: #e62526;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Список новостей */
+.news-list {
+    margin-top: 40px;
+}
+
+/* Заголовок списка новостей */
+.news-list-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Элементы списка новостей */
+.news-list-items {
+    list-style: none;
+    padding: 0;
+}
+
+.news-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Контент новости */
+.news-list-item-content h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.news-list-item-content p {
+    margin: 5px 0;
+}
+
+/* Действия (кнопки редактирования и удаления) */
+.news-list-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.edit-button:hover, .delete-button:hover {
+    background-color: #f0f0f0;
+}
