@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
-import {store} from "../index";
+import AdminNav from "./adminPages/adminPageComponents/AdminNav";
+
 
 const AdminPage: FC = () => {
     return (
         <div>
-            Это панель админа
-            <button onClick={() => store.logout()}>Выйти</button>
+            <AdminNav/>
         </div>
     );
 };

@@ -1,4 +1,3 @@
-// Header.tsx
 import React, {useState} from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography, Menu} from '@mui/material';
 import {YouTube, Telegram, WhatsApp, AccountCircle} from '@mui/icons-material';
