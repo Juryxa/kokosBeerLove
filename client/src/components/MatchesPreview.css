@@ -5,6 +5,7 @@
     flex-direction: row;
     background: white;
     width: 80%;
+    padding: 20px 0 20px 0;
 }
 
 .card {

@@ -1,9 +1,10 @@
 .about-club-container {
+    background-color: #ffffff;
+    padding: 20px 0 20px 0; /* Добавляем отступ сверху */
     
-    padding: 20px;
-    max-width: 1550px; /* Скорректировал ширину */
+    
     margin: 0 auto; /* Центрируем контейнер */
-    width: 100%;
+    width: 80%;
 }
  
 .image-container {

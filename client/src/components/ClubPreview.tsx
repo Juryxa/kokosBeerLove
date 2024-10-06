@@ -3,9 +3,10 @@ import "./ClubPreview.css"
 import clubPic from '../images/Group 135.png'
 
 
-const Shop = () => {
+const ClubPreview = () => {
     return (
-        <div className="about-club-container">
+        <div className="about-club-container" >
+          
           <div className="image-container">
           
             <div className="text-overlay">
@@ -27,4 +28,4 @@ const Shop = () => {
         </div>
       );
     };
-export default Shop;
+export default ClubPreview;

@@ -12,68 +12,44 @@ interface Item {
     title: string;
     content?:string;
     image: string; 
-    size: 'small'|'medium' | 'large';
+    
   }
   
   const items: Item[] = [
-    { id: 1, title: 'Футболка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  tshirt,size:'medium' },
-    { id: 2, title: 'Кепка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  redCap,size:'small' },
-    { id: 3, title: 'Толстовка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  Kangaroo,size:'large'},
-    { id: 4, title: 'Футболка Mark-2',content:"Что делать соперникам, когда у вас в атаке ...",  image: tshirt ,size:'medium'},
-    { id: 5, title: 'Футболка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  tshirt ,size:'medium'},
-   
-    { id: 6, title: 'Кепка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  redCap,size:'small' },
-    { id: 7, title: 'Футболка Mark-2',content:"Что делать соперникам, когда у вас в атаке ...",  image: tshirt ,size:'medium'},
-    { id: 8, title: 'Футболка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  tshirt,size:'medium' },
-    { id: 9, title: 'Толстовка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  Kangaroo,size:'large'},
-    { id: 10, title: 'Кепка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  redCap,size:'small' },
-    
+    { id: 1, title: 'Футболка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  tshirt},
+    { id: 2, title: 'Толстовка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  Kangaroo},
+    { id: 3, title: 'Футболка Mark-2',content:"Что делать соперникам, когда у вас в атаке ...",  image: tshirt},
+    { id: 4, title: 'Футболка Mark-2',content:"Что делать соперникам, когда у вас в атаке ...",  image: tshirt},
+    { id: 5, title: 'Толстовка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  Kangaroo},
   ];
 
 
 
-  const getSizeStyle = (size: string) => {
-    switch (size) {
-      case 'small':
-        return { height: 500 }; // маленький размер для кепок
-      case 'medium':
-        return { height: 650 }; // средний размер для футболок
-      case 'large':
-        return { height: 650 }; // большой размер для толстовок
-      
-    }
-  };
+ 
 
-const ShopPreview = () => {
-    const [currentIndex, setCurrentIndex] = React.useState(0);
-  
-    const handleCardClick = (index: number) => {
-      setCurrentIndex(index);
-    };
+  const ShopPreview = () => {
     return (
-        <div className='shop-container'>
-            <div className='shop-content'>
-                <div className='title-links'>
-                <h1>Магазин</h1>
-                <a href="#">Узнать больше...</a>
-                </div>
-                <div>
-                <Masonry columns={4} spacing={2}>
-    {items.map((item) => (
-      <Card key={item.id} style={{ ...getSizeStyle(item.size) }}>
-        <img src={item.image} alt={item.title} style={{ width: '100%', objectFit: 'cover' }} />
-        <CardContent>
-          <Typography variant="h6">{item.title}</Typography>
-          <Typography variant="body2">{item.content}</Typography>
-          <Button variant="contained" color="error">Заказать</Button>
-        </CardContent>
-      </Card>
-    ))}
-  </Masonry>
-                </div>
-            </div>
+    <div className="shop-container">
+      <div className="shop-content">
+        <div className="title-links" style={{ color: 'black' }}>
+          <h1>Магазин</h1>
+          <a href="#">Переходите в официальный магазин команды</a>
         </div>
-    );
+        <div className="card-container">
+          {items.map((item) => (
+            <Card key={item.id} className="shop-card">
+              <img src={item.image} alt={item.title} className="shop-card-image" />
+              <CardContent >
+                <Typography variant="h6">{item.title}</Typography>
+                <Typography variant="body2">{item.content}</Typography>
+                <Button variant="contained" color="error" className="shop-card-button">Заказать</Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ShopPreview;

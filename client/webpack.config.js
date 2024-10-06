@@ -1,36 +1,37 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.tsx', // Путь к вашему входному файлу на TypeScript
-    output: {
-        filename: 'bundle.js', // Имя выходного файла
-        path: path.resolve(__dirname, 'dist'), // Путь к выходной папке
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/, // Примените правило к .ts и .tsx файлам
-                exclude: /node_modules/,
-                use: {
-                    loader: 'ts-loader', // Используйте ts-loader для обработки TypeScript
-                },
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)$/,
-                use: [
-                    {
-                        loader: 'file-loader', // Загружает изображения
-                        options: {
-                            name: '[path][name].[ext]',
-                            type:'public/'
-                        },
-                    },
-                ],
-            }
-        ],
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'], // Поддержка расширений
-    },
-    mode: 'development', // Режим разработки
+  entry: './src/index.tsx', // Ваш главный файл
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json'], // Укажите расширения файлов
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/, // Для файлов TypeScript
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/, // Для файлов CSS
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/, // Для изображений
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]', // Указывает на то, как будут называться файлы
+            outputPath: 'images/', // Папка, куда будут помещены изображения в сборке
+          },
+        },
+      },
+    ],
+  },
+  devtool: 'source-map', // Для отладки
+  mode: 'development', // Или 'production'
 };

@@ -5,6 +5,8 @@ import NearestMatch from "../components/NearestMatch";
 import MatchesPreview from "../components/MatchesPreview";
 import NewsPreview from "../components/NewsPreview";
 import ClubPreiew from '../components/ClubPreview'
+import ShopPreview from '../components/ShopPreview';
+import Carousel from '../components/Carousel';
 
 const tabloinfo = {
     title: "Высший дивизион 25 ТУР",
@@ -32,13 +34,16 @@ const MainPage: React.FC = () => {
                 alignItems: 'center',
                 height: '100%',
                 width: '100%',
+               
                 background: `linear-gradient(180deg, rgba(227,39,38,0) 0%, rgba(0,0,0,0) 0%, rgba(227,38,39,0.5) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(227,39,38,0.5) 50%, rgba(0,0,0,0) 100%, rgba(227,39,38,0) 100%)`
-            }}>
+           
+           }}>
                 <NearestMatch tabloinfo={tabloinfo}/>
                 <MatchesPreview/>
                 <NewsPreview/>
                 <ClubPreiew/>
-
+                <Carousel/>
+                <ShopPreview/>
             </div>
             <Footer/>
         </div>
