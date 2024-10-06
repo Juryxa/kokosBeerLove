@@ -1,36 +1,45 @@
 const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: './src/index.tsx', // Путь к вашему входному файлу на TypeScript
+    entry: './src/index.tsx', // Ваш главный файл
     output: {
-        filename: 'bundle.js', // Имя выходного файла
-        path: path.resolve(__dirname, 'dist'), // Путь к выходной папке
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html', // путь к вашему HTML файлу
+            filename: 'index.html' // имя файла в dist
+        })
+    ],
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'], // Укажите расширения файлов
     },
     module: {
         rules: [
             {
-                test: /\.tsx?$/, // Примените правило к .ts и .tsx файлам
+                test: /\.tsx?$/, // Для файлов TypeScript
+                use: 'ts-loader',
                 exclude: /node_modules/,
-                use: {
-                    loader: 'ts-loader', // Используйте ts-loader для обработки TypeScript
-                },
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/,
-                use: [
-                    {
-                        loader: 'file-loader', // Загружает изображения
-                        options: {
-                            name: '[path][name].[ext]',
-                            type:'public/'
-                        },
+                test: /\.css$/, // Для файлов CSS
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/, // Для изображений
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]', // Указывает на то, как будут называться файлы
+                        outputPath: 'images/', // Папка, куда будут помещены изображения в сборке
                     },
-                ],
-            }
+                },
+            },
         ],
     },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js'], // Поддержка расширений
-    },
-    mode: 'development', // Режим разработки
+    devtool: 'source-map', // Для отладки
+    mode: 'development', // Или 'production'
 };
