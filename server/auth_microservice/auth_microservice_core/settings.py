@@ -204,7 +204,7 @@ EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдер
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Включить TLS (SSL)
 EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
-EMAIL_HOST_PASSWORD = '5WPgBLxmtAnkPFDmWcd3'  # Ваш пароль от Email
+EMAIL_HOST_PASSWORD = 'jkts1VXfd0zmkPKUqezp'  # Ваш пароль от Email
 
 # Настройка стандартного адреса для отправки писем
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

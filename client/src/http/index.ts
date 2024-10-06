@@ -12,7 +12,7 @@ const $api = axios.create({
 
 $api.interceptors.request.use((config) => {
     // Проверка, если это не запрос на регистрацию
-    if (config.url !== '/signup/' && config.url !== '/login/') {
+    if (config.url !== '/signup/' && config.url !== '/login/' && config.url !== '/verify-email/') {
         // @ts-ignore
         config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
     }
