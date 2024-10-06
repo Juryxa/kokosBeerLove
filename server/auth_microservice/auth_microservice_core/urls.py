@@ -8,10 +8,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
         default_version='v1',
-        description="Документация для API",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="support@example.com"),
-        license=openapi.License(name="BSD License"),
+        description='Все запросы начинаются с http://127.0.0.1:8000/api/'
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
