@@ -1,0 +1,95 @@
+/* Общий контейнер */
+.admin-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовки */
+.admin-form-title {
+    font-size: 24px;
+    color: #e62526;
+    margin-bottom: 20px;
+}
+
+/* Поля ввода */
+.admin-form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Текстовая область */
+.admin-form-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical; /* Разрешаем только вертикальное изменение размера */
+    min-height: 100px;
+}
+
+/* Лейбл для загрузки файлов */
+.admin-form-file-label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e62526;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.admin-form-file-input {
+    display: none;
+}
+
+/* Имя загруженного файла */
+.admin-form-image-name {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Кнопка */
+.admin-form-button {
+    background-color: #e62526;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Списки элементов */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+    .admin-form-container {
+        padding: 10px;
+    }
+
+    .admin-form-title {
+        font-size: 20px;
+    }
+
+    .admin-form-input, .admin-form-textarea, .admin-form-button {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

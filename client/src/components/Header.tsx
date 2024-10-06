@@ -1,8 +1,8 @@
-// Header.tsx
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Box, IconButton, MenuItem, Typography, Drawer , Menu} from '@mui/material';
-import { YouTube, Telegram, WhatsApp, Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
-import { Link, useNavigate } from 'react-router-dom';
+
+import React, {useState} from 'react';
+import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu} from '@mui/material';
+import {YouTube, Telegram, WhatsApp,Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
+import {Link, useNavigate} from 'react-router-dom';
 import RegistrationModal from './RegistrationModal';
 import { store } from '../index';
 import logo from '../images/logo.jpg';
