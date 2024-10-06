@@ -4,7 +4,9 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.utils import timezone
 
+from ..models import RefreshToken as RefreshTokenModel
 from ..serializers import RefreshTokenSerializer
 
 @swagger_auto_schema(
@@ -28,8 +30,18 @@ def refresh_token(request):
         return Response({'error': 'Refresh токен не предоставлен'}, status=status.HTTP_401_UNAUTHORIZED)
 
     try:
-        # Проверка валидности refresh токена
+        # Проверяем валидность refresh токена
         token = JWTRefreshToken(refresh_token)
+
+        # Проверка наличия токена в базе данных
+        try:
+            db_token = RefreshTokenModel.objects.get(token=refresh_token)
+        except RefreshTokenModel.DoesNotExist:
+            return Response({'error': 'Refresh токен не найден в базе данных'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Проверка истечения токена в базе данных
+        if db_token.expires_at < timezone.now():
+            return Response({'error': 'Refresh токен истек'}, status=status.HTTP_401_UNAUTHORIZED)
 
         # Генерация нового access токена
         new_access_token = token.access_token
