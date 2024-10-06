@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.utils import timezone
 
-from ..models import CustomUser
+from ..models import CustomUser, RefreshToken as RefreshTokenModel
 from ..serializers import LoginSerializer
 
 
@@ -19,7 +20,6 @@ from ..serializers import LoginSerializer
         401: openapi.Response('Неверный email или пароль'),
     }
 )
-
 @api_view(['POST'])
 def login(request):
     email = request.data.get('email')
@@ -39,9 +39,26 @@ def login(request):
     # Проверяем статус пользователя (is_superuser)
     is_superuser = user.is_superuser
 
-    # Генерация JWT токенов
-    refresh = JWTRefreshToken.for_user(user)
-    access_token = refresh.access_token
+    # Проверяем, есть ли уже существующий refresh токен в базе данных для этого пользователя
+    try:
+        db_refresh_token = RefreshTokenModel.objects.get(user=user)
+        if db_refresh_token.expires_at < timezone.now():
+            # Если токен истек, удаляем его и создаем новый
+            db_refresh_token.delete()
+            raise RefreshTokenModel.DoesNotExist
+    except RefreshTokenModel.DoesNotExist:
+        # Генерация нового refresh токена
+        refresh = JWTRefreshToken.for_user(user)
+
+        # Сохраняем новый refresh токен в базе данных
+        db_refresh_token = RefreshTokenModel.objects.create(
+            user=user,
+            token=str(refresh),
+            expires_at=timezone.now() + timezone.timedelta(days=60)  # Устанавливаем срок действия токена
+        )
+
+    # Генерация нового access токена на основе refresh токена
+    access_token = JWTRefreshToken(db_refresh_token.token).access_token
 
     response = Response({
         'access': str(access_token),
@@ -51,7 +68,7 @@ def login(request):
     # Настройка cookie для refresh токена
     response.set_cookie(
         key='refresh_token',
-        value=str(refresh),
+        value=db_refresh_token.token,
         httponly=True,  # Защита от JavaScript доступа
         secure=False,  # Для production среды установите True (для HTTPS)
         samesite='Lax',  # Защита от CSRF

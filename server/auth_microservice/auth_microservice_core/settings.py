@@ -56,6 +56,8 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
@@ -81,7 +83,6 @@ CORS_ALLOW_HEADERS = [
 
 ROOT_URLCONF = 'auth_microservice_core.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -99,7 +100,6 @@ TEMPLATES = [
 ]
 
 
-#WSGI_APPLICATION = 'auth_microservice_app.wsgi.application'
 WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 
 
@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fc_kokoc_db',
+        'NAME': 'kokocDB_auth_microservice',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -159,8 +159,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 AUTH_USER_MODEL = 'auth_microservice_app.CustomUser'
 
 
@@ -189,8 +187,6 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
