@@ -2,6 +2,42 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+<<<<<<< HEAD
+  entry: './src/index.tsx', // Ваш главный файл
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json'], // Укажите расширения файлов
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/, // Для файлов TypeScript
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/, // Для файлов CSS
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/, // Для изображений
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]', // Указывает на то, как будут называться файлы
+            outputPath: 'images/', // Папка, куда будут помещены изображения в сборке
+          },
+        },
+      },
+    ],
+  },
+  devtool: 'source-map', // Для отладки
+  mode: 'development', // Или 'production'
+};
+=======
     entry: './src/index.tsx', // Ваш главный файл
     output: {
         filename: 'bundle.js',
@@ -43,3 +79,4 @@ module.exports = {
     devtool: 'source-map', // Для отладки
     mode: 'development', // Или 'production'
 };
+>>>>>>> c28f4aa52bf088d631e2df956590efe8c39ad497

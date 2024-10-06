@@ -15,10 +15,7 @@
     color: white;
     text-align: center;
 }
-{
-    width: 60px;
-    height: auto;
-}
+
 @media screen and (max-width: 500px) {
     .matchBlock .titleMatch {
         font-size: 17px;

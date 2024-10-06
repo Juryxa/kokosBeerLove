@@ -29,8 +29,8 @@ const Matches: FC = () => {
                  Voluptate inventore alias hic nobis, cum, vero nostrum quaerat aut consequuntur nesciunt vo
                  luptates, fugiat assumenda aliquid ratione ut totam quis mollitia quas?
                  </div>
-                 <Carousel/>
-                 <ShopPreview/>
+                 
+                 
                  </div>
                  
        <Footer/>
