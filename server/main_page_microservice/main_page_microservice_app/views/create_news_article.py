@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.core.files.storage import default_storage
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -10,14 +9,14 @@ from ..models import NewsArticle
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание новой новости",
+    operation_description="Создание новой новости с указанием URL изображения",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
-        required=['title', 'text', 'image'],
+        required=['title', 'text', 'image_url'],
         properties={
             'title': openapi.Schema(type=openapi.TYPE_STRING, description='Заголовок новости'),
             'text': openapi.Schema(type=openapi.TYPE_STRING, description='Текст новости'),
-            'image': openapi.Schema(type=openapi.TYPE_FILE, description='Изображение новости')
+            'image_url': openapi.Schema(type=openapi.TYPE_STRING, description='URL изображения новости')
         },
     ),
     responses={
@@ -29,16 +28,11 @@ from ..models import NewsArticle
 def create_news_article(request):
     title = request.data.get('title')
     text = request.data.get('text')
-    image = request.FILES.get('image')  # Получаем изображение из запроса
+    image_url = request.data.get('image_url')  # Получаем URL изображения
 
-    image_path = default_storage.save(f"news_images/{image.name}", image)
-
-    if title or text or image:
-        # Создание и сохранение новости
-        NewsArticle.objects.create(title=title, text=text, image=image_path)
-
-        # Возвращаем успешный ответ
+    if title and text and image_url:
+        # Сохранение новости в базе данных с URL изображения
+        NewsArticle.objects.create(title=title, text=text, image=image_url)
         return Response(status=status.HTTP_201_CREATED)
 
-    # Если обязательные данные не переданы, возвращаем ошибку
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Отсутствуют обязательные поля'}, status=status.HTTP_400_BAD_REQUEST)
