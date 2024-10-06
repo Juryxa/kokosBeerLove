@@ -18,6 +18,9 @@ class SignupSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class EmailVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
