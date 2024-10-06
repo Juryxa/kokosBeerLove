@@ -109,10 +109,9 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kokos',
+        'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
-        'PASSWORD': 'Maksim1516',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
