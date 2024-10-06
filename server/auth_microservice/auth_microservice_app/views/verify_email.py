@@ -29,7 +29,7 @@ def verify_email(request):
         email = serializer.validated_data['email']
 
         # Генерация случайного 6-значного кода
-        code = str(randint(100000, 999999))
+        code = randint(100000, 999999)
 
         # Отправка кода на email
         send_mail(

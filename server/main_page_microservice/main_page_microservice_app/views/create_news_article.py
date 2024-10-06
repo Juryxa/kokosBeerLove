@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 
@@ -29,8 +29,8 @@ from ..models import NewsArticle
     }
 )
 @api_view(['POST'])
-@authentication_classes([JWTAuthentication])  # JWT аутентификация
-@permission_classes([IsAuthenticated])  # Требует, чтобы пользователь был авторизован
+@authentication_classes([JWTTokenUserAuthentication])
+@permission_classes([IsAuthenticated])
 def create_news_article(request):
     # Проверка наличия is_superuser в токене
     if not request.user.is_superuser:

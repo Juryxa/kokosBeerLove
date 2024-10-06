@@ -168,6 +168,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Для открытых API
+        #'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -186,6 +187,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw123)@',
 }
 
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
@@ -197,7 +200,7 @@ EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдер
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Включить TLS (SSL)
 EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
-EMAIL_HOST_PASSWORD = 'поменяй пароль'  # Ваш пароль от Email
+EMAIL_HOST_PASSWORD = 'jkts1VXfd0zmkPKUqezp'  # Ваш пароль от Email
 
 # Настройка стандартного адреса для отправки писем
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
