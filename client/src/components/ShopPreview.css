@@ -1,0 +1,82 @@
+.shop-container{
+    background-image: url('../images/image14.png');
+    width: 97vw;
+    min-height: 934px;
+    height: 100%;
+    background-size: cover; /* Растягивает изображение по всему блоку */
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем элементы */
+    padding: 20px;
+    position: relative;
+
+}
+
+.shop-container::before {
+    content: '';
+  position: absolute; /* Позиционируем над фоном */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7); /* Фоновый цвет с прозрачностью */
+  backdrop-filter: blur(10px); /* Здесь устанавливаем эффект блюра */
+  
+  }
+
+
+
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+a {
+    color: black; /* Делаем текст всегда черным */
+    text-decoration: underline; /* Добавляем подчеркивание */
+    cursor: pointer;
+}
+
+a:hover {
+    color: black; /* Черный цвет при наведении */
+    text-decoration: underline; /* Подчеркивание остается при наведении */
+}
+
+
+
+.shop-image {
+    width: 120%; /* Увеличиваем ширину изображения */
+    height: auto; /* Сохраняем пропорции изображения */
+    position: absolute; /* Позволяет растянуть изображение */
+    top: -50px; /* Поднимаем изображение вверх */
+    left: -10%; /* Смещение влево */
+    object-fit: cover; /* Обеспечивает правильное масштабирование изображения */
+    position: relative;
+   
+  }
+
+  .shop-item {
+    background-image: url('../images/Rectangle40.png');
+   max-height: 627px;
+   max-height: 376px;
+   height: 100%;
+   width: 100%;
+    margin: 0 10px; /* Отступы между элементами */
+    background-size: cover; /* Растягивает изображение по всему блоку */
+    position: relative; /* Позволяет использовать абсолютное позиционирование для изображения внутри карточки */
+    border-radius: 10px; /* Скругление углов карточки */
+}
+
+  
+
+
+  .shop-box{
+   
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрируем элементы */
+    padding: 20px;
+    position: relative;
+  }

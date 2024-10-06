@@ -109,10 +109,9 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kokos',
+        'NAME': 'fc_kokoc_db',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
-        'PASSWORD': 'Maksim1516',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -205,7 +204,7 @@ EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдер
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Включить TLS (SSL)
 EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
-EMAIL_HOST_PASSWORD = '5WPgBLxmtAnkPFDmWcd3'  # Ваш пароль от Email
+EMAIL_HOST_PASSWORD = 'BJ1svRppsqyb40jSfScZ'  # Ваш пароль от Email
 
 # Настройка стандартного адреса для отправки писем
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

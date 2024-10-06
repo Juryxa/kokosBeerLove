@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
-import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography} from '@mui/material';
-import {YouTube, Telegram, WhatsApp} from '@mui/icons-material';
-import {Link, useNavigate} from 'react-router-dom';
-import logo from "../images/logo.jpg"
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Box, IconButton, MenuItem, Typography, Drawer } from '@mui/material';
+import { YouTube, Telegram, WhatsApp, Menu as MenuIcon } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from "../images/logo.jpg";
 import RegistrationModal from './RegistrationModal';
 import './Header.css';
-import {store} from "../index";
+import { store } from "../index";
 
 
 const Header = () => {
     const [open, setOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
+    
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     const handleClick = () => {
         if (store.isAuth) {
             navigate('/admin');
@@ -21,12 +22,16 @@ const Header = () => {
             handleOpen();
         }
     };
+    
+    const handleDrawerToggle = () => {
+        setDrawerOpen(!drawerOpen);
+    };
 
     return (
         <AppBar position="static" color="transparent" elevation={0}>
             <Toolbar sx={{flexDirection: 'column', alignItems: 'center'}}>
-                {/* Верхняя часть шапки */}
-                <Box
+               {/* Верхняя часть шапки */}
+               <Box
                     className="HighLine"
                     sx={{
                         width: '80%',
@@ -39,7 +44,6 @@ const Header = () => {
                         boxShadow: '0 0 6px 0.5px #E62526',
                         padding: '10px',
                         marginBottom: '1px',
-
                         '@media (max-width: 700px)': {
                             width: '90%',
                         },
@@ -55,13 +59,21 @@ const Header = () => {
                         }}
                     >
                         {/* Логотип */}
-                        <Box sx={{display: 'flex', alignItems: 'center'}}>
-                            <IconButton component={Link} to="/" sx={{padding: 0}}>
-                                <img src={logo} alt="Logo" style={{height: '50px'}}/>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <IconButton component={Link} to="/" sx={{ padding: 0 }}>
+                                <img src={logo} alt="Logo" style={{ height: '50px' }} />
                             </IconButton>
                         </Box>
+
+                        {/* Бургер-кнопка, отображается только на мобильных устройствах */}
+                        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                            <IconButton onClick={handleDrawerToggle} color="inherit">
+                                <MenuIcon />
+                            </IconButton>
+                        </Box>
+
                         {/* Навигация */}
-                        <Box className='links' sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                        <Box className='links' sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', flexWrap: 'wrap' }}>
                             <MenuItem component={Link} to="/news">Новости</MenuItem>
                             <MenuItem component={Link} to="/matches">Матчи</MenuItem>
                             <MenuItem component={Link} to="/team">Команда</MenuItem>
@@ -69,13 +81,14 @@ const Header = () => {
                             <MenuItem component={Link} to="/shop">Магазин</MenuItem>
                             <MenuItem component={Link} to="/contacts">Контакты</MenuItem>
                         </Box>
+
                         {/* Поиск и Логин */}
-                        <Box sx={{display: 'flex', alignItems: 'center', marginLeft: 'auto', color: 'white'}}>
+                        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto', color: 'white' }}>
                             <IconButton>
                                 <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="10" r="8" stroke="#E62526" strokeWidth="2"/>
-                                    <path d="M17 16L22 21" stroke="#E62526" strokeWidth="2"/>
+                                    <circle cx="12" cy="10" r="8" stroke="#E62526" strokeWidth="2" />
+                                    <path d="M17 16L22 21" stroke="#E62526" strokeWidth="2" />
                                 </svg>
                                 <Typography color={'#E62526'}> Поиск</Typography>
                             </IconButton>
@@ -84,13 +97,27 @@ const Header = () => {
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
-                                        fill="#E62526"/>
+                                        fill="#E62526" />
                                 </svg>
                                 <Typography color={'#E62526'}>Вход</Typography>
                             </IconButton>
                         </Box>
                     </Box>
                 </Box>
+
+                {/* Бургер-меню */}
+                <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
+                    <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
+                        {/* Все элементы меню, которые были в шапке */}
+                        <MenuItem component={Link} to="/news">Новости</MenuItem>
+                        <MenuItem component={Link} to="/matches">Матчи</MenuItem>
+                        <MenuItem component={Link} to="/team">Команда</MenuItem>
+                        <MenuItem component={Link} to="/about">О клубе</MenuItem>
+                        <MenuItem component={Link} to="/shop">Магазин</MenuItem>
+                        <MenuItem component={Link} to="/contacts">Контакты</MenuItem>
+                        <MenuItem onClick={handleClick}>Вход</MenuItem>
+                    </Box>
+                </Drawer>
 
                 {/* Нижняя часть шапки */}
                 <Box
