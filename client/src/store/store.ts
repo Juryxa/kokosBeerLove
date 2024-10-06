@@ -9,6 +9,7 @@ export default class Store {
     user = {} as IUser;
     code = 0;
     isAuth = false;
+    isSuperUser = false;
     isLoading = false;
 
     constructor() {
@@ -29,6 +30,9 @@ export default class Store {
     getCode() {
         return this.code;
     }
+    setSuperUser(bool:boolean){
+        this.isSuperUser = bool;
+    }
 
     setLoading(bool: boolean) {
         this.isLoading = bool;
@@ -39,6 +43,7 @@ export default class Store {
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
+            this.setSuperUser(response.data.is_superuser)
             this.setUser(response.data.user);
         } catch (e) {
             // @ts-ignore

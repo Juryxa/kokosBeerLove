@@ -16,7 +16,7 @@ export default class AuthService {
         return $api.post('/logout/')
     }
 
-    static verify(email: string) {
+    static async verify(email: string) {
         return $api.post<CodeResponse>('/verify-email/', {email})
     }
 

@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Modal, Box, Button, TextField, Typography, IconButton } from '@mui/material';
-import { Context } from '../index';
-import { observer } from 'mobx-react-lite';
+import React, {useState, useContext, useEffect} from 'react';
+import {Modal, Box, Button, TextField, Typography, IconButton} from '@mui/material';
+import {Context} from '../index';
+import {observer} from 'mobx-react-lite';
 import CloseIcon from '@mui/icons-material/Close';
+import {useNavigate} from "react-router-dom";
 
-const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
+const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = ({open, handleClose}) => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -12,17 +13,26 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [step, setStep] = useState<number>(1); // 1 - вход/регистрация, 2 - подтверждение email
     const [code, setCode] = useState<string[]>(Array(6).fill('')); // Код подтверждения
-    const [errorFields, setErrorFields] = useState<{ name?: string, email?: string, password?: string, confirmPassword?: string, code?: string }>({});
+    const [errorFields, setErrorFields] = useState<{
+        name?: string,
+        email?: string,
+        password?: string,
+        confirmPassword?: string,
+        code?: string
+    }>({});
     const [loginError, setLoginError] = useState<boolean>(false); // Ошибка входа
     const [codeError, setCodeError] = useState<boolean>(false); // Ошибка кода подтверждения
     const [resendTimer, setResendTimer] = useState<number>(10); // Таймер для повторной отправки кода
-    const { store } = useContext(Context);
+    const [successMessage, setSuccessMessage] = useState<boolean>(false); // Успешная верификация
+    const {store} = useContext(Context);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!open) {
             setStep(1);
             setIsLogin(true); // Сброс формы на вход
             setCodeError(false); // Сброс ошибки кода
+            setSuccessMessage(false); // Сброс сообщения об успешной верификации
         }
     }, [open]);
 
@@ -42,7 +52,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
         return emailPattern.test(email);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (isLogin) {
             // Валидация для входа
             const errors: any = {};
@@ -54,11 +64,21 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                 return;
             }
 
-            const success = store.login(email, password);
-            if (!success) {
-                setLoginError(true); // Показываем ошибку при неправильных данных
-            } else {
-                handleClose();
+            // Вызов функции логина и проверка успешности
+            try {
+                const success = await store.login(email, password);
+                if (!store.isAuth) {
+                    setLoginError(true);
+                } else {
+                    if (store.isSuperUser) {
+                        navigate('/admin');
+                    } else {
+                        navigate('/fan');
+                    }
+                    handleClose();
+                }
+            } catch (e) {
+                setLoginError(true); // Обрабатываем ошибку при неверных данных
             }
         } else {
             // Валидация для регистрации
@@ -86,12 +106,23 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
         setCode(newCode);
     };
 
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+        const pastedData = event.clipboardData.getData('text');
+        if (pastedData.length === 6) {
+            setCode(pastedData.split(''));
+            event.preventDefault();
+        }
+    };
+
     const handleConfirmEmail = () => {
         const confirmationCode = Number(code.join(''));
         const codeFromStore = store.getCode();
         if (confirmationCode === codeFromStore) {
             store.registration(name, email, password);
-            handleClose();
+            setSuccessMessage(true); // Показываем успешное сообщение
+            setTimeout(() => {
+                handleClose(); // Закрываем окно через 3 секунды после успешной верификации
+            }, 3000);
         } else {
             setCodeError(true); // Устанавливаем ошибку, если код неверен
         }
@@ -267,6 +298,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                     inputProps={{
                                         maxLength: 1,
                                         style: { textAlign: 'center' },
+                                        onPaste: handlePaste, // Обработчик вставки
                                     }}
                                     variant="outlined"
                                     value={digit}
@@ -278,6 +310,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                         {codeError && (
                             <Typography sx={{ color: 'red', mt: 1 }}>
                                 Неверный код подтверждения
+                            </Typography>
+                        )}
+
+                        {successMessage && (
+                            <Typography sx={{ color: 'green', mt: 1 }}>
+                                Успешно! Войдите в аккаунт
                             </Typography>
                         )}
 
@@ -308,7 +346,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                             onClick={handleResendCode}
                             disabled={resendTimer > 0}
                         >
-                            {resendTimer === 0 ? 'Отправить заново' : `Отправить заново через ${resendTimer} секунд`}
+                            {resendTimer === 0 ? 'Отправить заново' : 'Отправить заново через ${resendTimer} секунд'}
                         </Button>
                     </>
                 )}
