@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import NearestMatch from "../components/NearestMatch";
 import MatchesPreview from "../components/MatchesPreview";
 import NewsPreview from "../components/NewsPreview";
+import ClubPreiew from '../components/ClubPreview'
 
 const tabloinfo = {
     title: "Высший дивизион 25 ТУР",
@@ -36,6 +37,8 @@ const MainPage: React.FC = () => {
                 <NearestMatch tabloinfo={tabloinfo}/>
                 <MatchesPreview/>
                 <NewsPreview/>
+                <ClubPreiew/>
+
             </div>
             <Footer/>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Shop.css"
+import "./ClubPreview.css"
 import clubPic from '../images/Group 135.png'
 
 
