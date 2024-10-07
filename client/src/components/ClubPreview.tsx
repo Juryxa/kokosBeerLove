@@ -5,7 +5,7 @@ import clubPic from '../images/Group 135.png'
 
 const ClubPreview = () => {
     return (
-        <div className="about-club-container" >
+        <div className="club-container" >
           
           <div className="image-container">
           
@@ -16,6 +16,8 @@ const ClubPreview = () => {
                 Но есть то, что остаётся неизменным, независимо от результата. Это игра.
                 В каждом матче наши ребята оставляют все силы от первой до последней минуты,
                 и не важно, какой счёт горит в этот момент на табло.
+                
+        
               </p>
               <a href="#">Узнать больше...</a>
             </div>

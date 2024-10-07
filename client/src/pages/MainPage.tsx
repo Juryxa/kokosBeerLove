@@ -45,7 +45,7 @@ const MainPage: React.FC = () => {
             <ClubPreiew/>
             <Carousel/>
             <ShopPreview/>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

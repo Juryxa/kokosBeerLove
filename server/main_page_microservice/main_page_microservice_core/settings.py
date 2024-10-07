@@ -56,12 +56,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'main_page_microservice_core.urls'
 
-CSRF_TRUSTED_ORIGINS = [#'http://localhost:3000',
-                        'http://localhost:80']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
+                        'http://localhost',]
 
 CORS_ALLOWED_ORIGINS = [
-    #"http://localhost:3000",
-    "http://localhost:80",
+    "http://localhost:3000",
+    "http://localhost",
 ]
 
 

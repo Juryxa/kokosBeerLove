@@ -7,7 +7,7 @@ import phone from '../images/icons/telephone.png'
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
+    <footer className="footer"  id="footer">
       <div className="footer-content">
 
         <div className="contacts_koks">

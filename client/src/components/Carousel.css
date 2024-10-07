@@ -38,6 +38,7 @@
     overflow-y: auto; /* Добавляем вертикальный скролл */
     scrollbar-width: thin; /* Уменьшаем ширину скролла для Firefox */
     scrollbar-color: #ff5a5a #e0e0e0; /* Цвет скролла и его фона для Firefox */
+    
 }
 
 .carousel-item {
@@ -46,18 +47,19 @@
     cursor: pointer;
     margin: 10px;
     position: relative;
-    overflow: hidden; /* Изменяем на hidden, чтобы избежать переполнения */
+    overflow: hidden; 
     z-index: 2;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    border-radius: 20px; /* Радиус границ */
+    border-radius: 20px;
     transition: transform 0.3s, box-shadow 0.3s; /* Плавные переходы для трансформации и теней */
 }
 .carousel-item:hover {
     transform: scale(1.05); /* Увеличиваем карточку при наведении */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Добавляем тень при наведении */
+    border-radius: 20px; 
 }
 
 .carousel-image {

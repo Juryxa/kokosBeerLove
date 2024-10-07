@@ -1,0 +1,65 @@
+.about-club-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.aboutclub-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    
+}
+
+.aboutclub-h1{
+    display: flex;
+    justify-content: flex-start;
+    width: 80vw;
+}
+
+.aboutclub-top-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutclub-content-low {
+    width: 80vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+    padding: 20px; /* Добавляем отступы для лучшего отображения */
+}
+.aboutclub-content-low p {
+    width: 50vw;
+    border: 3px solid rgb(156, 156, 156); /* Добавляем красную рамку */
+    
+}
+
+.aboutclub-text-overlay {
+    width: 30%;
+    top: -50px; /* Сдвиг блока вверх */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
+    margin-right: -20px; /* Перекрываем картинку правым краем */
+    z-index: 1; /* Текст поверх изображения */
+}
+
+ 
+.aboutclub-text-overlay h2 {
+    margin: 0;
+    font-size: 24px;
+}
+ 
+.aboutclub-text-overlay p {
+    margin: 10px 0;
+    font-size: 16px;
+}
