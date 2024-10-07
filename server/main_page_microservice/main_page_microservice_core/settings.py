@@ -11,16 +11,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_path = Path(BASE_DIR).parent.parent / '.env'
+
+# Загружаем переменные окружения
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw)@'
+SECRET_KEY = config('SECRET_KEY_MAIN')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,11 +117,11 @@ WSGI_APPLICATION = 'main_page_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kokocDB_main_page_microservice',
-        'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config('DATABASE_NAME_MAIN'),
+        'USER': config('DATABASE_USER_MAIN'),
+        'PASSWORD': config('DATABASE_PASSWORD_MAIN'),
+        'HOST': config('DATABASE_HOST_MAIN'),
+        'PORT': config('DATABASE_PORT_MAIN'),
     }
 }
 
@@ -188,5 +194,5 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw123)@',
+    'SIGNING_KEY': config('JWT_SIGNING_KEY_MAIN'),
 }
