@@ -6,10 +6,17 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json'], // Укажите расширения файлов
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html', // путь к вашему HTML файлу
+            filename: 'index.html' // имя файла в dist
+        })
+    ],
     module: {
         rules: [
             {

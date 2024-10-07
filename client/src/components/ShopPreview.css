@@ -1,6 +1,6 @@
 .shop-container{
     background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
-    width: 97vw;
+    width: 100%;
     min-height: 934px;
     height: 100%;
     background-size: cover; /* Растягивает изображение по всему блоку */
@@ -8,7 +8,6 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Центрируем элементы */
-    padding: 20px;
     position: relative;
 
 }
@@ -20,8 +19,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.7); 
-  backdrop-filter: blur(10px); 
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   z-index: 0;
   }
 
@@ -43,46 +42,46 @@
 }
 
 .title-links a:hover {
-    color: #4D4D4D; 
+    color: #4D4D4D;
     text-decoration: none;
 }
 
 .shop-content {
     display: flex;
     flex-direction: column;
-  
-    
+
+
     z-index: 1;
 }
-  
+
   .title-links {
     margin-bottom: 100px;
     z-index: 1;
     display: flex;
-    
+
     align-items: flex-start;
     flex-direction: column;
   }
-  
+
   .card-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px; /* расстояние между карточками */
-    
+
   }
-  
+
   .shop-card {
     width: 300px;
-    background: rgba(255, 255, 255, 0.7); 
+    background: rgba(255, 255, 255, 0.7);
   }
-  
+
   .shop-card-image {
     width: 100%; /* Занимает 100% ширины карточки */
     height: 400px; /* Устанавливаем фиксированную высоту для изображений */
     object-fit: cover; /* Обеспечиваем правильное соотношение сторон */
 }
-  
+
 .shop-card-button:hover {
     background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
 }
@@ -98,7 +97,7 @@
 
 .shop-card {
     width: 300px;
-    background: rgba(255, 255, 255, 0.7); 
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 20px; /* Добавляем радиус скругления к карточкам */
     transition: transform 0.5s ease; /* Плавный переход для трансформации */
 }
