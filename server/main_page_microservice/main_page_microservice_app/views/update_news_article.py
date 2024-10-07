@@ -4,6 +4,9 @@ from rest_framework.decorators import api_view
 from django.core.files.storage import default_storage
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import authentication_classes, permission_classes
 
 from ..models import NewsArticle
 @swagger_auto_schema(
@@ -24,9 +27,12 @@ from ..models import NewsArticle
         200: openapi.Response(description="Новость успешно обновлена"),
         404: openapi.Response(description="Новость не найдена"),
         400: openapi.Response(description="Неправильные данные"),
+        401: openapi.Response(description="Неавторизован"),
     }
 )
 @api_view(['PUT', 'PATCH'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def update_news_article(request, article_id):
     try:
         # Ищем статью по id

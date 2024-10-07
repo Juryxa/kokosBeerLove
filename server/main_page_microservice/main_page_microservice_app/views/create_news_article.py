@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import authentication_classes, permission_classes
 
 from ..models import NewsArticle
-
 
 @swagger_auto_schema(
     method='post',
@@ -22,10 +24,19 @@ from ..models import NewsArticle
     responses={
         201: openapi.Response(description="Новость успешно создана"),
         400: openapi.Response(description="Неправильные данные"),
+        401: openapi.Response(description="Неавторизован"),
+        403: openapi.Response(description="Нет прав доступа"),
     }
 )
 @api_view(['POST'])
+@authentication_classes([JWTTokenUserAuthentication])
+@permission_classes([IsAuthenticated])
 def create_news_article(request):
+    # Проверка наличия is_superuser в токене
+    if not request.user.is_superuser:
+        return Response({'error': 'У вас нет прав доступа для создания новостей'}, status=status.HTTP_403_FORBIDDEN)
+
+    # Проверка на наличие всех необходимых полей
     title = request.data.get('title')
     text = request.data.get('text')
     image_url = request.data.get('image_url')  # Получаем URL изображения
@@ -35,4 +46,5 @@ def create_news_article(request):
         NewsArticle.objects.create(title=title, text=text, image=image_url)
         return Response(status=status.HTTP_201_CREATED)
 
+    # Если отсутствуют обязательные поля, возвращаем ошибку
     return Response({'error': 'Отсутствуют обязательные поля'}, status=status.HTTP_400_BAD_REQUEST)
