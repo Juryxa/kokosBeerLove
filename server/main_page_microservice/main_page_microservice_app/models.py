@@ -10,5 +10,5 @@ class NewsArticle(models.Model):
     class Meta:
         db_table = 'main_page_news_articles'
 
-    def __str__(self):
+    def str(self):
         return self.title
