@@ -112,7 +112,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kokocDB_auth_microservice',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }

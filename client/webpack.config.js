@@ -17,6 +17,15 @@ module.exports = {
             filename: 'index.html' // Output file in dist/
         }),
     ],
+    devServer: {
+        historyApiFallback: true, // Для работы SPA
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000/',
+                changeOrigin: true
+            }
+        },
+    },
     module: {
         rules: [
             {

@@ -4,6 +4,31 @@ import AuthService from "../services/AuthService";
 import axios from 'axios';
 import {AuthResponse} from "../models/response/AuthResponse";
 import {API_URL} from "../http";
+import {jwtDecode} from 'jwt-decode';
+
+interface JwtPayload {
+    user_id: number;
+    exp: number;
+    is_superuser: boolean;
+}
+
+const getAccessToken = (): string | null => {
+    return localStorage.getItem('token');
+};
+
+const isUserSuperuser = (): boolean => {
+    const token = getAccessToken();
+    if (token) {
+        try {
+            const decoded: JwtPayload = jwtDecode<JwtPayload>(token);
+            return decoded.is_superuser;
+        } catch (error) {
+            console.error('Ошибка при декодировании токена:', error);
+            return false;
+        }
+    }
+    return false;
+};
 
 export default class Store {
     user = {} as IUser;
@@ -43,7 +68,7 @@ export default class Store {
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
-            this.setSuperUser(response.data.is_superuser)
+            this.setSuperUser(isUserSuperuser());
             this.setUser(response.data.user);
         } catch (e) {
             // @ts-ignore

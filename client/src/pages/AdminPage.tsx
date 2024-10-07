@@ -7,6 +7,7 @@ const AdminPage: FC = () => {
     return (
         <div>
             <AdminNav/>
+            <h1>это панель администратора</h1>
             <Outlet />
         </div>
     );
