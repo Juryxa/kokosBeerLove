@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw)@r'
+SECRET_KEY = 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw)@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -99,6 +98,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'main_page_microservice_core.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -107,7 +107,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kokocDB_main_page_microservice',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -131,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -163,6 +162,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Для открытых API
+        #'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -174,9 +174,15 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
 }
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw123)@',
+}
+
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
-
-import os
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
