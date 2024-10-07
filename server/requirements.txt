@@ -11,3 +11,4 @@ django-silk # профилировщик
 django-cors-headers
 dnspython # для проверки email
 python-decouple # Для работы с env
+python-dotenv

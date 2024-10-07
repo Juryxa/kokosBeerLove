@@ -9,14 +9,22 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Путь к файлу .env на один уровень выше папки server
+dotenv_path = Path(BASE_DIR).parent.parent / '.env'
+
+# Загружаем переменные окружения
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -60,9 +68,6 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
 # Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
