@@ -66,12 +66,11 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
-CSRF_TRUSTED_ORIGINS = [#'http://localhost:3000',
-                        'http://localhost:80']
+CSRF_TRUSTED_ORIGINS = ["http://localhost",
+                        ]
 
 CORS_ALLOWED_ORIGINS = [
-    #"http://localhost:3000",
-    "http://localhost:80",
+    "http://localhost",
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
