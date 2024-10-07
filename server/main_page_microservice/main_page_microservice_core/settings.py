@@ -56,9 +56,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'main_page_microservice_core.urls'
 
+CSRF_TRUSTED_ORIGINS = [#'http://localhost:3000',
+                        'http://localhost:80']
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    #"http://localhost:3000",
+    "http://localhost:80",
 ]
+
+
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
 # Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
@@ -107,7 +113,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kokocDB_main_page_microservice',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'dima15042004',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -184,5 +190,3 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw123)@',
 }
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
