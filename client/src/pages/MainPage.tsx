@@ -34,17 +34,17 @@ const MainPage: React.FC = () => {
                 alignItems: 'center',
                 height: '100%',
                 width: '100%',
-               
+
                 background: `linear-gradient(180deg, rgba(227,39,38,0) 0%, rgba(0,0,0,0) 0%, rgba(227,38,39,0.5) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(227,39,38,0.5) 50%, rgba(0,0,0,0) 100%, rgba(227,39,38,0) 100%)`
-           
+
            }}>
                 <NearestMatch tabloinfo={tabloinfo}/>
                 <MatchesPreview/>
                 <NewsPreview/>
-                <ClubPreiew/>
-                <Carousel/>
-                <ShopPreview/>
             </div>
+            <ClubPreiew/>
+            <Carousel/>
+            <ShopPreview/>
             <Footer/>
         </div>
     );

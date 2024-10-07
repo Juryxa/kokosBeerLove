@@ -1,5 +1,5 @@
 .carousel-container {
-    width: 97vw;
+    width: 100%;
     min-height: 917px;
     height: auto; /* Адаптируем под количество карточек */
     background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
@@ -9,10 +9,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: row; /* Расположение элементов по бокам */
-    padding: 20px;
     position: relative;
     overflow: hidden;
-    
+
 }
 .carousel-item h5 {
     font-size: 20px; /* Уменьшаем размер текста заголовка */
@@ -68,7 +67,7 @@
     top: 30px;
     left: 10%;
     z-index: -1;
-    border-radius: 20px; 
+    border-radius: 20px;
 }
 
 .carousel-buttons {
