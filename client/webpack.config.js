@@ -20,16 +20,16 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/, // Для файлов TypeScript
+                test: /.tsx?$/, // Для файлов TypeScript
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
             {
-                test: /\.css$/, // Для файлов CSS
+                test: /.css$/, // Для файлов CSS
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/, // Для изображений
+                test: /.(png|jpe?g|gif|svg)$/, // Для изображений
                 use: {
                     loader: 'file-loader',
                     options: {
@@ -44,5 +44,3 @@ module.exports = {
     mode: 'development', // Или 'production'
 
 };
-
-

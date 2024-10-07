@@ -62,9 +62,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'main_page_microservice_core.urls'
 
+CSRF_TRUSTED_ORIGINS = [#'http://localhost:3000',
+                        'http://localhost:80']
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    #"http://localhost:3000",
+    "http://localhost:80",
 ]
+
+
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
 # Если фронтенд и бекенд на разных портах, разрешаем все источники (НЕ рекомендуется для продакшена)
@@ -190,5 +196,3 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': config('JWT_SIGNING_KEY_MAIN'),
 }
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
