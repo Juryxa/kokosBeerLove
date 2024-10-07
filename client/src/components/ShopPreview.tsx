@@ -11,10 +11,10 @@ interface Item {
     id: number;
     title: string;
     content?:string;
-    image: string; 
-    
+    image: string;
+
   }
-  
+
   const items: Item[] = [
     { id: 1, title: 'Футболка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  tshirt},
     { id: 2, title: 'Толстовка',content:"Что делать соперникам, когда у вас в атаке ...",  image:  Kangaroo},
@@ -25,13 +25,13 @@ interface Item {
 
 
 
- 
+
 
   const ShopPreview = () => {
     return (
     <div className="shop-container">
       <div className="shop-content">
-        <div className="title-links" style={{ color: 'black' }}>
+        <div className="title-links" style={{ color: 'black', marginLeft: '15px'}}>
           <h1>Магазин</h1>
           <a href="#">Переходите в официальный магазин команды</a>
         </div>
