@@ -1,21 +1,70 @@
-html, body, #root, .app {
-    height: 100%; /* Важно задать 100% высоту для html, body и #root */
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-  }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 90vh;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
-  .container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #ff0000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
   
- .content{
-    flex: 1;
-    max-width:  1380px;
-   
-    background-color: blue;
- }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Адаптивные стили для iframe */
+iframe {
+  max-width: 100% !important; /* Заставляет iframe быть адаптивным */
+  height: auto; /* Автоматически подстраивает высоту */
+  aspect-ratio: 16/9; /* Сохраняет соотношение сторон */
+}
+
+.videosVk.hidden {
+  display: none;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .loading-spinner {
+      width: 40px;
+      height: 40px;
+  }
+
+  .content {
+      min-height: 400px; /* Уменьшаем минимальную высоту для планшетов */
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-spinner {
+      width: 30px;
+      height: 30px;
+  }
+
+  .content {
+      min-height: 300px; /* Уменьшаем минимальную высоту для мобильных устройств */
+  }
+}
+
+
