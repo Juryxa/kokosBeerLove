@@ -24,7 +24,7 @@ from ..models import NewsArticle
     responses={
         201: openapi.Response(description="Новость успешно создана"),
         400: openapi.Response(description="Неправильные данные"),
-        401: openapi.Response(description="Неавторизован"),
+        401: openapi.Response(description="Неавторизован, нужно перенаправить со стороны frontend в перехватчик api/refresh/ другого микросервиса"),
         403: openapi.Response(description="Нет прав доступа"),
     }
 )
@@ -41,7 +41,7 @@ def create_news_article(request):
     text = request.data.get('text')
     image_url = request.data.get('image_url')  # Получаем URL изображения
 
-    if title and text and image_url:
+    if title or text or image_url:
         # Сохранение новости в базе данных с URL изображения
         NewsArticle.objects.create(title=title, text=text, image=image_url)
         return Response(status=status.HTTP_201_CREATED)
