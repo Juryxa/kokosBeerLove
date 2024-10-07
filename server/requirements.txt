@@ -8,7 +8,5 @@ drf_yasg
 drf-spectacular
 locust # для нагрузочного тестирования
 django-silk # профилировщик
-Pillow
 django-cors-headers
-
 dnspython # для проверки email
