@@ -17,10 +17,19 @@ module.exports = {
             filename: 'index.html' // имя файла в dist
         })
     ],
+    devServer: {
+        historyApiFallback: true, // Для работы SPA
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000/',
+                changeOrigin: true
+            }
+        },
+    },
     module: {
         rules: [
             {
-                test: /\.tsx?$/, // Для файлов TypeScript
+                test: /.tsx?$/, // Для файлов TypeScript
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
@@ -29,12 +38,13 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/, // Для изображений
+                test: /\.(png|jpe?g|gif|svg|ico|webp)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '[path][name].[ext]', // Указывает на то, как будут называться файлы
+                        name: '[name].[ext]', // Указывает на то, как будут называться файлы
                         outputPath: 'images/', // Папка, куда будут помещены изображения в сборке
+                        esModule: false
                     },
                 },
             },
@@ -43,4 +53,3 @@ module.exports = {
     devtool: 'source-map', // Для отладки
     mode: 'development', // Или 'production'
 };
-

@@ -1,6 +1,6 @@
 import React, {createContext} from 'react';
 import ReactDOM from 'react-dom/client';
-import Store from "./store/store";
+import Store from "./api/store/store";
 import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom'

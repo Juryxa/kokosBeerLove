@@ -12,6 +12,7 @@ const AboutClubAdmin = () => {
     }, []);
 
     const fetchAbout = async () => {
+
         setAboutList([
             { id: 1, title: 'О клубе', description: 'Описание клуба', imageUrl: '/images/about.jpg' }
         ]);

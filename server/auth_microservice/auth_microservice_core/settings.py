@@ -56,10 +56,12 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
+                        'http://localhost:80']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:80",
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
@@ -111,7 +113,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kokocDB_auth_microservice',
         'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
