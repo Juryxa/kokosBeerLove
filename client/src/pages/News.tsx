@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-interface News {
+interface NewsType {
     title: string;
     content: string;
     image: string;
 }
 
-const NewsCard: React.FC<News> = ({ title, content, image }) => {
+const NewsCard: React.FC<NewsType> = ({ title, content, image }) => {
     return (
         <div className="news-card">
             <div className="news-content-text">

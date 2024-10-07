@@ -1,6 +1,15 @@
+.h1-block{
+    width: 80vw;
+    background-color: white;
+    display: flex;
+    
+}
+
+
 .team-container {
     background-image: url("../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg");
-    margin: 0 auto;
+    
+    
   }
   
   .team-table {
@@ -11,11 +20,14 @@
     margin: 0 auto;
     margin-bottom: 30px;
     background-color: white;
+    
+    
   }
   
   .team-table th, .team-table td {
     padding: 10px;
     border: 1px solid #ddd;
+    
   }
   
   .team-table th {
