@@ -42,5 +42,7 @@ module.exports = {
     },
     devtool: 'source-map', // Для отладки
     mode: 'development', // Или 'production'
+
 };
+
 
