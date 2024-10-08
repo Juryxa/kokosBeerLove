@@ -11,7 +11,7 @@ from ...models import NewsArticle
 
 @swagger_auto_schema(
     methods=['put', 'patch'],
-    operation_description="Обновление существующей новости с указанием URL локального изображения",
+    operation_description="Обновление существующей новости с указанием URL локального изображения. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     manual_parameters=[
         openapi.Parameter('article_id', openapi.IN_PATH, description="ID статьи", type=openapi.TYPE_INTEGER)
     ],

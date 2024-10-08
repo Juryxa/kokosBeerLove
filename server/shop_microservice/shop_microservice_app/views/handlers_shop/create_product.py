@@ -8,11 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 
 from ...serializers import ProductCreateSerializer
-from ...models import Product
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание нового товара с указанием массива URL изображений",
+    operation_description="Создание нового товара с указанием массива URL изображений. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     request_body=ProductCreateSerializer,
     responses={
         201: openapi.Response(description="Товар успешно создан"),
@@ -32,6 +31,6 @@ def create_product(request):
     serializer = ProductCreateSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

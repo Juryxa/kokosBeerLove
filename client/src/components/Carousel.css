@@ -1,3 +1,8 @@
+.command-cntainer{
+    width:100vw
+}
+
+
 .carousel-container {
     width: 100%;
     min-height: 917px;
@@ -62,6 +67,8 @@
     border-radius: 20px; 
 }
 
+
+
 .carousel-image {
     width: 80%;
     height: auto;
@@ -108,6 +115,7 @@
 .card-container {
     display: flex;
     justify-content: center;
+    
     gap: 20px; /* расстояние между карточками */
     transition: transform 0.5s ease; /* Плавный переход для анимации */
     will-change: transform; /* Оптимизация для производительности */
@@ -115,4 +123,14 @@
 
 .card-container.animate {
     transform: translateX(-100%); /* Сдвиг при анимации */
+}
+
+.command-h1{
+    background: linear-gradient(to bottom, #ff2a2a 0%, #410707 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 100px; /* Установите нужный размер шрифта */
+    text-align: center; /* Выравнивание текста */
+    z-index: 2;
+   
 }

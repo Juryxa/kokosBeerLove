@@ -12,7 +12,7 @@ from ...models import NewsArticle
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание новой новости с указанием URL изображения",
+    operation_description="Создание новой новости с указанием URL изображения. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         required=['title', 'text', 'image_url'],

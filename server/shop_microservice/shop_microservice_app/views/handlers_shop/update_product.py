@@ -12,7 +12,7 @@ from ...serializers import ProductCreateSerializer, ProductSerializer
 
 @swagger_auto_schema(
     methods=['put', 'patch'],
-    operation_description="Обновление существующего товара с указанием URL изображений",
+    operation_description="Обновление существующего товара с указанием URL изображений. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     manual_parameters=[
         openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER)
     ],
@@ -52,8 +52,6 @@ def update_product(request, product_id):
             product.url_images = image_urls
             product.save()
 
-        # Возвращаем обновленные данные
-        response_serializer = ProductSerializer(product)
-        return Response(response_serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

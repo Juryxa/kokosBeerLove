@@ -7,12 +7,12 @@ from drf_yasg import openapi
 from django.utils import timezone
 
 from ..models import RefreshToken as RefreshTokenModel
-from ..serializers import RefreshTokenSerializer
+
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Обновление access токена с использованием refresh токена",
-    request_body=RefreshTokenSerializer,
+    operation_description="Обновление access токена с использованием refresh токена, который передается в Cookie. "
+                          "Refresh токен должен быть передан в cookie с именем 'refresh_token'.",
     responses={
         200: openapi.Response(description="Новый access токен", examples={
             "application/json": {
@@ -22,6 +22,7 @@ from ..serializers import RefreshTokenSerializer
         401: openapi.Response(description="Недействительный или отсутствующий refresh токен")
     }
 )
+
 @api_view(['POST'])
 def refresh_token(request):
     refresh_token = request.COOKIES.get('refresh_token')  # Получаем refresh токен из cookie
