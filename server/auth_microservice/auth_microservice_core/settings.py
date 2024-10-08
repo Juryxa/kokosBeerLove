@@ -64,10 +64,12 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost",
+                        "http://localhost:3000",
                         ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
@@ -187,7 +189,6 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
 }
 
-from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),

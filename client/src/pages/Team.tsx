@@ -5,6 +5,7 @@ import player2 from '../images/player1.jpg';
 import data from './players.json';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import BigBosses from '../components/BigBosses';
 
 interface PlayerType {
     id: number;
@@ -43,6 +44,10 @@ const Team = () => {
     return (
         <div className="team-container">
             <Header/>
+
+           
+
+            <BigBosses/>
             <table className="team-table">
                 <thead>
                     <tr>
