@@ -66,10 +66,12 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost",
+                        "http://localhost:3000",
                         ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков

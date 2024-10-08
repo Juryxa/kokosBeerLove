@@ -20,6 +20,7 @@ import Shop from "./pages/Shop";
 import {Co2} from "@mui/icons-material";
 import Contacts from "./pages/Contacts";
 import Team from "./pages/Team";
+import NewsDetails from './pages/NewsDetails';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/matches" element={<Matches/>}/>
                 <Route path='/news' element={<News/>}/>
+                <Route path="/news/:newsId" element={<NewsDetails />} />
                 <Route path='/about' element={<AboutClub/>}/>
                 <Route path='/shop' element={<Shop/>}/>
                 <Route path='/contacts' element={<Contacts/>}/>

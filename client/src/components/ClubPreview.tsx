@@ -19,7 +19,7 @@ const ClubPreview = () => {
                 
         
               </p>
-              <a href="#">Узнать больше...</a>
+              <a href="/about">Узнать больше...</a>
             </div>
             <img 
               src={clubPic} 
