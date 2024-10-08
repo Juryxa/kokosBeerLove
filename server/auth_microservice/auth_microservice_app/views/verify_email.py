@@ -5,10 +5,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.conf import settings
 from drf_yasg import openapi
-from smtplib import SMTPException
 from drf_yasg.utils import swagger_auto_schema
 from ..serializers import EmailVerificationSerializer
 from django.core.mail import BadHeaderError
+from smtplib import SMTPException
 import logging
 
 # Логирование ошибок
