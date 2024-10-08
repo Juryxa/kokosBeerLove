@@ -9,12 +9,9 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os
 from dotenv import load_dotenv
 from pathlib import Path
 from decouple import config
-from datetime import timedelta
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -200,7 +197,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': config('JWT_SIGNING_KEY_AUTH'),
+    'SIGNING_KEY': config('JWT_SIGNING_KEY'),
 }
 
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер

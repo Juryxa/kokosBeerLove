@@ -26,7 +26,6 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY_MAIN')
 SECRET_KEY = config('SECRET_KEY_SHOP')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -45,9 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'main_page_microservice_app',
+    'shop_microservice_app',
     'corsheaders',
-    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +59,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'main_page_microservice_core.urls'
+ROOT_URLCONF = 'shop_microservice_core.urls'
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
                         'http://localhost',]
@@ -108,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'main_page_microservice_core.wsgi.application'
+WSGI_APPLICATION = 'shop_microservice_core.wsgi.application'
 
 
 
@@ -118,11 +116,11 @@ WSGI_APPLICATION = 'main_page_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME_MAIN'),
-        'USER': config('DATABASE_USER_MAIN'),
-        'PASSWORD': config('DATABASE_PASSWORD_MAIN'),
-        'HOST': config('DATABASE_HOST_MAIN'),
-        'PORT': config('DATABASE_PORT_MAIN'),
+        'NAME': config('DATABASE_NAME_SHOP'),
+        'USER': config('DATABASE_USER_SHOP'),
+        'PASSWORD': config('DATABASE_PASSWORD_SHOP'),
+        'HOST': config('DATABASE_HOST_SHOP'),
+        'PORT': config('DATABASE_PORT_SHOP'),
     }
 }
 
@@ -179,12 +177,6 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your auth_microservice_app API',
-    'DESCRIPTION': 'Your project API documentation',
-    'VERSION': '1.0.0',
 }
 
 from datetime import timedelta

@@ -8,7 +8,7 @@ class NewsArticle(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        db_table = 'main_page_news_articles'
+        db_table = 'news_articles'
 
     def str(self):
         return self.title
