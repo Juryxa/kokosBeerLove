@@ -1,10 +1,13 @@
 import newsApi from "../http/news";
+import {GetAllNewsResponse, NewsResponse} from "../models/response/NewsResponse";
 
 export default class ContentService{
     static async getAllNews() {
-        return newsApi.get('/get_all/');
+        return newsApi.get<GetAllNewsResponse>('/get_all/');
     }
-
+    static async getNewsId(articleId: number) {
+        return newsApi.get<NewsResponse>(`/${articleId}/`);
+    }
     static async createNews(title: string, text: string, image_url: string) {
         return newsApi.post(`/create/`, {title, text, image_url});
     }
@@ -13,9 +16,10 @@ export default class ContentService{
         return newsApi.delete(`/${articleId}/delete/`);
     }
     static async updateFullNews(articleId: number, title: string, text: string, image_url: string) {
-        return newsApi.put(`/${articleId}/delete/`, {title, text, image_url});
+        return newsApi.put(`/${articleId}/update/`, {title, text, image_url});
     }
+
     static async updatePartNews(articleId: number, title: string, text: string, image_url: string) {
-        return newsApi.patch(`/${articleId}/delete/`, {title, text, image_url});
+        return newsApi.patch(`/${articleId}/update/`, {title, text, image_url});
     }
 }

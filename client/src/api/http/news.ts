@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { AuthResponse } from "../models/response/AuthResponse";
+import $api from "./index";
 
-export const NEWS_API_URL = `http://localhost:8000/api/news`;
+export const NEWS_API_URL = `http://localhost:9000/api/news`;
 
 const newsApi = axios.create({
     withCredentials: true,
@@ -9,10 +10,10 @@ const newsApi = axios.create({
 });
 
 newsApi.interceptors.request.use((config) => {
-    // Добавляем токен в заголовки
-    if (localStorage.getItem('token')) {
+    const token = localStorage.getItem('token');
+    if (token) {
         // @ts-ignore
-        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 });
@@ -24,8 +25,9 @@ newsApi.interceptors.response.use((config) => {
     if (error.response.status === 401 && !originalRequest._isRetry) {
         originalRequest._isRetry = true;
         try {
-            const response = await axios.get<AuthResponse>(`http://localhost:8000/api/auth/refresh/`, { withCredentials: true });
+            const response = await axios.post<AuthResponse>(`http://localhost:8000/api/auth/refresh/`, { withCredentials: true });
             localStorage.setItem('token', response.data.access);
+            originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
             return newsApi.request(originalRequest);
         } catch (e) {
             console.log('НЕ АВТОРИЗОВАН');

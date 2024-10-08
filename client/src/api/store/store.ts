@@ -112,7 +112,13 @@ export default class Store {
     async checkAuth() {
         this.setLoading(true);
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh/`, {withCredentials: true})
+            const response = await axios.post<AuthResponse>(
+                `${API_URL}/refresh/`,
+                {},  // Передаем пустой объект, так как refresh_token находится в куки
+                {
+                    withCredentials: true // Обязательно указываем, что куки должны быть отправлены
+                }
+            );
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -123,4 +129,5 @@ export default class Store {
             this.setLoading(false);
         }
     }
+
 }
