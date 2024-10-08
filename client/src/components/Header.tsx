@@ -97,7 +97,13 @@ const Header = () => {
                             <MenuItem component={Link} to="/team">Команда</MenuItem>
                             <MenuItem component={Link} to="/about">О клубе</MenuItem>
                             <MenuItem component={Link} to="/shop">Магазин</MenuItem>
-                            <MenuItem component={Link} to="#footer">Контакты</MenuItem>
+                            <MenuItem  component="div"
+    onClick={() => {
+        const footerElement = document.getElementById('footer');
+        if (footerElement) {
+            footerElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    }}>Контакты</MenuItem>
                         </Box>
 
                         {/* Социальные сети */}

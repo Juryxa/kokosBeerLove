@@ -3,6 +3,7 @@ import img1 from "../images/rectangle1.png";
 import logoTeam1 from "../images/logoteam1.png";
 import logoTeam2 from "../images/logo2.png";
 import './NearestMatch.css';
+import { Link } from 'react-router-dom';
 
 interface tabloinfo {
     title: string;
@@ -25,7 +26,7 @@ const NearestMatch: React.FC<NearestMatchProps> = ({tabloinfo}) => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            height: '100vh',
+            height: '60vh',
             width: '80%',
         }}>
 
@@ -53,16 +54,11 @@ const NearestMatch: React.FC<NearestMatchProps> = ({tabloinfo}) => {
                     }}/> {/* Увеличиваем размер */}
                 </div>
                 {/* Дополнительные элементы, например, кнопка "О матче" */}
-                <button style={{
-                    padding: '10px 50px',
-                    fontSize: '20px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                }}>
-                    О матче
-                </button>
+                <Link to="/matches">
+                        <button className="styled-button">
+                            О матче
+                        </button>
+                    </Link>
             </div>
         </div>
     );
