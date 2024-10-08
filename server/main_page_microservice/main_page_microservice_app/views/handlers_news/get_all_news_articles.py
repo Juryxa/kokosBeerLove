@@ -1,16 +1,11 @@
-#
-#
-#
-############ ЭТОТ МЕТОД ЕЩЕ В СТАДИИ РАЗДУМЫВАНИЯ И ОБДУМЫВАНИЯ
-#
-#
-#
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..models import NewsArticle
 from ..serializers import NewsArticleSerializer
+from rest_framework import status
+
 
 @swagger_auto_schema(
     method='get',
@@ -32,3 +27,4 @@ def get_all_news_articles(request):
     articles = NewsArticle.objects.all()
     serializer = NewsArticleSerializer(articles, many=True)
     return Response(serializer.data)
+
