@@ -7,6 +7,12 @@ from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from ..serializers import EmailVerificationSerializer
+from django.core.mail import BadHeaderError
+from smtplib import SMTPException
+import logging
+
+# Логирование ошибок
+logger = logging.getLogger(__name__)
 
 
 @swagger_auto_schema(
@@ -20,7 +26,7 @@ from ..serializers import EmailVerificationSerializer
             }
         }),
         400: openapi.Response(description="Некорректный email"),
-        500: openapi.Response(description="Некорректный email(Internal Server Error)")
+        500: openapi.Response(description="Внутренняя ошибка сервера (Internal Server Error)")
     }
 )
 @api_view(['POST'])
@@ -32,14 +38,21 @@ def verify_email(request):
         # Генерация случайного 6-значного кода
         code = randint(100000, 999999)
 
-        # Отправка кода на email
-        send_mail(
-            'Подтверждение регистрации',
-            f'Ваш код подтверждения: {code}',
-            settings.EMAIL_HOST_USER,
-            [email],
-            fail_silently=False,
-        )
+        try:
+            # Отправка кода на email
+            send_mail(
+                'Подтверждение регистрации',
+                f'Ваш код подтверждения: {code}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+        except (BadHeaderError, SMTPException) as e:
+            # Логируем ошибку для администраторов, чтобы не потерять детали
+            logger.error(f"Ошибка при отправке email: {str(e)}")
+
+            # Возвращаем ответ с ошибкой 500
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # Отправляем код клиенту для дальнейшей обработки
         return Response({'code': code}, status=status.HTTP_200_OK)
