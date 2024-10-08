@@ -9,7 +9,7 @@ export const uploadImage = async (
 
     try {
         const response = await axios.put(
-            `http://localhost:9000/upload_image/${uniqueFileName}`,
+            `http://localhost/upload_image/${uniqueFileName}/`,
             file, // Передаем сам файл в body
             {
                 headers: {

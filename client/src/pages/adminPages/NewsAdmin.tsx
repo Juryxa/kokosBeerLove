@@ -23,7 +23,7 @@ const NewsAdmin = () => {
     const fetchNews = async () => {
         try {
             const response = await ContentService.getAllNews();
-            setNewsList(response.data.news);
+            setNewsList(response.data);
         } catch (error) {
             setErrorMessage('Ошибка загрузки новостей.');
         }
@@ -78,7 +78,7 @@ const NewsAdmin = () => {
             setEditNewsId(null);
             setOriginalNews(null);
 
-            fetchNews();
+            await fetchNews();
         } catch (error) {
             setErrorMessage('Ошибка при сохранении новости.');
         }
@@ -103,7 +103,7 @@ const NewsAdmin = () => {
         try {
             await ContentService.deleteNews(id);
             setSuccessMessage('Новость удалена.');
-            fetchNews();
+            await fetchNews();
         } catch (error) {
             setErrorMessage('Ошибка при удалении новости.');
         }
@@ -131,7 +131,7 @@ const NewsAdmin = () => {
             />
             <label className="news-admin-file-label">
                 Загрузить изображение
-                <input type="file" className="news-admin-file-input" onChange={handleFileChange} />
+                <input type="file" className="news-admin-file-input" onChange={handleFileChange}/>
             </label>
             {image && <p className="news-admin-image-name">Файл: {image.name}</p>}
 
@@ -142,25 +142,30 @@ const NewsAdmin = () => {
             <div className="news-list">
                 <h3 className="news-list-title">Список новостей</h3>
                 <ul className="news-list-items">
-                    {newsList.map((news) => (
-                        <li key={news.id} className="news-list-item">
-                            <div className="news-list-item-content">
-                                <h4>{news.title}</h4>
-                                <p>{news.text}</p>
-                                <img src={news.image} alt={news.title} className="news-image" />
-                            </div>
-                            <div className="news-list-item-actions">
-                                <button onClick={() => handleEditNews(news.id)} className="edit-button">
-                                    <EditIcon />
-                                </button>
-                                <button onClick={() => handleDeleteNews(news.id)} className="delete-button">
-                                    <DeleteIcon />
-                                </button>
-                            </div>
-                        </li>
-                    ))}
+                    {Array.isArray(newsList) && newsList.length > 0 ? (
+                        newsList.map((news) => (
+                            <li key={news.id} className="news-list-item">
+                                <div className="news-list-item-content">
+                                    <h4>{news.title}</h4>
+                                    <p>{news.text}</p>
+                                    <img src={news.image} alt={news.title} className="news-image"/>
+                                </div>
+                                <div className="news-list-item-actions">
+                                    <button onClick={() => handleEditNews(news.id)} className="edit-button">
+                                        <EditIcon/>
+                                    </button>
+                                    <button onClick={() => handleDeleteNews(news.id)} className="delete-button">
+                                        <DeleteIcon/>
+                                    </button>
+                                </div>
+                            </li>
+                        ))
+                    ) : (
+                        <p>Новостей нет</p>
+                    )}
                 </ul>
             </div>
+
         </div>
     );
 };
