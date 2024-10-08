@@ -11,7 +11,7 @@ from ..serializers import EmailVerificationSerializer
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Отправка кода подтверждения на email",
+    operation_description="Отправка кода подтверждения на email. Код отправляется только на @mail.ru",
     request_body=EmailVerificationSerializer,
     responses={
         200: openapi.Response(description="Код отправлен на почту", examples={
@@ -20,6 +20,7 @@ from ..serializers import EmailVerificationSerializer
             }
         }),
         400: openapi.Response(description="Некорректный email"),
+        500: openapi.Response(description="Некорректный email(Internal Server Error)")
     }
 )
 @api_view(['POST'])
