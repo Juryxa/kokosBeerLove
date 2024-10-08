@@ -32,3 +32,26 @@
         width: 40px;
     }
 }
+
+
+.styled-button {
+    padding: 15px 120px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.styled-button:hover {
+    background-color:rgb(255, 107, 107); /* Цвет при наведении */
+    transform: translateY(-2px); /* Поднимаем кнопку немного вверх */
+}
+
+.styled-button:active {
+    background-color: rgb(255, 0, 0);  /* Цвет при нажатии */
+    transform: translateY(1px); /* Опускаем кнопку вниз */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

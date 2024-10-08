@@ -10,8 +10,8 @@ interface IframeType {
     autoplay?: number;     
 }
 
-const CreateVideoFrame: React.FC<IframeType> = ({ oid, id, hd = 2, width = 853, height = 480 }) => {
-    const iframeSrc = `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=${hd}&js_api=1`;
+const CreateVideoFrame: React.FC<IframeType> = ({ oid, id, hd = 2, width = 853, height = 480,autoplay }) => {
+    const iframeSrc = `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=${hd}&autoplay=${autoplay ? 1 : 0}&js_api=1`;
     
 
     return (
