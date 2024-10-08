@@ -26,6 +26,7 @@ class Match(models.Model):
     def __str__(self):
         return f"{self.team_home} vs {self.team_away}"
 
+
 class Team(models.Model):
     name = models.CharField(max_length=255)  # Название команды
     logo_url = models.URLField(max_length=1000)  # URL лога команды
