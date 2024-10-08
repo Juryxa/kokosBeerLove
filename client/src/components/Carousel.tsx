@@ -6,7 +6,7 @@ import './Carousel.css';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import footboler1 from '../images/footboler1.png';
-
+import boss from "../images/boss3.jpg"
 import back from '../images/icons/Vector 5.png'
 import next from '../images/icons/Vector 4.png'
 
@@ -14,6 +14,7 @@ interface Item {
   id: number;
   title: string;
   image: string;
+  role?:string;
 }
 
 const items: Item[] = [
@@ -55,6 +56,7 @@ const items: Item[] = [
   { id: 36, title: 'Погребняк Павел Викторович', image: footboler1 },
 ];
 
+
 const Carousel: React.FC = () => {
   const [currentPage, setCurrentPage] = React.useState(0);
   const itemsPerPage = 10;
@@ -77,7 +79,11 @@ const Carousel: React.FC = () => {
   const visibleItems = items.slice(startIndex, startIndex + itemsPerPage);
 
   return (
+    <div className='command-cntainer'>
+    <h1 className='command-h1'>Команда</h1>
+    
     <div className="carousel-container">
+      
          <div  className="carousel-buttons" style={{ minWidth: '30px', padding: '0',width: '91px', height: '182px' }}>
          {currentPage > 0 && ( // Отображаем кнопку "Назад" только если это не первая страница
           <Button
@@ -112,7 +118,7 @@ const Carousel: React.FC = () => {
         )}
         </div>
       </div>
-    
+      </div>
   );
 };
 
