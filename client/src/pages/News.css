@@ -88,3 +88,17 @@
         font-size: 12px;
     }
 }
+
+.news-card a {
+    text-decoration: none;
+    color: inherit;
+}
+.news-card {
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Наследует цвет от родительского элемента */
+}
+
+.news-card:hover {
+    color: #E62526; /* Меняет цвет при наведении, можно настроить по вашему желанию */
+    transform: scale(1.05); /* Эффект увеличения при наведении */
+}
