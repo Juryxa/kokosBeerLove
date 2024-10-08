@@ -2,13 +2,13 @@ from django.db import models
 from django.utils import timezone
 
 class NewsArticle(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=500)
     text = models.TextField()
-    image = models.ImageField(upload_to='news_images/')
+    image = models.CharField(max_length=500)
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        db_table = 'main_page_news_articles'
+        db_table = 'news_articles'
 
-    def __str__(self):
+    def str(self):
         return self.title

@@ -9,18 +9,25 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from dotenv import load_dotenv
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Путь к файлу .env на один уровень выше папки server
+dotenv_path = Path(BASE_DIR).parent.parent / '.env'
+
+# Загружаем переменные окружения
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-17mso)k$d1g+56f%_w=vi^3b864z@nlzj0d4wpcljrh5!!7%#z'
+SECRET_KEY = config('SECRET_KEY_AUTH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -56,10 +63,11 @@ MIDDLEWARE = [
     # 'silk.middleware.SilkyMiddleware', # для профилирования
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ["http://localhost",
+                        ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost",
 ]
 
 CORS_ALLOW_CREDENTIALS = True # Разрешить отправку с учётом CORS-заголовков
@@ -109,14 +117,13 @@ WSGI_APPLICATION = 'auth_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kokocDB_auth_microservice',
-        'USER': 'postgres',
-        'PASSWORD': 'dima15042004',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config('DATABASE_NAME_AUTH'),
+        'USER': config('DATABASE_USER_AUTH'),
+        'PASSWORD': config('DATABASE_PASSWORD_AUTH'),
+        'HOST': config('DATABASE_HOST_AUTH'),
+        'PORT': config('DATABASE_PORT_AUTH'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -180,7 +187,6 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
 }
 
-from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
@@ -188,7 +194,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': 'django-insecure-jhllb__6t#(^)qf9j!m!36$e@qq&y$f0u1^ca6wogzx$&iw123)@',
+    'SIGNING_KEY': config('JWT_SIGNING_KEY'),
 }
 
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
@@ -197,12 +203,12 @@ SIMPLE_JWT = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Настройка SMTP-сервера
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mail.ru'  # SMTP-сервер вашего провайдера
-EMAIL_PORT = 587  # Порт для TLS
-EMAIL_USE_TLS = True  # Включить TLS (SSL)
-EMAIL_HOST_USER = 'conopi12@mail.ru'  # Ваш Email адрес
-EMAIL_HOST_PASSWORD = 'jkts1VXfd0zmkPKUqezp'  # Ваш пароль от Email
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST_AUTH')
+EMAIL_PORT = config('EMAIL_PORT_AUTH', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS_AUTH', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER_AUTH')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD_AUTH')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
