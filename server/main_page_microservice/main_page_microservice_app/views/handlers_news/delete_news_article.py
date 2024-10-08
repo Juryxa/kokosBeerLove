@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 
-from main_page_microservice.main_page_microservice_app.models import NewsArticle
+from ...models import NewsArticle
 
 
 @swagger_auto_schema(

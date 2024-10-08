@@ -50,7 +50,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
-        db_table = 'auth_microservice_registered_users'
+        db_table = 'site_users'
 
     def __str__(self):
         return self.email

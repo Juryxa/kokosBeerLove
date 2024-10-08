@@ -2,9 +2,9 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from main_page_microservice.main_page_microservice_app.models import NewsArticle
-from main_page_microservice.main_page_microservice_app.serializers import NewsArticleSerializer
-from rest_framework import status
+
+from ...models import NewsArticle
+from ...serializers import NewsArticleSerializer
 
 
 @swagger_auto_schema(
@@ -16,7 +16,7 @@ from rest_framework import status
                 "id": 1,
                 "title": "Заголовок новости",
                 "text": "Текст новости",
-                "image": "news_images/image.jpg",
+                "image_url": "news_images/image",
                 "created_at": "2024-10-06T12:00:00Z"
             }
         ]
