@@ -46,6 +46,7 @@ const NewsAdmin = () => {
 
             if (image) {
                 imageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
+                console.log("Image URL:", imageUrl);
             }
             else{
                 imageUrl = '';
@@ -93,7 +94,7 @@ const NewsAdmin = () => {
             setContent(news.text);
             setIsEditing(true);
             setEditNewsId(news.id);
-            setOriginalNews(news); // Сохраняем оригинальные данные для сравнения
+            setOriginalNews(news);
         } catch (error) {
             setErrorMessage('Ошибка при загрузке новости для редактирования.');
         }

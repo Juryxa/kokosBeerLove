@@ -9,8 +9,8 @@ export const uploadImage = async (
 
     try {
         const response = await axios.put(
-            `http://localhost/upload_image/${uniqueFileName}/`,
-            file, // Передаем сам файл в body
+            `http://localhost/upload_image/${uniqueFileName}`,
+            file,
             {
                 headers: {
                     'Content-Type': file.type,
@@ -18,7 +18,7 @@ export const uploadImage = async (
             }
         );
 
-        if (response.status === 200) {
+        if (response.status === 201) {
             setSuccessMessage('Изображение успешно загружено.');
             return `/uploads/news_images/${uniqueFileName}`;
         } else {

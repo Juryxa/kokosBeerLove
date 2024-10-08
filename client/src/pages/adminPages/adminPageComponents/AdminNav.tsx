@@ -1,24 +1,41 @@
-import React from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import './AdminNav.css';
-import {store} from "../../../index";
-
+import { store } from "../../../index";
 
 const AdminNav = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
+
     const handleLogOut = () => {
         store.logout();
-        navigate('/', {replace: true});
-    }
+        navigate('/', { replace: true });
+        setIsMenuOpen(false); // Закрываем меню при выходе
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false); // Закрываем меню при клике на ссылку
+    };
+
     return (
-        <div className='nav'>
-            <Link to='/'>На главную</Link>
-            <Link to='news'>Новости</Link>
-            <Link to='matches'>Матчи</Link>
-            <Link to='contacts'>Контакты</Link>
-            <Link to="about">О клубе</Link>
-            <Link to="shop">Магазин</Link>
-            <button onClick={handleLogOut}>Выйти</button>
+        <div className='nav-container'>
+            <div className="burger-menu" onClick={toggleMenu}>
+                &#9776; {/* Иконка бургер-меню */}
+            </div>
+
+            <div className={`nav ${isMenuOpen ? 'open' : ''}`}>
+                <Link to='/' onClick={closeMenu}>На главную</Link>
+                <Link to='news' onClick={closeMenu}>Новости</Link>
+                <Link to='matches' onClick={closeMenu}>Матчи</Link>
+                <Link to='contacts' onClick={closeMenu}>Контакты</Link>
+                <Link to="about" onClick={closeMenu}>О клубе</Link>
+                <Link to="shop" onClick={closeMenu}>Магазин</Link>
+                <button onClick={handleLogOut}>Выйти</button>
+            </div>
         </div>
     );
 };
