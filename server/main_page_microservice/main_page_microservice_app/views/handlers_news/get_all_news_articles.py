@@ -2,8 +2,8 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from ..models import NewsArticle
-from ..serializers import NewsArticleSerializer
+from main_page_microservice.main_page_microservice_app.models import NewsArticle
+from main_page_microservice.main_page_microservice_app.serializers import NewsArticleSerializer
 from rest_framework import status
 
 
