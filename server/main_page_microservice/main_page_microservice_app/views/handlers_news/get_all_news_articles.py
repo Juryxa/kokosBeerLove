@@ -27,3 +27,4 @@ def get_all_news_articles(request):
     articles = NewsArticle.objects.all()
     serializer = NewsArticleSerializer(articles, many=True)
     return Response(serializer.data)
+
