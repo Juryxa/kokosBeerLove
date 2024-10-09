@@ -183,7 +183,6 @@ const Header = () => {
                         <MenuItem component={Link} to="/team">Команда</MenuItem>
                         <MenuItem component={Link} to="/about">О клубе</MenuItem>
                         <MenuItem component={Link} to="/shop">Магазин</MenuItem>
-                        <MenuItem component={Link} to="#footer" >Контакты</MenuItem>
                         <MenuItem onClick={handleOpen} >Вход</MenuItem>
                         <div className='icons'>
                         <IconButton color="inherit">
