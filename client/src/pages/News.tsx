@@ -33,6 +33,7 @@ const NewsCard: React.FC<NewsType> = ({ id, title, content, image }) => {
 
 const News = () => {
     const [newsData, setNewsData] = useState<NewsType[]>([]);
+    
 
     useEffect(() => {
         setNewsData(data.news); // Загружаем данные новостей из JSON-файла

@@ -119,18 +119,19 @@ iframe {
   }
 }
 
-.video-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  background-color: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 0 0 6px 0.5px #E62526; /* Повторяем тень из sx */
-  padding: 10px;
-  margin-bottom: 1px;
+.video-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
+.video-info th, .video-info td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.video-info th {
+  background-color: #f2f2f2;
+  text-align: left;
 }
 
 .video-caption {
@@ -144,4 +145,45 @@ iframe {
   font-size: 14px;
   margin: 0;
   padding: 5px;
+}
+
+.show-more-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #E62526;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.show-more-button:hover {
+  background-color: #ff4444;
+}
+
+.show-more-button.hidden{
+  display: none;
+}
+
+
+.button {
+  width: 100%;
+  color: white;
+  font-size: 15px;
+  border: none;
+  background-color: #E62526;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 0 6px 0.5px #E62526;
+  padding: 10px;
+  margin-bottom: 1px;
+  cursor: pointer; /* Изменяет курсор на указатель при наведении */
+  transition: transform 0.2s ease; /* Плавный переход для эффекта уменьшения */
+}
+
+.button:hover {
+  transform: scale(0.98); /* Уменьшение кнопки при наведении */
 }
