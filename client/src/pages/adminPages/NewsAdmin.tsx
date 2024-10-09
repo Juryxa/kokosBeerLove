@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import ContentService from '../../api/services/ContentService'
+import { NewsResponse } from '../../api/models/response/NewsResponse';
+import {uploadImage} from "./functions/uploadImage";
 import './NewsAdmin.css';
 
 const NewsAdmin = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState<File | null>(null);
-    const [newsList, setNewsList] = useState<any[]>([]);
+    const [newsList, setNewsList] = useState<NewsResponse[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editNewsId, setEditNewsId] = useState<number | null>(null);
+    const [originalNews, setOriginalNews] = useState<NewsResponse | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     useEffect(() => {
         fetchNews();
     }, []);
 
     const fetchNews = async () => {
-        // Пример данных для тестирования UI
-        setNewsList([
-            { id: 1, title: 'Новость 1', content: 'Текст новости 1', imageUrl: '/images/news1.jpg' },
-            { id: 2, title: 'Новость 2', content: 'Текст новости 2', imageUrl: '/images/news2.jpg' }
-        ]);
+        try {
+            const response = await ContentService.getAllNews();
+            setNewsList(response.data);
+        } catch (error) {
+            setErrorMessage('Ошибка загрузки новостей.');
+        }
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,41 +37,85 @@ const NewsAdmin = () => {
 
     const handleAddOrUpdateNews = async () => {
         if (!title || !content) {
-            alert('Заполните все поля!');
+            setErrorMessage('Заполните все поля!');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        if (image) {
-            formData.append('image', image);
+        try {
+            let imageUrl: string | '';
+
+            if (image) {
+                imageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
+                console.log("Image URL:", imageUrl);
+            }
+            else{
+                imageUrl = '';
+            }
+
+            if (isEditing && editNewsId !== null) {
+                if (originalNews) {
+                    const isTitleChanged = originalNews.title !== title;
+                    const isContentChanged = originalNews.text !== content;
+                    const isImageChanged = image !== null;
+
+                    if (isTitleChanged && isContentChanged && isImageChanged) {
+                        await ContentService.updateFullNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        setSuccessMessage('Новость полностью обновлена.');
+                    } else {
+                        await ContentService.updatePartNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        setSuccessMessage('Новость частично обновлена.');
+                    }
+                }
+            } else {
+                await ContentService.createNews(title, content, imageUrl);
+                setSuccessMessage('Новость добавлена.');
+            }
+
+            // Очистка формы
+            setTitle('');
+            setContent('');
+            setImage(null);
+            setIsEditing(false);
+            setEditNewsId(null);
+            setOriginalNews(null);
+
+            await fetchNews();
+        } catch (error) {
+            setErrorMessage('Ошибка при сохранении новости.');
         }
-
-        // Очистка формы
-        setTitle('');
-        setContent('');
-        setImage(null);
-        setIsEditing(false);
-        setEditNewsId(null);
-
-        fetchNews();
     };
 
-    const handleEditNews = (news: any) => {
-        setTitle(news.title);
-        setContent(news.content);
-        setIsEditing(true);
-        setEditNewsId(news.id);
+    const handleEditNews = async (newsId: number) => {
+        try {
+            const response = await ContentService.getNewsId(newsId);
+            const news = response.data;
+
+            setTitle(news.title);
+            setContent(news.text);
+            setIsEditing(true);
+            setEditNewsId(news.id);
+            setOriginalNews(news);
+        } catch (error) {
+            setErrorMessage('Ошибка при загрузке новости для редактирования.');
+        }
     };
 
     const handleDeleteNews = async (id: number) => {
-        fetchNews();
+        try {
+            await ContentService.deleteNews(id);
+            setSuccessMessage('Новость удалена.');
+            await fetchNews();
+        } catch (error) {
+            setErrorMessage('Ошибка при удалении новости.');
+        }
     };
 
     return (
         <div className="news-admin-container">
             <h2 className="news-admin-title">{isEditing ? 'Редактировать новость' : 'Добавить новость'}</h2>
+
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {successMessage && <div className="success-message">{successMessage}</div>}
 
             <input
                 type="text"
@@ -81,7 +132,7 @@ const NewsAdmin = () => {
             />
             <label className="news-admin-file-label">
                 Загрузить изображение
-                <input type="file" className="news-admin-file-input" onChange={handleFileChange} />
+                <input type="file" className="news-admin-file-input" onChange={handleFileChange}/>
             </label>
             {image && <p className="news-admin-image-name">Файл: {image.name}</p>}
 
@@ -92,24 +143,30 @@ const NewsAdmin = () => {
             <div className="news-list">
                 <h3 className="news-list-title">Список новостей</h3>
                 <ul className="news-list-items">
-                    {newsList.map((news) => (
-                        <li key={news.id} className="news-list-item">
-                            <div className="news-list-item-content">
-                                <h4>{news.title}</h4>
-                                <p>{news.content}</p>
-                            </div>
-                            <div className="news-list-item-actions">
-                                <button onClick={() => handleEditNews(news)} className="edit-button">
-                                    <EditIcon />
-                                </button>
-                                <button onClick={() => handleDeleteNews(news.id)} className="delete-button">
-                                    <DeleteIcon />
-                                </button>
-                            </div>
-                        </li>
-                    ))}
+                    {Array.isArray(newsList) && newsList.length > 0 ? (
+                        newsList.map((news) => (
+                            <li key={news.id} className="news-list-item">
+                                <div className="news-list-item-content">
+                                    <h4>{news.title}</h4>
+                                    <p>{news.text}</p>
+                                    <img src={news.image} alt={news.title} className="news-image"/>
+                                </div>
+                                <div className="news-list-item-actions">
+                                    <button onClick={() => handleEditNews(news.id)} className="edit-button">
+                                        <EditIcon/>
+                                    </button>
+                                    <button onClick={() => handleDeleteNews(news.id)} className="delete-button">
+                                        <DeleteIcon/>
+                                    </button>
+                                </div>
+                            </li>
+                        ))
+                    ) : (
+                        <p>Новостей нет</p>
+                    )}
                 </ul>
             </div>
+
         </div>
     );
 };

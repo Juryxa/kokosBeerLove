@@ -12,12 +12,8 @@ interface JwtPayload {
     is_superuser: boolean;
 }
 
-const getAccessToken = (): string | null => {
-    return localStorage.getItem('token');
-};
-
 const isUserSuperuser = (): boolean => {
-    const token = getAccessToken();
+    const token = localStorage.getItem('token');
     if (token) {
         try {
             const decoded: JwtPayload = jwtDecode<JwtPayload>(token);
@@ -112,15 +108,23 @@ export default class Store {
     async checkAuth() {
         this.setLoading(true);
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh/`, {withCredentials: true})
+            const response = await axios.post<AuthResponse>(
+                `${API_URL}/refresh/`,
+                {},  // Передаем пустой объект, так как refresh_token находится в куки
+                {
+                    withCredentials: true
+                }
+            );
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
+            this.setSuperUser(isUserSuperuser()); // Обновляем статус суперпользователя после получения токена
             this.setUser(response.data.user);
         } catch (e) {
             // @ts-ignore
-            console.log(e.response?.data?.message);
+            console.log('Ошибка авторизации:', e.response?.data?.message);
         } finally {
             this.setLoading(false);
         }
     }
+
 }

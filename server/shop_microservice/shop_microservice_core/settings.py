@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'shop_microservice_app',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -89,6 +90,7 @@ CORS_ALLOW_HEADERS = [
     'X-CSRFToken',
     'X-Requested-With',
 ]
+
 
 TEMPLATES = [
     {

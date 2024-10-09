@@ -1,10 +1,90 @@
-.nav{
-    display: flex;
-    width: 100%;
-    justify-content: center;
+/* Общие стили */
+.nav-container {
+    position: relative;
 }
-.nav a{
-    margin: 0 15px;
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav a {
+    color: white;
     text-decoration: none;
-    color: black;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.nav a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+.nav button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav button:hover {
+    background-color: #cc0000;
+}
+
+/* Скрываем меню на маленьких экранах по умолчанию */
+.burger-menu {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Адаптивное бургер-меню */
+@media (max-width: 768px) {
+    .burger-menu {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 20;
+    }
+
+    .nav {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: #333;
+        padding-top: 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transform: translateX(-100%); /* Меню скрыто */
+    }
+
+    .nav.open {
+        transform: translateX(0); /* Меню открыто */
+    }
+
+    .nav a {
+        padding: 15px;
+        font-size: 18px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav button {
+        padding: 15px;
+        width: 100%;
+    }
 }
