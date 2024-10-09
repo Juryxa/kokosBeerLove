@@ -118,11 +118,11 @@ WSGI_APPLICATION = 'news_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME_MAIN'),
-        'USER': config('DATABASE_USER_MAIN'),
-        'PASSWORD': config('DATABASE_PASSWORD_MAIN'),
-        'HOST': config('DATABASE_HOST_MAIN'),
-        'PORT': config('DATABASE_PORT_MAIN'),
+        'NAME': config('DATABASE_NAME_NEWS'),
+        'USER': config('DATABASE_USER_NEWS'),
+        'PASSWORD': config('DATABASE_PASSWORD_NEWS'),
+        'HOST': config('DATABASE_HOST_NEWS'),
+        'PORT': config('DATABASE_PORT_NEWS'),
     }
 }
 
