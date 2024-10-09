@@ -2,8 +2,7 @@ venv
 .idea
 __pycache__
 
-server/auth_microservice/auth_microservice_app/migrations
-server/main_page_microservice/main_page_microservice_app/migrations
 server/pswd
-server/main_page_microservice/.env_main
+server/news_microservice/.env_main
 .env
+nginx.conf

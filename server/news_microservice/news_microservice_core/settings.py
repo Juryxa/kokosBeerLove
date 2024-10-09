@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY_SHOP')
+SECRET_KEY = config('SECRET_KEY_MAIN')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'shop_microservice_app',
+    'news_microservice_app',
     'corsheaders',
     'drf_yasg',
 ]
@@ -60,7 +61,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'shop_microservice_core.urls'
+ROOT_URLCONF = 'news_microservice_core.urls'
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
                         'http://localhost',]
@@ -91,7 +92,6 @@ CORS_ALLOW_HEADERS = [
     'X-Requested-With',
 ]
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -108,7 +108,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'shop_microservice_core.wsgi.application'
+WSGI_APPLICATION = 'news_microservice_core.wsgi.application'
 
 
 
@@ -118,11 +118,11 @@ WSGI_APPLICATION = 'shop_microservice_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME_SHOP'),
-        'USER': config('DATABASE_USER_SHOP'),
-        'PASSWORD': config('DATABASE_PASSWORD_SHOP'),
-        'HOST': config('DATABASE_HOST_SHOP'),
-        'PORT': config('DATABASE_PORT_SHOP'),
+        'NAME': config('DATABASE_NAME_NEWS'),
+        'USER': config('DATABASE_USER_NEWS'),
+        'PASSWORD': config('DATABASE_PASSWORD_NEWS'),
+        'HOST': config('DATABASE_HOST_NEWS'),
+        'PORT': config('DATABASE_PORT_NEWS'),
     }
 }
 
@@ -181,7 +181,13 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-from datetime import timedelta
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your auth_microservice_app API',
+    'DESCRIPTION': 'Your project API documentation',
+    'VERSION': '1.0.0',
+}
+
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
