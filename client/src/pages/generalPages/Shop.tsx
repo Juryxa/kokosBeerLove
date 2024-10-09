@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import './Shop.css';
-import { Card, CardContent, Typography, Button } from '@mui/material';
-import data from './shop.json';
 import tshirt from '../../images/T-shirt Mockup.png';
 import kangaroo from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import {ShopResponse} from "../../api/models/response/ShopResponse";
-import ShopService from "../../api/services/ShopService";
-
-interface ShopType {
-  id: number;
-  title: string;
-  content?: string;
-  image: string;
-}
+import { ShopResponse } from '../../api/models/response/ShopResponse';
+import ShopService from '../../api/services/ShopService';
+import { Link } from 'react-router-dom';
+import {Button} from "@mui/material";
 
 const imageMapping: Record<string, string> = {
   tshirt: tshirt,
   kangaroo: kangaroo,
 };
 
+const ShopCard: React.FC<ShopResponse> = ({ id, name, description, price, url_images }) => {
+  return (
+      <Link to={`/shop/${id}`} className="shop-card">
+        <div className="shop-content-text">
+          <h3 className="shop-title">{name}</h3>
+          <p className="shop-description">{description}</p>
+        </div>
+        <div className="shop-content-img">
+          <img src={url_images[0]} alt={name} className="shop-image" />
+        </div>
+          <div>
+              <p className="shop-price">{price} ₽</p>
+          </div>
+          <div className="shop-content-action">
+              <Button variant="contained" color="error" className="shop-order-button">Заказать</Button>
+        </div>
+      </Link>
+  );
+};
+
 const Shop = () => {
   const [shopData, setShopData] = useState<ShopResponse[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [shopItem, setShopItem] = useState<ShopResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
@@ -39,19 +51,16 @@ const Shop = () => {
       const response = await ShopService.getAllProducts();
       setShopData(response.data);
     } catch (error) {
-      setErrorMessage('Ошибка загрузки новостей.');
+      setErrorMessage('Ошибка загрузки товаров.');
     } finally {
       setIsLoading(false);
     }
   };
 
-
-  // Определяем элементы, которые будут отображаться на текущей странице
+  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = shopData.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Обработка переключения страниц
   const totalPages = Math.ceil(shopData.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -63,45 +72,38 @@ const Shop = () => {
   };
 
   return (
-    <div className="page-shop-container">
-      <Header />
-      <div className="page-shop-content">
-        <div className="page-shop-title" >
+      <div className="container-shop">
+        <Header />
+        <div className="shop-section">
           <h1>Магазин</h1>
+          <div className="shop-cards-container">
+            {isLoading && <div className="loading-spinner"></div>}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {currentItems.map((item) => (
+                <ShopCard
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    description={item.description}
+                    price={item.price}
+                    url_images={item.url_images}
+                />
+            ))}
+          </div>
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+              Предыдущая
+            </button>
+            <span style={{ color: 'white' }}>
+                        Страница {currentPage} из {totalPages}
+                    </span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+              Следующая
+            </button>
+          </div>
         </div>
-        <div className="page-shop-card-container">
-          {isLoading && (
-              <div className='loading-spinner'></div>
-          )}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          {currentItems.map((item) => (
-            <Card key={item.id} className="page-shop-card">
-              <img src={imageMapping[item.url_images[0]]} alt={item.name} className="page-shop-card-image" />
-              <CardContent>
-                <Typography variant="h6">{item.name}</Typography>
-                <Typography variant="body2">{item.description}</Typography>
-                <Button variant="contained" color="error" className="page-shop-card-button">
-                  Заказать
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        {/* Пагинация */}
-        <div className="pagination">
-          <Button onClick={handlePrevPage} disabled={currentPage === 1}>
-            Предыдущая
-          </Button>
-          <span style={{color:'white'}}>
-            Страница {currentPage} из {totalPages}
-          </span>
-          <Button onClick={handleNextPage} disabled={currentPage === totalPages}>
-            Следующая
-          </Button>
-        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
   );
 };
 
