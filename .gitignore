@@ -7,3 +7,4 @@ server/news_microservice/news_microservice_app/migrations
 server/pswd
 server/news_microservice/.env_main
 .env
+nginx.conf
