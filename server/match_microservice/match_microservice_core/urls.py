@@ -11,7 +11,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
         default_version='v1',
-        description='Все запросы начинаются с http://127.0.0.1:8000/api/ если сервер локальный и на порту 8000'
+        description='Все запросы начинаются с http://127.0.0.1:8000/api/match/ если сервер локальный и на порту 8000'
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
@@ -22,5 +22,5 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('swagger.json/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 
-    path('api/match/', include('news_microservice_app.urls')),
+    path('api/match/', include('match_microservice_app.urls')),
 ]

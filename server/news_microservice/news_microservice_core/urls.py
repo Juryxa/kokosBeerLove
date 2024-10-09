@@ -11,7 +11,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
         default_version='v1',
-        description='Все запросы начинаются с http://127.0.0.1:8000/api/ если сервер локальный и на порту 8000'
+        description='Все запросы начинаются с http://127.0.0.1:8000/api/news/ если сервер локальный и на порту 8000'
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),

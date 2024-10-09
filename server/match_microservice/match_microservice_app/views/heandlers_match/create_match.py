@@ -10,7 +10,7 @@ from drf_yasg import openapi
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание нового матча. ВАЖНО ПЕРЕДАТЬ access token. Пользователь должен быть администратором (is_superuser == true), иначе ответит 403.",
+    operation_description="Создание нового матча с указанием URL изображения. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         required=['team_home', 'team_away', 'score_home', 'score_away', 'location', 'division'],
