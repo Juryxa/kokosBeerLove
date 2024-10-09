@@ -8,7 +8,7 @@ import './ShopAdmin.css';
 const ShopAdmin = () => {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState<string>('');  // Поле для цены как строка
     const [image, setImage] = useState<File | null>(null);
     const [productList, setProductList] = useState<ShopResponse[]>([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -36,14 +36,25 @@ const ShopAdmin = () => {
         }
     };
 
-    const handleAddOrUpdateProduct = async () => {
-        if (!productName || !description || !price) {
-            setErrorMessage('Заполните все поля!');
-            return;
-        }
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, selectionStart } = e.target;
 
-        if (!/^\d+(\.\d{1,2})?$/.test(price)) {
-            setErrorMessage('Некорректный формат цены. Укажите число или число в формате "100.00"');
+        // Проверка на то, что введенное значение является числом с не более чем двумя знаками после запятой
+        const regex = /^\d+(\.\d{0,2})?$/;
+
+        if (value === '' || regex.test(value)) {
+            setPrice(value);
+
+            // Перемещаем курсор на правильную позицию
+            setTimeout(() => {
+                e.target.setSelectionRange(selectionStart, selectionStart);
+            }, 0);
+        }
+    };
+
+    const handleAddOrUpdateProduct = async () => {
+        if (!productName || !description || price === '') {
+            setErrorMessage('Заполните все поля!');
             return;
         }
 
@@ -52,25 +63,37 @@ const ShopAdmin = () => {
 
             if (image) {
                 const uploadedImageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
-                imageUrl.push(uploadedImageUrl);
+                imageUrl = [uploadedImageUrl];
+            }
+
+            const parsedPrice = parseFloat(price);  // Преобразуем строку в число перед отправкой на сервер
+            if (isNaN(parsedPrice)) {
+                setErrorMessage('Цена должна быть числом.');
+                return;
             }
 
             if (isEditing && editProductId !== null) {
                 if (originalProduct) {
                     const isNameChanged = originalProduct.name !== productName;
                     const isDescriptionChanged = originalProduct.description !== description;
-                    const isPriceChanged = originalProduct.price !== price;
+                    const isPriceChanged = originalProduct.price !== parsedPrice;
                     const isImageChanged = image !== null;
 
                     if (isNameChanged || isDescriptionChanged || isPriceChanged || isImageChanged) {
-                        await ShopService.updatePartProduct(editProductId, productName, description, price, imageUrl.length > 0 ? imageUrl : originalProduct.url_images);
+                        await ShopService.updatePartProduct(
+                            editProductId,
+                            productName,
+                            description,
+                            parsedPrice,
+                            imageUrl.length > 0 ? imageUrl : originalProduct.url_images
+                        );
                         setSuccessMessage('Товар обновлен.');
                     } else {
                         setSuccessMessage('Изменений не обнаружено.');
                     }
                 }
             } else {
-                await ShopService.createProduct(productName, description, price, imageUrl);
+                await ShopService.createProduct(productName, description, parsedPrice, imageUrl);
                 setSuccessMessage('Товар добавлен.');
             }
 
@@ -96,7 +119,7 @@ const ShopAdmin = () => {
 
             setProductName(product.name);
             setDescription(product.description);
-            setPrice(product.price);
+            setPrice(product.price);  // Оставляем цену как строку
             setIsEditing(true);
             setEditProductId(product.id);
             setOriginalProduct(product);
@@ -139,8 +162,8 @@ const ShopAdmin = () => {
                 type="text"
                 className="shop-admin-input"
                 placeholder="Цена"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={price}  // Оставляем строковое значение цены
+                onChange={handlePriceChange}
             />
             <label className="shop-admin-file-label">
                 Загрузить изображение
@@ -161,7 +184,7 @@ const ShopAdmin = () => {
                                 <div className="product-list-item-content">
                                     <h4>{product.name}</h4>
                                     <p>{product.description}</p>
-                                    <p>{product.price} ₽</p>
+                                    <p>{product.price} ₽</p>  {/* Оставляем цену как строку */}
                                     {product.url_images && product.url_images.length > 0 && (
                                         <img src={product.url_images[0]} alt={product.name} className="product-image" />
                                     )}

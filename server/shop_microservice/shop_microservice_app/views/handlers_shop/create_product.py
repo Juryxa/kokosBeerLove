@@ -28,12 +28,17 @@ def create_product(request):
     if not request.user.is_superuser:
         return Response({'error': 'У вас нет прав доступа для создания товаров'}, status=status.HTTP_403_FORBIDDEN)
 
+    # Получаем данные с удалением пустых строк в массиве url_images
+    data = request.data
+    if 'url_images' in data:
+        # Удаляем пустые строки из массива изображений
+        data['url_images'] = [url for url in data['url_images'] if url]
+
     # Сериализуем данные
-    serializer = ProductCreateSerializer(data=request.data)
+    serializer = ProductCreateSerializer(data=data)
     if serializer.is_valid():
         # Сохраняем данные и массив изображений
         serializer.save()
         return Response(status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
