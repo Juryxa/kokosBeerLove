@@ -6,3 +6,4 @@ server/pswd
 server/news_microservice/.env_main
 .env
 nginx.conf
+start_services.bat
