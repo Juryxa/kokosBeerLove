@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import ContentService from '../../api/services/ContentService'
+import NewsService from '../../api/services/NewsService'
 import { NewsResponse } from '../../api/models/response/NewsResponse';
 import {uploadImage} from "./functions/uploadImage";
 import './NewsAdmin.css';
@@ -22,7 +22,7 @@ const NewsAdmin = () => {
 
     const fetchNews = async () => {
         try {
-            const response = await ContentService.getAllNews();
+            const response = await NewsService.getAllNews();
             setNewsList(response.data);
         } catch (error) {
             setErrorMessage('Ошибка загрузки новостей.');
@@ -59,15 +59,15 @@ const NewsAdmin = () => {
                     const isImageChanged = image !== null;
 
                     if (isTitleChanged && isContentChanged && isImageChanged) {
-                        await ContentService.updateFullNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updateFullNews(editNewsId, title, content, imageUrl || originalNews.image);
                         setSuccessMessage('Новость полностью обновлена.');
                     } else {
-                        await ContentService.updatePartNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updatePartNews(editNewsId, title, content, imageUrl || originalNews.image);
                         setSuccessMessage('Новость частично обновлена.');
                     }
                 }
             } else {
-                await ContentService.createNews(title, content, imageUrl);
+                await NewsService.createNews(title, content, imageUrl);
                 setSuccessMessage('Новость добавлена.');
             }
 
@@ -87,7 +87,7 @@ const NewsAdmin = () => {
 
     const handleEditNews = async (newsId: number) => {
         try {
-            const response = await ContentService.getNewsId(newsId);
+            const response = await NewsService.getNewsId(newsId);
             const news = response.data;
 
             setTitle(news.title);
@@ -102,7 +102,7 @@ const NewsAdmin = () => {
 
     const handleDeleteNews = async (id: number) => {
         try {
-            await ContentService.deleteNews(id);
+            await NewsService.deleteNews(id);
             setSuccessMessage('Новость удалена.');
             await fetchNews();
         } catch (error) {

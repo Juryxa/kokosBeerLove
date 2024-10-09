@@ -1,8 +1,8 @@
 import React, { FC, useContext, useState } from 'react';
-import { Context } from "../index";
+import { Context } from "../../index";
 import { observer } from "mobx-react-lite";
-import Header from "../components/Header";
-import background from "../images/Rectangle2.png";
+import Header from "../../components/Header";
+import background from "../../images/Rectangle2.png";
 import { Box, Button, TextField, Typography, } from '@mui/material';
 
 

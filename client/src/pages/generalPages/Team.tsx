@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Team.css';
-import player1 from '../images/player.jpeg';
-import player2 from '../images/player1.jpg';
+import player1 from '../../images/player.jpeg';
+import player2 from '../../images/player1.jpg';
 import data from './players.json';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import BigBosses from '../components/BigBosses';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import BigBosses from '../../components/BigBosses';
 
 interface PlayerType {
     id: number;
@@ -45,7 +45,7 @@ const Team = () => {
         <div className="team-container">
             <Header/>
 
-           
+
 
             <BigBosses/>
             <table className="team-table">

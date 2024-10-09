@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React, { FC, useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import './Matches.css';
-import CreateVideoFrame from '../components/CreateVideoFrame'; // Импортируем компонент
-import logo1 from '../images/logoteam1.png'
-import logo2 from '../images/logo2.png'
-import place from '../images/icons/stadium__small.svg'
-import league from '../images/icons/ball.svg'
+import CreateVideoFrame from '../../components/CreateVideoFrame'; // Импортируем компонент
+import logo1 from '../../images/logoteam1.png'
+import logo2 from '../../images/logo2.png'
+import place from '../../images/icons/stadium__small.svg'
+import league from '../../images/icons/ball.svg'
 
 const Matches: FC = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +19,7 @@ const Matches: FC = () => {
         height: 480,
         autoplay: true,
     };
-  
+
 
     const vkLinks = [
         { id: 1, oid: '-170578', idVideo: '456241163', hd: 4,"title":"24.08.99","scoreteam1":1,"scoreteam2":1,"location":"Вернадка Парк. Поле № 1","league":"Высший дивизион ЮЗЛ-2024" },
@@ -34,7 +34,7 @@ const Matches: FC = () => {
         { id: 10, oid: '-55072656', idVideo: '456239074', hd: 4,"title":"24.08.99","scoreteam1":1,"scoreteam2":1,"location":"Вернадка Парк. Поле № 1","league":"Высший дивизион ЮЗЛ-2024"  },
         { id: 11, oid: '-55072656', idVideo: '456239074', hd: 4,"title":"24.08.99","scoreteam1":1,"scoreteam2":1,"location":"Вернадка Парк. Поле № 1","league":"Высший дивизион ЮЗЛ-2024"  },
         { id: 12, oid: '-2000965537', idVideo: '125965537', hd: 4,"title":"24.08.99","scoreteam1":1,"scoreteam2":1,"location":"Вернадка Парк. Поле № 1","league":"Высший дивизион ЮЗЛ-2024"  },
-        
+
     ];
 
 
