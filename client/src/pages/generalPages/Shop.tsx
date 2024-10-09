@@ -6,6 +6,8 @@ import tshirt from '../../images/T-shirt Mockup.png';
 import kangaroo from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import {ShopResponse} from "../../api/models/response/ShopResponse";
+import ShopService from "../../api/services/ShopService";
 
 interface ShopType {
   id: number;
@@ -20,21 +22,37 @@ const imageMapping: Record<string, string> = {
 };
 
 const Shop = () => {
-  const [shopItem, setShopItem] = useState<ShopType[]>([]);
+  const [shopData, setShopData] = useState<ShopResponse[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shopItem, setShopItem] = useState<ShopResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
   useEffect(() => {
-    setShopItem(data.shop);
+    fetchShop();
   }, []);
+
+  const fetchShop = async () => {
+    setIsLoading(true);
+    try {
+      const response = await ShopService.getAllProducts();
+      setShopData(response.data);
+    } catch (error) {
+      setErrorMessage('Ошибка загрузки новостей.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   // Определяем элементы, которые будут отображаться на текущей странице
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = shopItem.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = shopData.slice(indexOfFirstItem, indexOfLastItem);
 
   // Обработка переключения страниц
-  const totalPages = Math.ceil(shopItem.length / itemsPerPage);
+  const totalPages = Math.ceil(shopData.length / itemsPerPage);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
@@ -52,12 +70,16 @@ const Shop = () => {
           <h1>Магазин</h1>
         </div>
         <div className="page-shop-card-container">
+          {isLoading && (
+              <div className='loading-spinner'></div>
+          )}
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           {currentItems.map((item) => (
             <Card key={item.id} className="page-shop-card">
-              <img src={imageMapping[item.image]} alt={item.title} className="page-shop-card-image" />
+              <img src={imageMapping[item.url_images[0]]} alt={item.name} className="page-shop-card-image" />
               <CardContent>
-                <Typography variant="h6">{item.title}</Typography>
-                <Typography variant="body2">{item.content}</Typography>
+                <Typography variant="h6">{item.name}</Typography>
+                <Typography variant="body2">{item.description}</Typography>
                 <Button variant="contained" color="error" className="page-shop-card-button">
                   Заказать
                 </Button>
