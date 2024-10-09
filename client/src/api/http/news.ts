@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AuthResponse } from "../models/response/AuthResponse";
 
-export const NEWS_API_URL = 'http://localhost:9000/api/news';
+export const NEWS_API_URL = 'http://localhost:8001/api/news';
 
 const newsApi = axios.create({
     withCredentials: true,

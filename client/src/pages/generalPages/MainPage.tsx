@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import NearestMatch from "../components/NearestMatch";
-import MatchesPreview from "../components/MatchesPreview";
-import NewsPreview from "../components/NewsPreview";
-import ClubPreiew from '../components/ClubPreview'
-import ShopPreview from '../components/ShopPreview';
-import Carousel from '../components/Carousel';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import NearestMatch from "../../components/NearestMatch";
+import MatchesPreview from "../../components/MatchesPreview";
+import NewsPreview from "../../components/NewsPreview";
+import ClubPreiew from '../../components/ClubPreview'
+import ShopPreview from '../../components/ShopPreview';
+import Carousel from '../../components/Carousel';
 
 const tabloinfo = {
     title: "Высший дивизион 25 ТУР",

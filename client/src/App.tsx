@@ -1,26 +1,25 @@
 import React, {useContext, useEffect} from 'react';
 import './App.css';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/generalPages/MainPage';
 import {Route, Routes} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {Context} from "./index";
-import Matches from './pages/Matches';
-import AdminPage from "./pages/AdminPage";
-import FanPage from "./pages/FanPage";
+import Matches from './pages/generalPages/Matches';
+import AdminPage from "./pages/generalPages/AdminPage";
 import NewsAdmin from "./pages/adminPages/NewsAdmin";
 import MatchesAdmin from "./pages/adminPages/MatchesAdmin";
 import AboutClubAdmin from "./pages/adminPages/AboutClubAdmin";
 import ContactsAdmin from "./pages/adminPages/ContactsAdmin";
 import ShopAdmin from "./pages/adminPages/ShopAdmin";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/generalPages/NotFound";
 import RequireAuth from "./pages/hoc/RequireAuth";
-import News from "./pages/News";
-import AboutClub from "./pages/AboutClub";
-import Shop from "./pages/Shop";
-import {Co2} from "@mui/icons-material";
-import Team from "./pages/Team";
-import NewsDetails from './pages/NewsDetails';
-import UserProfile from './pages/UserProfile';
+import News from "./pages/generalPages/News";
+import AboutClub from "./pages/generalPages/AboutClub";
+import Shop from "./pages/generalPages/Shop";
+import Team from "./pages/generalPages/Team";
+import NewsDetails from './pages/generalPages/NewsDetails';
+import UserProfile from './pages/generalPages/UserProfile';
+import MatchDetails from './pages/generalPages/MatchDetails';
 
 
 function App() {
@@ -42,8 +41,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/matches" element={<Matches/>}/>
+                <Route path="/match/:id" element={<MatchDetails />} />
                 <Route path='/news' element={<News/>}/>
-                <Route path="/news/:newsId" element={<NewsDetails />} />
+                <Route path="/news/:id" element={<NewsDetails />} />
                 <Route path='/about' element={<AboutClub/>}/>
                 <Route path='/shop' element={<Shop/>}/>
                 <Route path='/team' element={<Team/>}/>
@@ -54,7 +54,7 @@ function App() {
                     <Route path="about" element={<AboutClubAdmin/>}/>
                     <Route path="shop" element={<ShopAdmin/>}/>
                 </Route>
-                <Route path='/fan' element={<RequireAuth><FanPage/></RequireAuth>}/>
+                <Route path='/fan' element={<RequireAuth><UserProfile/></RequireAuth>}/>
                 <Route path='*' element={<NotFound/>}/>
                 <Route path='/test' element={<UserProfile/>}/>
             </Routes>

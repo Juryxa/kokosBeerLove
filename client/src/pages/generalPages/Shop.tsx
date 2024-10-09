@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './Shop.css';
 import { Card, CardContent, Typography, Button } from '@mui/material';
 import data from './shop.json';
-import tshirt from '../images/T-shirt Mockup.png';
-import kangaroo from '../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import tshirt from '../../images/T-shirt Mockup.png';
+import kangaroo from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface ShopType {
   id: number;

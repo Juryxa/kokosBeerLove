@@ -1,7 +1,7 @@
 import newsApi from "../http/news";
 import {NewsResponse} from "../models/response/NewsResponse";
 
-export default class ContentService{
+export default class NewsService {
     static async getAllNews() {
         return newsApi.get<NewsResponse[]>('/get_all/');
     }

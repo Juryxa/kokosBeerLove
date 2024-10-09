@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, CardContent, Typography, Button, Avatar, Grid } from '@mui/material';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const UserProfile: React.FC = () => {
   return (
@@ -31,8 +31,8 @@ const UserProfile: React.FC = () => {
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
                 </Typography>
-                
-                
+
+
               </Card>
 
               {/* Социальные сети */}
@@ -70,7 +70,7 @@ const UserProfile: React.FC = () => {
                       bootdey
                     </Typography>
                   </Box>
-                  
+
                 </CardContent>
               </Card>
             </Grid>
