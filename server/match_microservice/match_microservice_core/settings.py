@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'match_microservice_app',
     'corsheaders',
+    'match_microservice_app',
     'drf_yasg',
 ]
 

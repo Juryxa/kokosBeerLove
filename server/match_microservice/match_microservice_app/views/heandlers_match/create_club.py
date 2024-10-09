@@ -11,7 +11,7 @@ from drf_yasg import openapi
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание новой команды. ВАЖНО ПЕРЕДАТЬ access token. Пользователь должен быть администратором (is_superuser == true), иначе ответит 403.",
+    operation_description="Создание нового клуба с указанием URL изображения. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         required=['name', 'logo_url'],
