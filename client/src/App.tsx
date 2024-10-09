@@ -20,6 +20,7 @@ import Shop from "./pages/Shop";
 import {Co2} from "@mui/icons-material";
 import Team from "./pages/Team";
 import NewsDetails from './pages/NewsDetails';
+import UserProfile from './pages/UserProfile';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                 </Route>
                 <Route path='/fan' element={<RequireAuth><FanPage/></RequireAuth>}/>
                 <Route path='*' element={<NotFound/>}/>
+                <Route path='/test' element={<UserProfile/>}/>
             </Routes>
         </div>
     );

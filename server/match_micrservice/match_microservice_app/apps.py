@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MainPageMicroserviceAppConfig(AppConfig):
+class MatchMicroserviceAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'main_page_microservice_app'
+    name = 'match_microservice_app'

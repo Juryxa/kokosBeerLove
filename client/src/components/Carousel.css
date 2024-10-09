@@ -125,12 +125,30 @@
     transform: translateX(-100%); /* Сдвиг при анимации */
 }
 
-.command-h1{
+.command-h1 {
     background: linear-gradient(to bottom, #ff2a2a 0%, #410707 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 100px; /* Установите нужный размер шрифта */
+    font-size: 100px; /* Размер шрифта для больших экранов */
     text-align: center; /* Выравнивание текста */
     z-index: 2;
-   
+}
+
+/* Адаптивные стили для планшетов и мобильных устройств */
+@media (max-width: 1024px) {
+    .command-h1 {
+        font-size: 70px; /* Уменьшение размера шрифта для планшетов */
+    }
+}
+
+@media (max-width: 768px) {
+    .command-h1 {
+        font-size: 50px; /* Уменьшение размера шрифта для маленьких планшетов */
+    }
+}
+
+@media (max-width: 480px) {
+    .command-h1 {
+        font-size: 35px; /* Размер шрифта для мобильных телефонов */
+    }
 }

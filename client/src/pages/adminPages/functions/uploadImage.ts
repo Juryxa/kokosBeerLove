@@ -9,7 +9,7 @@ export const uploadImage = async (
 
     try {
         const response = await axios.put(
-            `http://localhost/upload_image/${uniqueFileName}`,
+            `http://localhost/uploads/news_images/${uniqueFileName}`,
             file,
             {
                 headers: {
@@ -20,10 +20,10 @@ export const uploadImage = async (
 
         if (response.status === 201) {
             setSuccessMessage('Изображение успешно загружено.');
-            return `/uploads/news_images/${uniqueFileName}`;
+            return `http://localhost/uploads/news_images/${uniqueFileName}`;
         } else {
             setErrorMessage('Ошибка при загрузке изображения.');
-            return '';
+            return'';
         }
     } catch (error) {
         setErrorMessage('Ошибка при загрузке изображения.');
