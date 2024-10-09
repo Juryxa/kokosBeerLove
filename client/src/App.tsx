@@ -19,6 +19,7 @@ import Shop from "./pages/generalPages/Shop";
 import Team from "./pages/generalPages/Team";
 import NewsDetails from './pages/generalPages/NewsDetails';
 import UserProfile from './pages/generalPages/UserProfile';
+import MatchDetails from './pages/generalPages/MatchDetails';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage/>}/>
                 <Route path="/matches" element={<Matches/>}/>
+                <Route path="/match/:id" element={<MatchDetails />} />
                 <Route path='/news' element={<News/>}/>
                 <Route path="/news/:id" element={<NewsDetails />} />
                 <Route path='/about' element={<AboutClub/>}/>
