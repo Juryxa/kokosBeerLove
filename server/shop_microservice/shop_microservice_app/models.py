@@ -9,7 +9,6 @@ class Product(models.Model):
     url_images = ArrayField(
         models.CharField(max_length=500), blank=True, default=list
     )  # Поле для массива URL изображений
-    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         db_table = 'shop_products'
