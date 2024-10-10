@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -5,7 +6,6 @@ from ...models import AboutFcKokoc
 from ...serializers import AboutFcKokocSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-
 
 @swagger_auto_schema(
     method='get',
@@ -16,6 +16,7 @@ from drf_yasg import openapi
     }
 )
 @api_view(['GET'])
+@cache_page(60 * 10)
 def get_about_fc_kokoc(request):
     try:
         about_fc_kokoc = AboutFcKokoc.objects.first()

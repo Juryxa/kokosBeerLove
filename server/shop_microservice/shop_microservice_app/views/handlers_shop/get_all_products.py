@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -16,6 +17,7 @@ from ...serializers import ProductSerializer
     }
 )
 @api_view(['GET'])
+@cache_page(60 * 20)
 def get_all_products(request):
     # Получаем все товары из базы данных
     products = Product.objects.all()
