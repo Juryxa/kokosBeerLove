@@ -27,7 +27,7 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY_MAIN')
+SECRET_KEY = config('SECRET_KEY_MATCH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -180,13 +180,6 @@ REST_FRAMEWORK = {
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your auth_microservice_app API',
-    'DESCRIPTION': 'Your project API documentation',
-    'VERSION': '1.0.0',
-}
-
 
 
 SIMPLE_JWT = {
