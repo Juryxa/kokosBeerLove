@@ -72,7 +72,7 @@ const NewsDetails: React.FC = () => {
                         <div className="newsdetails-content">{newsItem.text}</div>
                     </>
                 ) : (
-                    <div>Новость не найдена.</div>
+                    <div className='notfound'>Новость не найдена.</div>
                 )
             )}
             

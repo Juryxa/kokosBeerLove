@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { TextField, List, ListItem, Box } from '@mui/material';
+import { ListItemButton, ListItemText } from '@mui/material';
 import './News.css';
 import imgnews from '../../images/news.png';
-import {Link} from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import {NewsResponse} from "../../api/models/response/NewsResponse";
+import { NewsResponse } from "../../api/models/response/NewsResponse";
 import NewsService from "../../api/services/NewsService";
-import {parseAndFormatDate} from "./functions/dateParser";
-
-
+import { parseAndFormatDate } from "./functions/dateParser";
 
 const imageMapping: Record<string, string> = {
     imgnews: imgnews,
 };
 
-
-const truncateText = (text:string, wordLimit:number):string => {
+const truncateText = (text: string, wordLimit: number): string => {
     const words = text.split(' ');
     if (words.length > wordLimit) {
         return words.slice(0, wordLimit).join(' ') + '...';
@@ -23,19 +22,17 @@ const truncateText = (text:string, wordLimit:number):string => {
     return text;
 };
 
-const NewsCard: React.FC<NewsResponse> = ({id, title, text, image, created_at}) => {
+const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image, created_at }) => {
     return (
         <Link to={`/news/${id}`} className="news-card">
             <div className="news-content-text">
-            
                 <h3 className="news-title">{truncateText(title, 10)}</h3>
-                <p className="news-text" >{truncateText(text, 20)}</p>  
+                <p className="news-text">{truncateText(text, 20)}</p>
                 <p className="news-time">{parseAndFormatDate(created_at)}</p>
             </div>
             <div className="news-content-img">
-                <img src={image} alt="news" className="news-image"/>
+                <img src={image} alt="news" className="news-image" />
             </div>
-
         </Link>
     );
 };
@@ -44,6 +41,9 @@ const News = () => {
     const [newsData, setNewsData] = useState<NewsResponse[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [suggestions, setSuggestions] = useState<NewsResponse[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchNews();
@@ -61,15 +61,71 @@ const News = () => {
         }
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        // Фильтруем новости по заголовку на основе запроса
+        const filteredSuggestions = newsData.filter((news) =>
+            news.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setSuggestions(filteredSuggestions);
+    };
+
+    const handleSuggestionClick = (id: number) => {
+        navigate(`/news/${id}`);
+    };
+
     return (
-        <div className='container-news'>
-            <Header/>
+        <div className="container-news">
+            <Header />
             <div className="news-section">
                 <h1>НОВОСТИ</h1>
+
+                {/* Поле поиска */}
+                <Box mb={3} style={ {color: 'red'} }>
+    <TextField
+        label="Поиск новостей"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        sx={{ 
+            width: '300px', // Уменьшаем ширину строки поиска
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: 'red', // Красная рамка
+                },
+                '&:hover fieldset': {
+                    borderColor: 'darkred', // Более темная красная рамка при наведении
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: 'red', // Красная рамка при фокусе
+                },
+            },
+        }}
+        InputLabelProps={{
+            sx: { color: 'red' }, // Красный цвет для надписи
+        }}
+    />
+    {suggestions.length > 0 && (
+        <List>
+            {suggestions.map((news) => (
+                <ListItemButton
+                    key={news.id}
+                    onClick={() => handleSuggestionClick(news.id)}
+                    sx={{ width: '200px' }}
+                >
+                    <ListItemText primary={news.title} />
+                </ListItemButton>
+            ))}
+        </List>
+    )}
+</Box>
+
+
+
                 <div className="news-cards-container">
-                    {isLoading && (
-                        <div className='loading-spinner'></div>
-                    )}
+                    {isLoading && <div className="loading-spinner"></div>}
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
                     {newsData.map((news) => (
                         <NewsCard
@@ -78,12 +134,12 @@ const News = () => {
                             title={news.title}
                             text={news.text}
                             image={imageMapping[news.image] || imgnews}
-                            
-                            created_at={news.created_at}/>
+                            created_at={news.created_at}
+                        />
                     ))}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

@@ -3,6 +3,14 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    flex: 1;
+}
+.search-input {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .news-section {
