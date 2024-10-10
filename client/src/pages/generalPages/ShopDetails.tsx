@@ -21,9 +21,9 @@ const ShopDetails = () => {
             setProductItem(response.data);
         } catch (error: any) {
             if (error.response && error.response.status === 404) {
-                setErrorMessage('Новость не найдена.');
+                setErrorMessage('Товары не найдены.');
             } else {
-                setErrorMessage('Ошибка загрузки новостей.');
+                setErrorMessage('Ошибка загрузки товаров.');
             }
         } finally {
             setIsLoading(false);
