@@ -1,11 +1,13 @@
-import newsApi from "../http/news";
+import {newsApi} from "../http/news";
 import {NewsResponse} from "../models/response/NewsResponse";
 
 export default class NewsService {
     static async getAllNews() {
+        // @ts-ignore
         return newsApi.get<NewsResponse[]>('/get_all/');
     }
     static async getNewsId(articleId: number) {
+        // @ts-ignore
         return newsApi.get<NewsResponse>(`/${articleId}/`);
     }
     static async createNews(title: string, text: string, image_url: string) {

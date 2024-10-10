@@ -21,7 +21,12 @@ export const uploadImage = async (
         if (response.status === 201) {
             setSuccessMessage('Изображение успешно загружено.');
             return `http://localhost/uploads/news_images/${uniqueFileName}`;
-        } else {
+        }
+        if (response.status === 401){
+            setErrorMessage('Вы не авторизованы');
+            return'';
+        }
+        else {
             setErrorMessage('Ошибка при загрузке изображения.');
             return'';
         }
