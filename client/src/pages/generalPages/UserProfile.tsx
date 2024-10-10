@@ -15,6 +15,17 @@ interface User {
   telegram: string;
 }
 
+const fieldNames: Record<keyof User, string> = {
+  name: 'Имя',
+  surname: 'Фамилия',
+  email: 'Электронная почта',
+  phone: 'Номер телефона',
+  telegram: 'Телеграм',
+  img: 'Аватар',
+  id: 'ID'
+};
+
+
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<User>(userData.user[0]);
   const [isEditing, setIsEditing] = useState(false);
@@ -80,25 +91,26 @@ const UserProfile: React.FC = () => {
             <Grid item xs={12} md={8}>
               <Card sx={{ padding: 2, backgroundColor: '#ffffff' }}>
                 <CardContent>
-                  {(['name', 'surname', 'email', 'phone', 'telegram'] as Array<keyof User>).map((field) => (
-                    <Box key={field} mb={2}>
-                      <Typography variant="h6" gutterBottom>
-                        {field.charAt(0).toUpperCase() + field.slice(1)}
-                      </Typography>
-                      {isEditing ? (
-                        <TextField
-                          fullWidth
-                          variant="outlined"
-                          value={user[field]}
-                          onChange={(e) => handleInputChange(field, e.target.value)}
-                        />
-                      ) : (
-                        <Typography variant="body2" color="textSecondary">
-                          {user[field]}
-                        </Typography>
-                      )}
-                    </Box>
-                  ))}
+                {(['name', 'surname', 'email', 'phone', 'telegram'] as Array<keyof User>).map((field) => (
+  <Box key={field} mb={2}>
+    <Typography variant="h6" gutterBottom>
+      {fieldNames[field]} {/* Используем русские названия полей */}
+    </Typography>
+    {isEditing ? (
+      <TextField
+        fullWidth
+        variant="outlined"
+        value={user[field]}
+        onChange={(e) => handleInputChange(field, e.target.value)}
+      />
+    ) : (
+      <Typography variant="body2" color="textSecondary">
+        {user[field]}
+      </Typography>
+    )}
+  </Box>
+))}
+
                   <Button variant="contained" color="error" onClick={handleEditToggle}> {/* Цвет кнопки изменен на красный */}
                     {isEditing ? 'Сохранить' : 'Редактировать'}
                   </Button>
