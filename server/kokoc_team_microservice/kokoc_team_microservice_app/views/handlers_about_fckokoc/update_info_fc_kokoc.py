@@ -39,8 +39,9 @@ from drf_yasg import openapi
 @permission_classes([IsAuthenticated])
 def update_info_fc_kokoc(request):
     try:
-        about_fc_kokoc = AboutFcKokoc.objects.first()
+        about_fc_kokoc = AboutFcKokoc.get_instance()
 
+        # Проверка прав администратора
         if not request.user.is_superuser:
             return Response({'error': 'У вас нет прав для изменения информации'}, status=status.HTTP_403_FORBIDDEN)
 
@@ -48,14 +49,14 @@ def update_info_fc_kokoc(request):
         if request.method == 'PUT':
             # Полное обновление (все поля обязательны)
             serializer = AboutFcKokocSerializer(about_fc_kokoc, data=request.data)
-        elif request.method == 'PATCH':
+        else:
             # Частичное обновление (некоторые поля могут быть обновлены)
             serializer = AboutFcKokocSerializer(about_fc_kokoc, data=request.data, partial=True)
 
         # Проверяем валидность данных
         if serializer.is_valid():
             serializer.save()
-            return Response(status=status.HTTP_200_OK)
+            return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
