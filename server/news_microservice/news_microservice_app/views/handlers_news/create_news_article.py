@@ -44,7 +44,7 @@ def create_news_article(request):
 
     if title or text or image_url:
         # Сохранение новости в базе данных с URL изображения
-        NewsArticle.objects.create(title=title, text=text, image=image_url)
+        NewsArticle.objects.create(title=title, text=text, image_url=image_url)
         return Response(status=status.HTTP_201_CREATED)
 
     # Если отсутствуют обязательные поля, возвращаем ошибку
