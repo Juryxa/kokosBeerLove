@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_page
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import api_view
@@ -23,8 +24,8 @@ from ...serializers import NewsArticleSerializer
     })}
 )
 @api_view(['GET'])
+@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 def get_all_news_articles(request):
     articles = NewsArticle.objects.all()
     serializer = NewsArticleSerializer(articles, many=True)
-
     return Response(serializer.data)
