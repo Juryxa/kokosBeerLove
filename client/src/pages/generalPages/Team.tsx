@@ -11,7 +11,6 @@ interface PlayerType {
     id: number;
     name: string;
     role: string;
-    club: string;
     games: number;
     goals: number;
     assists: number;
@@ -53,7 +52,6 @@ const Team = () => {
                     <tr>
                         <th>№</th>
                         <th>ФИО</th>
-                        <th>КЛУБ</th>
                         <th>ИГРЫ</th>
                         <th>ГОЛЫ</th>
                         <th>ПАСЫ</th>
@@ -79,7 +77,6 @@ const Team = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{player.club}</td>
                                     <td>{player.games}</td>
                                     <td>{player.goals}</td>
                                     <td>{player.assists}</td>

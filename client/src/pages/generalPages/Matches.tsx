@@ -61,7 +61,7 @@ const Matches: FC = () => {
     // Определение, является ли экран мобильным
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
-      setVideosToShow(window.innerWidth < 768 ? 1 : 4); // Установка начального количества видео
+      setVideosToShow(window.innerWidth < 768 ? 2 : 4); // Установка начального количества видео
     };
 
     window.addEventListener('resize', handleResize);
