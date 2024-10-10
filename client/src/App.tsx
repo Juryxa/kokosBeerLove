@@ -58,7 +58,6 @@ function App() {
                 </Route>
                 <Route path='/fan' element={<RequireAuth><UserProfile/></RequireAuth>}/>
                 <Route path='*' element={<NotFound/>}/>
-                <Route path='/test' element={<UserProfile/>}/>
             </Routes>
         </div>
     );
