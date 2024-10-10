@@ -132,7 +132,7 @@ const NewsAdmin = () => {
             />
             <label className="news-admin-file-label">
                 Загрузить изображение
-                <input type="file" className="news-admin-file-input" onChange={handleFileChange}/>
+                <input type="file" accept="image/png, image/jpeg" className="news-admin-file-input" onChange={handleFileChange}/>
             </label>
             {image && <p className="news-admin-image-name">Файл: {image.name}</p>}
 

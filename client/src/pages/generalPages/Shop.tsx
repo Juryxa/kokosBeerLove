@@ -1,38 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Shop.css';
-import tshirt from '../../images/T-shirt Mockup.png';
-import kangaroo from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { ShopResponse } from '../../api/models/response/ShopResponse';
 import ShopService from '../../api/services/ShopService';
-import { Link } from 'react-router-dom';
-import { Button } from "@mui/material";
+import ShopCard from "../../components/ShopCard";
 
-const imageMapping: Record<string, string> = {
-  tshirt: tshirt,
-  kangaroo: kangaroo,
-};
-
-const ShopCard: React.FC<ShopResponse> = ({ id, name, description, price, url_images }) => {
-  return (
-      <Link to={`/shop/${id}`} className="shop-card">
-        <div className="shop-content-text">
-          <h3 className="shop-title">{name}</h3>
-          <p className="shop-description">{description}</p>
-        </div>
-        <div className="shop-content-img">
-          <img src={url_images[0]} alt={name} className="shop-image" />
-        </div>
-        <div>
-          <p className="shop-price">{price} ₽</p>
-        </div>
-        <div className="shop-content-action">
-          <Button variant="contained" color="error" className="shop-order-button">Заказать</Button>
-        </div>
-      </Link>
-  );
-};
 
 const Shop = () => {
   const [shopData, setShopData] = useState<ShopResponse[]>([]);
@@ -59,7 +32,7 @@ const Shop = () => {
   };
 
   // Фильтрация товаров по имени
-  const filteredShopData = shopData.filter(item => 
+  const filteredShopData = shopData.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -91,7 +64,7 @@ const Shop = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 padding: '10px',
-                border: '1px solid red', // Красная рамка
+                border: '1px solid red',
                 borderRadius: '5px',
                 width: '300px',
                 marginBottom: '20px',

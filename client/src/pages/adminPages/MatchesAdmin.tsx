@@ -3,6 +3,7 @@ import {Edit as EditIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import MatchesService from '../../api/services/MatchService';
 import {MatchResponse} from '../../api/models/response/MatchResponse';
 import './MatchesAdmin.css';
+import { uploadImage } from './functions/uploadImage';
 
 const MatchesAdmin = () => {
     const [team1, setTeam1] = useState('');
@@ -42,14 +43,16 @@ const MatchesAdmin = () => {
         }
 
         try {
+            const formattedDate = new Date(`${matchDate}T${matchTime}`);
+
             if (isEditing && editMatchId !== null) {
                 await MatchesService.updatePartMatch(editMatchId,
-                    team1, team2, opponentEmblem, score1, score2, venue, league, vkVideoLink, matchDate, matchTime
+                    team1, team2, opponentEmblem, score1, score2, venue, league, vkVideoLink, formattedDate.toISOString(), matchTime
                 );
                 setSuccessMessage('Матч обновлен.');
             } else {
                 await MatchesService.createMatch(
-                    team1, team2, opponentEmblem, score1, score2, venue, league, vkVideoLink, matchDate, matchTime
+                    team1, team2, opponentEmblem, score1, score2, venue, league, vkVideoLink, formattedDate.toISOString(), matchTime
                 );
                 setSuccessMessage('Матч добавлен.');
             }
@@ -75,6 +78,19 @@ const MatchesAdmin = () => {
         }
     };
 
+    // Функция для загрузки изображения
+    const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage);
+            if (imageUrl) {
+                setOpponentEmblem(imageUrl);  // Сохраняем URL загруженного изображения
+            }
+        } else {
+            setErrorMessage('Пожалуйста, загрузите изображение в формате PNG или JPEG.');
+        }
+    };
+
     const handleEditMatch = async (matchId: number) => {
         try {
             const response = await MatchesService.getMatchId(matchId);
@@ -88,7 +104,7 @@ const MatchesAdmin = () => {
             setVenue(match.venue);
             setLeague(match.league);
             setVkVideoLink(match.vkVideoLink);
-            setMatchDate(match.matchDate);
+            setMatchDate(match.matchDate.split('T')[0]);
             setMatchTime(match.matchTime);
             setIsEditing(true);
             setEditMatchId(match.id);
@@ -129,27 +145,47 @@ const MatchesAdmin = () => {
                 value={team2}
                 onChange={(e) => setTeam2(e.target.value)}
             />
+
+            {/* Кнопка для загрузки изображения */}
+            <label>Эмблема команды противника</label>
             <input
-                type="text"
+                type="file"
+                accept="image/png, image/jpeg"
+                onChange={handleUploadImage}
                 className="matches-admin-input"
-                placeholder="Эмблема команды противника"
-                value={opponentEmblem}
-                onChange={(e) => setOpponentEmblem(e.target.value)}
             />
+            {opponentEmblem && <img src={opponentEmblem} alt="Эмблема команды противника" className="match-image"/>}
+
             <input
                 type="number"
                 className="matches-admin-input"
                 placeholder="Счет нашей команды"
                 value={score1}
-                onChange={(e) => setScore1(Number(e.target.value))}
+                min="0"
+                onChange={(e) => {
+                    const value = Math.max(0, Number(e.target.value));
+                    setScore1(value);
+                }}
+                onBlur={(e) => {
+                    if (Number(e.target.value) < 0) setScore1(0); // Установка значения не меньше 0 при потере фокуса
+                }}
             />
+
             <input
                 type="number"
                 className="matches-admin-input"
                 placeholder="Счет команды 2"
                 value={score2}
-                onChange={(e) => setScore2(Number(e.target.value))}
+                min="0"
+                onChange={(e) => {
+                    const value = Math.max(0, Number(e.target.value));
+                    setScore2(value);
+                }}
+                onBlur={(e) => {
+                    if (Number(e.target.value) < 0) setScore2(0);
+                }}
             />
+
             <input
                 type="text"
                 className="matches-admin-input"
@@ -174,14 +210,14 @@ const MatchesAdmin = () => {
             <input
                 type="text"
                 className="matches-admin-input"
-                placeholder="Дата матча (чч.мм.гггг, чч.мм)"
+                placeholder="Дата матча (чч.мм.гггг)"
                 value={matchDate}
                 onChange={(e) => setMatchDate(e.target.value)}
             />
             <input
                 type="text"
                 className="matches-admin-input"
-                placeholder="Время матча (мм.сс)"
+                placeholder="Время матча (чч:мм)"
                 value={matchTime}
                 onChange={(e) => setMatchTime(e.target.value)}
             />
@@ -198,12 +234,13 @@ const MatchesAdmin = () => {
                             <li key={match.id} className="matches-list-item">
                                 <div className="matches-list-item-content">
                                     <h4>{match.team_home} vs {match.team_away_name}</h4>
-                                    <p>Счет: {match.score_home} - {match.score_home}</p>
+                                    <p>Счет: {match.score_home} - {match.score_away}</p>
                                     <p>Лига: {match.division}</p>
                                     <p>Место: {match.location}</p>
                                     <p>Дата: {match.match_date}, Время: {match.match_time}</p>
                                     {match.team_away_logo_url &&
-                                        <img src={match.team_away_logo_url} alt="Эмблема команды" className="match-image"/>}
+                                        <img src={match.team_away_logo_url} alt="Эмблема команды"
+                                             className="match-image"/>}
                                 </div>
                                 <div className="matches-list-item-actions">
                                     <button onClick={() => handleEditMatch(match.id)} className="edit-button">
