@@ -11,7 +11,8 @@ load_dotenv(dotenv_path)
 # Security settings
 SECRET_KEY = config('SECRET_KEY_KOKOC_TEAM')
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+
 
 # Installed apps
 INSTALLED_APPS = [

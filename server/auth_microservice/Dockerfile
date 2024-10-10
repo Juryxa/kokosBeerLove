@@ -1,24 +1,30 @@
-# Use official Python image as a base
-FROM python:3.11-slim
+# Используем базовый образ с установленными зависимостями
+FROM python:3.12-alpine
 
-# Set the working directory
-WORKDIR /app
+# Установим необходимые пакеты для сборки
+RUN apk add --no-cache gcc musl-dev python3-dev linux-headers
 
-# Copy the requirements file from на уровень выше
-COPY ./server/requirements.txt /app/requirements.txt
+# Устанавливаем рабочую директорию
+WORKDIR /auth_microservice
 
-# Install dependencies
+# Скопируем файл с зависимостями в контейнер
+COPY requirements.txt .
+
+# Установим зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code to the container
-COPY ./server/auth_microservice /app
+# Скачиваем и устанавливаем wait-for
+RUN wget https://github.com/eficode/wait-for/releases/download/v2.1.0/wait-for -O /usr/local/bin/wait-for && chmod +x /usr/local/bin/wait-for
 
-# Set environment variables (for Django)
+# Копируем код микросервиса
+COPY . /auth_microservice
+
+# Окружающие переменные для Django
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Expose the port
+# Открываем порт для приложения
 EXPOSE 8000
 
-# Run Django migrations and start the server
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Запускаем сервер Django
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

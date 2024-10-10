@@ -1,74 +1,178 @@
-version: '3.8'
-
 services:
-  # PostgreSQL сервис для бэкенда
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-    networks:
-      - backend
-
-  # Бэкенд сервис (Django + микросервисы)
-  auth_microservice:
+  news_microservice:
     build:
-      context: .
-      dockerfile: ./server/auth_microservice/Dockerfile
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
-    volumes:
-      - ./server/auth_microservice:/app
-    environment:
-      - DB_HOST=db
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-    depends_on:
-      - db
+      context: ./server/news_microservice
+    container_name: news_microservice_container
+    command: sh -c "/usr/local/bin/wait-for postgres_db_auth:5433 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8001"
     ports:
-      - "8000:8000"
+      - "8001:8001"
+    volumes:
+      - ./server/news_microservice:/app
+    depends_on:
+      - db_news
+    env_file:
+      - .env
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME_NEWS}
+      - DATABASE_USER=${DATABASE_USER_NEWS}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD_NEWS}
+      - DATABASE_HOST=db_news
+      - DATABASE_PORT=${DATABASE_PORT_NEWS}
     networks:
-      - backend
+      - mynetwork
+
+
+  shop_microservice:
+    build:
+      context: ./server/shop_microservice
+    container_name: shop_microservice_container
+    command: sh -c "/usr/local/bin/wait-for postgres_db_auth:5434 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8003"
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./server/shop_microservice:/app
+    depends_on:
+      - db_shop
+    env_file:
+      - .env
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME_SHOP}
+      - DATABASE_USER=${DATABASE_USER_SHOP}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD_SHOP}
+      - DATABASE_HOST=db_shop
+      - DATABASE_PORT=${DATABASE_PORT_SHOP}
+    networks:
+      - mynetwork
 
   match_microservice:
     build:
-      context: .
-      dockerfile: ./server/match_microservice/Dockerfile
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8001"
+      context: ./server/match_microservice
+    container_name: match_microservice_container
+    command: sh -c "/usr/local/bin/wait-for postgres_db_auth:5435 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    ports:
+      - "8002:8002"
     volumes:
       - ./server/match_microservice:/app
-    environment:
-      - DB_HOST=db
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
     depends_on:
-      - db
-    ports:
-      - "8001:8001"
+      - db_match
+    env_file:
+      - .env
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME_MATCH}
+      - DATABASE_USER=${DATABASE_USER_MATCH}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD_MATCH}
+      - DATABASE_HOST=db_match
+      - DATABASE_PORT=${DATABASE_PORT_MATCH}
     networks:
-      - backend
+      - mynetwork
 
-  # Фронтенд сервис (React + Nginx)
-  frontend:
+  kokoc_team_microservice:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: ./server/kokoc_team_microservice
+    container_name: kokoc_team_microservice_container
+    command: sh -c "/usr/local/bin/wait-for postgres_db_auth:5436 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8004"
     ports:
-      - "3000:80"
+      - "8004:8004"
+    volumes:
+      - ./server/kokoc_team_microservice:/app
+    depends_on:
+      - db_kokoc_team
+    env_file:
+      - .env
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME_KOKOC_TEAM}
+      - DATABASE_USER=${DATABASE_USER_KOKOC_TEAM}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD_KOKOC_TEAM}
+      - DATABASE_HOST=db_kokoc_team
+      - DATABASE_PORT=${DATABASE_PORT_KOKOC_TEAM}
     networks:
-      - frontend
+      - mynetwork
+
+  db_auth:
+    image: postgres
+    container_name: postgres_db_auth
+    environment:
+      POSTGRES_USER: ${DATABASE_USER_AUTH}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_AUTH}
+      POSTGRES_DB: ${DATABASE_NAME_AUTH}
+    volumes:
+      - postgres_data_auth:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+
+  db_news:
+    image: postgres
+    container_name: postgres_db_news
+    environment:
+      POSTGRES_USER: ${DATABASE_USER_NEWS}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_NEWS}
+      POSTGRES_DB: ${DATABASE_NAME_NEWS}
+    volumes:
+      - postgres_data_news:/var/lib/postgresql/data
+    ports:
+      - "5433:5433"
+    networks:
+      - mynetwork
+
+  db_shop:
+    image: postgres
+    container_name: postgres_db_shop
+    environment:
+      POSTGRES_USER: ${DATABASE_USER_SHOP}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_SHOP}
+      POSTGRES_DB: ${DATABASE_NAME_SHOP}
+    volumes:
+      - postgres_data_shop:/var/lib/postgresql/data
+    ports:
+      - "5434:5434"
+    networks:
+      - mynetwork
+
+  db_match:
+    image: postgres
+    container_name: postgres_db_match
+    environment:
+      POSTGRES_USER: ${DATABASE_USER_MATCH}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_MATCH}
+      POSTGRES_DB: ${DATABASE_NAME_MATCH}
+    volumes:
+      - postgres_data_match:/var/lib/postgresql/data
+    ports:
+      - "5435:5435"
+    networks:
+      - mynetwork
+
+  db_kokoc_team:
+    image: postgres
+    container_name: postgres_db_kokoc_team
+    environment:
+      POSTGRES_USER: ${DATABASE_USER_KOKOC_TEAM}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_KOKOC_TEAM}
+      POSTGRES_DB: ${DATABASE_NAME_KOKOC_TEAM}
+    volumes:
+      - postgres_data_kokoc_team:/var/lib/postgresql/data
+    ports:
+      - "5436:5436"
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis:alpine
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
 
 volumes:
-  postgres_data:
+  postgres_data_auth:
+  postgres_data_news:
+  postgres_data_shop:
+  postgres_data_match:
+  postgres_data_kokoc_team:
 
 networks:
-  frontend:
-  backend:
+  mynetwork:
