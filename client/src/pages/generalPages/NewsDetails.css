@@ -1,8 +1,19 @@
 .newsdetails-container{
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
+.notfound{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+    flex: 1;
+}
 
 
 .newsdetails-details {
@@ -10,6 +21,7 @@
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    height: 100vw;
 }
 
 .newsdetails-title {
