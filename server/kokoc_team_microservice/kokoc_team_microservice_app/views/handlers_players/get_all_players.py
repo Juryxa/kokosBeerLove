@@ -3,8 +3,8 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from ..models import Player
-from ..serializers import PlayerSerializer
+from ...models import Player
+from ...serializers import PlayerSerializer
 
 @swagger_auto_schema(
     method='get',

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Match, AboutFcKokoc
+from .models import Match
 import json
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -42,9 +42,3 @@ class MatchCreateSerializer(serializers.ModelSerializer):
             **validated_data
         )
         return match
-
-
-class AboutFcKokocSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AboutFcKokoc
-        fields = ['games_played', 'wins', 'goals_scored', 'tournaments', 'about_text']

@@ -17,7 +17,7 @@ from drf_yasg import openapi
 )
 @api_view(['GET'])
 @cache_page(60 * 10)
-def get_about_fc_kokoc(request):
+def get_info_fc_kokoc(request):
     try:
         about_fc_kokoc = AboutFcKokoc.objects.first()
         serializer = AboutFcKokocSerializer(about_fc_kokoc)

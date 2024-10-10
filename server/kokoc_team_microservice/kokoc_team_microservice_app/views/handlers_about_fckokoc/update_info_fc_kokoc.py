@@ -37,7 +37,7 @@ from drf_yasg import openapi
 @api_view(['PUT', 'PATCH'])
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
-def update_about_fc_kokoc(request):
+def update_info_fc_kokoc(request):
     try:
         about_fc_kokoc = AboutFcKokoc.objects.first()
 
