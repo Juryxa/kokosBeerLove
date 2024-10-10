@@ -1,65 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './NewsPreview.css';
-import newsImg from '../images/news.png'
 import {Link} from 'react-router-dom';
-
-interface News {
-    title: string,
-    content: string,
-    image: string,
-}
-
-
-const NewsCard: React.FC<News> = ({title, content, image}) => {
-    return (
-        <div className="news-card">
-
-            <div className="news-content-text">
-                <h3 className="news-title">{title}</h3>
-                <p className="news-text">{content}</p>
-            </div>
-
-            <div className="news-content-img">
-                <img src={image} alt="news" className="news-image"/>
-            </div>
-
-        </div>
-    );
-};
+import {NewsResponse} from "../api/models/response/NewsResponse";
+import NewsService from "../api/services/NewsService";
+import NewsCard from "./NewsCard";
 
 const NewsPreview = () => {
-    const newsData = [
-        {
-            title: "Павел Погребняк дебютировал в Лиге F",
-            content: "И сразу забил гол, послематчевый пенальти и принёс команде первые очки!",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-        {
-            title: "Кокс Групп - дебютант Суперлиги с очень грозным составом!",
-            content: "Что делать соперникам, когда у вас в атаке ...",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-        {
-            title: "Высший дивизион - 25 тур",
-            content: "Новый турнир! Шок контент...",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-        {
-            title: "Высший дивизион - 25 тур",
-            content: "Новый турнир! Шок контент...",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-        {
-            title: "Высший дивизион - 25 тур",
-            content: "Новый турнир! Шок контент...",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-        {
-            title: "Высший дивизион - 25 тур",
-            content: "Новый турнир! Шок контент...",
-            image: "../images/news.png" // Укажите путь к вашему изображению
-        },
-    ];
+    const [newsData, setNewsData] = useState<NewsResponse[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetchNews();
+    }, []);
+
+    const fetchNews = async () => {
+        setIsLoading(true);
+        try {
+            const response = await NewsService.getAllNews();
+            setNewsData(response.data);
+        } catch (error) {
+            setErrorMessage('Ошибка загрузки новостей.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="news-section">
@@ -70,8 +35,19 @@ const NewsPreview = () => {
                 </Link>
             </button>
             <div className="news-cards-container">
-                {newsData.map((news, index) => (
-                    <NewsCard key={index} title={news.title} content={news.content} image={newsImg}/>
+                {isLoading && (
+                    <div className='loading-spinner'></div>
+                )}
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {newsData.slice(0,6).map((news) => (
+                    <NewsCard
+                        key={news.id}
+                        id={news.id}
+                        title={news.title}
+                        text={news.text}
+                        image={news.image}
+                        created_at={news.created_at}
+                    />
                 ))}
             </div>
         </div>

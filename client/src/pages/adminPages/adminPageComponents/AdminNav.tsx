@@ -31,7 +31,6 @@ const AdminNav = () => {
                 <Link to='/' onClick={closeMenu}>На главную</Link>
                 <Link to='news' onClick={closeMenu}>Новости</Link>
                 <Link to='matches' onClick={closeMenu}>Матчи</Link>
-                <Link to='contacts' onClick={closeMenu}>Контакты</Link>
                 <Link to="about" onClick={closeMenu}>О клубе</Link>
                 <Link to="shop" onClick={closeMenu}>Магазин</Link>
                 <button onClick={handleLogOut}>Выйти</button>
