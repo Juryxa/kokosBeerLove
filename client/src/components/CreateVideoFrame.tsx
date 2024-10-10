@@ -30,7 +30,7 @@ const CreateVideoFrame: React.FC<IframeType> = ({ oid, id, hd = 2, width = 853, 
                     margin: "0 auto"}}
             ></iframe>
         </div>
-    );
+    );  
 };
 
 export default CreateVideoFrame;

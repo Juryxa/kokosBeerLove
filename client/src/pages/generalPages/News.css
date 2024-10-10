@@ -15,9 +15,9 @@
 }
 
 .news-title {
-    font-size: 18px;
+    font-size: 20px;
     color: #E62526;
-    margin-bottom: 10px;
+   
 }
 
 .news-text {
@@ -125,4 +125,10 @@
         width: 30px;
         height: 30px;
     }
+}
+
+
+
+.news-time{
+    font-size: 13px;
 }
