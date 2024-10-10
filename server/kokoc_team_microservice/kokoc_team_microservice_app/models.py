@@ -34,6 +34,7 @@ class AboutFcKokoc(models.Model):
     about_text = models.TextField(verbose_name="Информация о команде", blank=True, null=True)
 
     class Meta:
+        db_table = 'about_fc_kokoc'
         verbose_name = "О клубе"
         verbose_name_plural = "О клубе"
 
