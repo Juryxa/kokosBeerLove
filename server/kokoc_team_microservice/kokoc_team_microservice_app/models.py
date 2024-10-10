@@ -25,6 +25,7 @@ class Player(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.role})'
 
+
 class AboutFcKokoc(models.Model):
     games_played = models.IntegerField(verbose_name="Количество игр", default=0)
     wins = models.IntegerField(verbose_name="Победы", default=0)
@@ -36,5 +37,15 @@ class AboutFcKokoc(models.Model):
         verbose_name = "О клубе"
         verbose_name_plural = "О клубе"
 
+    @classmethod
+    def get_instance(cls):
+        # Метод получения или создания единственной записи
+        instance, created = cls.objects.get_or_create(pk=1)
+        return instance
+
+    def save(self, *args, **kwargs):
+        self.pk = 1  # Всегда сохраняем запись с PK 1
+        super(AboutFcKokoc, self).save(*args, **kwargs)
+
     def __str__(self):
-        return f"Информация о команде (Игры: {self.games_played}, Победы: {self.wins})"
+        return f"Информация о клубе (Игры: {self.games_played}, Победы: {self.wins})"
