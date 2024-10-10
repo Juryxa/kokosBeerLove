@@ -1,5 +1,4 @@
 from django.views.decorators.cache import cache_page
-from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ...models import AboutFcKokoc
@@ -17,10 +16,7 @@ from drf_yasg import openapi
 )
 @api_view(['GET'])
 @cache_page(60 * 10)
-def get_about_fc_kokoc(request):
-    try:
-        about_fc_kokoc = AboutFcKokoc.objects.first()
-        serializer = AboutFcKokocSerializer(about_fc_kokoc)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    except AboutFcKokoc.DoesNotExist:
-        return Response({'error': 'Информация о клубе не найдена'}, status=status.HTTP_404_NOT_FOUND)
+def get_info_fc_kokoc(request):
+    about_fc_kokoc = AboutFcKokoc.get_instance()  # Получаем единственную запись
+    serializer = AboutFcKokocSerializer(about_fc_kokoc)
+    return Response(serializer.data)

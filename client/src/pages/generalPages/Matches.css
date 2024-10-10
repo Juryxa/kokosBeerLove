@@ -9,6 +9,10 @@
   min-height: 90vh;
 }
 
+.searchMAtch.hidden {
+  display: none;
+}
+
 .content {
   position: relative;
   display: flex;

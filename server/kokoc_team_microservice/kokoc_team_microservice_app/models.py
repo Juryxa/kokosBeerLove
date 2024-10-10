@@ -24,3 +24,29 @@ class Player(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.role})'
+
+
+class AboutFcKokoc(models.Model):
+    games_played = models.IntegerField(verbose_name="Количество игр", default=0)
+    wins = models.IntegerField(verbose_name="Победы", default=0)
+    goals_scored = models.IntegerField(verbose_name="Голы", default=0)
+    tournaments = models.IntegerField(verbose_name="Турниры", default=0)
+    about_text = models.TextField(verbose_name="Информация о команде", blank=True, null=True)
+
+    class Meta:
+        db_table = 'about_fc_kokoc'
+        verbose_name = "О клубе"
+        verbose_name_plural = "О клубе"
+
+    @classmethod
+    def get_instance(cls):
+        # Метод получения или создания единственной записи
+        instance, created = cls.objects.get_or_create(pk=1)
+        return instance
+
+    def save(self, *args, **kwargs):
+        self.pk = 1  # Всегда сохраняем запись с PK 1
+        super(AboutFcKokoc, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Информация о клубе (Игры: {self.games_played}, Победы: {self.wins})"

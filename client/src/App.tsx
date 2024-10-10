@@ -9,7 +9,6 @@ import AdminPage from "./pages/generalPages/AdminPage";
 import NewsAdmin from "./pages/adminPages/NewsAdmin";
 import MatchesAdmin from "./pages/adminPages/MatchesAdmin";
 import AboutClubAdmin from "./pages/adminPages/AboutClubAdmin";
-import ContactsAdmin from "./pages/adminPages/ContactsAdmin";
 import ShopAdmin from "./pages/adminPages/ShopAdmin";
 import NotFound from "./pages/generalPages/NotFound";
 import RequireAuth from "./pages/hoc/RequireAuth";
@@ -52,13 +51,11 @@ function App() {
                 <Route path='/admin/' element={<RequireAuth><AdminPage/></RequireAuth>}>
                     <Route path="news" element={<NewsAdmin/>}/>
                     <Route path="matches" element={<MatchesAdmin/>}/>
-                    <Route path="contacts" element={<ContactsAdmin/>}/>
                     <Route path="about" element={<AboutClubAdmin/>}/>
                     <Route path="shop" element={<ShopAdmin/>}/>
                 </Route>
                 <Route path='/fan' element={<RequireAuth><UserProfile/></RequireAuth>}/>
                 <Route path='*' element={<NotFound/>}/>
-                <Route path='/test' element={<UserProfile/>}/>
             </Routes>
         </div>
     );

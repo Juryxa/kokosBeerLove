@@ -167,7 +167,7 @@ const ShopAdmin = () => {
             />
             <label className="shop-admin-file-label">
                 Загрузить изображение
-                <input type="file" className="shop-admin-file-input" onChange={handleFileChange} />
+                <input type="file" accept="image/png, image/jpeg" className="shop-admin-file-input" onChange={handleFileChange} />
             </label>
             {image && <p className="shop-admin-image-name">Файл: {image.name}</p>}
 

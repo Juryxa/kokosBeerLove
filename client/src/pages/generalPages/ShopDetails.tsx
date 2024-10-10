@@ -19,8 +19,12 @@ const ShopDetails = () => {
         try {
             const response = await ShopService.getProductId(productId);
             setProductItem(response.data);
-        } catch (error) {
-            setErrorMessage('Ошибка загрузки новостей.');
+        } catch (error: any) {
+            if (error.response && error.response.status === 404) {
+                setErrorMessage('Новость не найдена.');
+            } else {
+                setErrorMessage('Ошибка загрузки новостей.');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -34,14 +38,12 @@ const ShopDetails = () => {
             {errorMessage ? (
                 <div className="error-message">{errorMessage}</div>
             ) : (
-                productItem ? (
+                productItem && (
                     <>
                         <h2>{productItem.name}</h2>
                         <img src={productItem.url_images[0]} alt={productItem.name}/>
                         <p>{productItem.description}</p>
                     </>
-                ) : (
-                    <div>Товар не найден</div>
                 )
             )}
         </div>

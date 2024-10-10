@@ -59,40 +59,6 @@
 
   }
 
-  .shop-card {
-    width: 300px;
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  .shop-card-image {
-    width: 100%; /* Занимает 100% ширины карточки */
-    height: 400px; /* Устанавливаем фиксированную высоту для изображений */
-    object-fit: cover; /* Обеспечиваем правильное соотношение сторон */
-}
-
-.shop-card-button:hover {
-    background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
-}
-.shop-card-button {
-    width: 95%; /* Ширина кнопки 95% от карточки */
-    background: linear-gradient(to right, #ff0000, #8a1a1a); /* Красный градиент */
-    color: white; /* Цвет текста на кнопке */
-    margin: 0 auto; /* Центрируем кнопку */
-    transition: background 0.3s; /* Плавный переход цвета фона */
-}
-
-
-
-.shop-card {
-    width: 300px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 20px; /* Добавляем радиус скругления к карточкам */
-    transition: transform 0.5s ease; /* Плавный переход для трансформации */
-}
-
-.shop-card:hover {
-    transform: scale(1.05); /* Увеличение карточки при наведении */
-}
 .loading-spinner {
     width: 50px;
     height: 50px;
