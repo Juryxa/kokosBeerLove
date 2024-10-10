@@ -6,9 +6,9 @@
     background-size: cover; /* Растягивает изображение по всему блоку */
     background-position: center;
     display: flex;
-    align-items: center;
-    justify-content: center; /* Центрируем элементы */
     position: relative;
+    background-color: #000;
+    z-index: 1;
 
 }
 
@@ -24,19 +24,8 @@
   z-index: 0;
   }
 
-
-
-  .shop-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #000;
-    z-index: 1;
-  }
   .title-links a {
     color: black; /* Черный цвет текста */
-    text-decoration: none; /* Убираем подчеркивание */
     transition: color 0.3s, text-decoration 0.3s;
     text-decoration: underline; /* Плавный переход цвета и подчеркивания */
 }
@@ -49,7 +38,7 @@
 .shop-content {
     display: flex;
     flex-direction: column;
-
+    width: 100%;
 
     z-index: 1;
 }
@@ -58,7 +47,6 @@
     margin-bottom: 100px;
     z-index: 1;
     display: flex;
-
     align-items: flex-start;
     flex-direction: column;
   }
@@ -104,4 +92,23 @@
 
 .shop-card:hover {
     transform: scale(1.05); /* Увеличение карточки при наведении */
+}
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute; /* Задаем абсолютное позиционирование */
+    top: 50%; /* Центрируем по вертикали */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translate(-50%, -50%); /* Сдвигаем влево и вверх на 50% от его размеров */
+}
+
+@media (max-width: 480px) {
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+    }
 }

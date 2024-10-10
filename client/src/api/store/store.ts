@@ -3,7 +3,7 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
 import axios from 'axios';
 import {AuthResponse} from "../models/response/AuthResponse";
-import {API_URL} from "../http";
+import {AUTH_API_URL} from "../http/url/urls";
 import {jwtDecode} from 'jwt-decode';
 
 interface JwtPayload {
@@ -109,7 +109,7 @@ export default class Store {
         this.setLoading(true);
         try {
             const response = await axios.post<AuthResponse>(
-                `${API_URL}/refresh/`,
+                `${AUTH_API_URL}/refresh/`,
                 {},  // Передаем пустой объект, так как refresh_token находится в куки
                 {
                     withCredentials: true

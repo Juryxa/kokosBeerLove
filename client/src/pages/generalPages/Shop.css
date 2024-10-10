@@ -1,4 +1,4 @@
-.page-shop-container{
+.container-shop {
     background-image: url('../../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
     width: 100vw;
     display: flex;
@@ -6,125 +6,144 @@
     align-items: center;
 }
 
-
-
-
-
-  .page-shop-content {
+.shop-section {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     width: 80vw;
-  }
-
-
-
-.page-shop-content {
-    display: flex;
+    color: white;
     flex-direction: column;
-
-
-
 }
 
-  .page-shop-title{
-    margin-bottom: 100px;
-    width: 100;
-    display: flex;
-    color: white;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-  }
-
-  .page-shop-card-container {
+.shop-cards-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px; /* расстояние между карточками */
-
     flex: 1;
-  }
+}
 
-  .page-shop-card {
+.shop-card {
     width: 300px;
+    text-decoration: none;
     background: rgba(255, 255, 255, 0.7);
-    height: 100%;
-  }
+    border-radius: 15px; /* Добавляем радиус скругления к карточкам */
+    transition: transform 0.5s ease; /* Плавный переход для трансформации */
+    overflow: hidden;
+}
 
-   .page-shop-card-image {
-    width: 100%;
+.shop-card:hover {
+    transform: scale(1.05); /* Увеличение карточки при наведении */
+}
+
+.shop-content-text {
+    padding: 15px;
+}
+
+.shop-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.shop-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.shop-price {
+    font-size: 18px;
+    color: #ff0000;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.shop-content-img {
     height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop-image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-
-
-
-.page-shop-card-button:hover {
-    background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
+.shop-content-action {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
 }
-.page-shop-card-button {
+
+.shop-order-button {
     width: 95%; /* Ширина кнопки 95% от карточки */
     background: linear-gradient(to right, #ff0000, #8a1a1a); /* Красный градиент */
     color: white; /* Цвет текста на кнопке */
     margin: 0 auto; /* Центрируем кнопку */
     transition: background 0.3s; /* Плавный переход цвета фона */
-
+    padding: 10px;
+    border: none;
+    cursor: pointer;
 }
 
-
-
-.page-shop-card {
-    width: 300px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 20px; /* Добавляем радиус скругления к карточкам */
-    transition: transform 0.5s ease; /* Плавный переход для трансформации */
-    border-radius: 15px;
+.shop-order-button:hover {
+    background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
 }
 
-.page-shop-card:hover {
-    transform: scale(1.05); /* Увеличение карточки при наведении */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
+@media (max-width: 480px) {
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+    }
+}
 
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
-  }
+}
 
-  .pagination button {
-    margin: 0 10px;
-  }
-
-  .pagination button {
+.pagination button {
     background: linear-gradient(45deg, #e63946, #770505); /* Градиент от красного к оранжевому */
     color: white;
     border: none;
     border-radius: 5px; /* Скругленные углы */
     padding: 8px 16px;
-    margin: 0 5px; /* Отступы между кнопками */
+    margin: 0 5px;
     font-size: 14px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    text-transform: uppercase; /* Заглавные буквы на кнопках */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Добавляем небольшую тень */
-  }
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-  .pagination button:hover {
+.pagination button:hover {
     transform: scale(1.1); /* Увеличение при наведении */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Усиливаем тень при наведении */
-  }
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
-  .pagination button:active {
-    transform: scale(0.95); /* Уменьшение при нажатии */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Снижение тени при нажатии */
-  }
+.pagination button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-  .pagination button.active {
+.pagination button.active {
     background: linear-gradient(45deg, #d62828, #fcbf49); /* Активная кнопка с другим градиентом */
-    color: white;
-  }
+}

@@ -20,6 +20,7 @@ import Team from "./pages/generalPages/Team";
 import NewsDetails from './pages/generalPages/NewsDetails';
 import UserProfile from './pages/generalPages/UserProfile';
 import MatchDetails from './pages/generalPages/MatchDetails';
+import ShopDetails from "./pages/generalPages/ShopDetails";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/news/:id" element={<NewsDetails />} />
                 <Route path='/about' element={<AboutClub/>}/>
                 <Route path='/shop' element={<Shop/>}/>
+                <Route path='/shop/:id' element={<ShopDetails/>}/>
                 <Route path='/team' element={<Team/>}/>
                 <Route path='/admin/' element={<RequireAuth><AdminPage/></RequireAuth>}>
                     <Route path="news" element={<NewsAdmin/>}/>
