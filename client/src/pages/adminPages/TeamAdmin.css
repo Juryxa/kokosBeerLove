@@ -1,0 +1,139 @@
+/* TeamAdmin.css */
+.team-admin-container {
+    margin: 80px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.team-admin-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.team-admin-input, .team-admin-select {
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+label{
+    padding-right: 10px;
+}
+
+.team-admin-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.team-admin-button:hover {
+    background-color: #45a049;
+}
+
+/* Список игроков */
+.players-list {
+    margin-top: 30px;
+}
+
+.players-list-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.players-list-items {
+    list-style: none;
+    padding: 0;
+}
+
+.players-list-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.players-list-item-content {
+    flex: 1;
+}
+
+.players-list-item h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.players-list-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.edit-button, .delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-button svg {
+    fill: #4CAF50;
+}
+
+.delete-button svg {
+    fill: #ff3333;
+}
+
+.error-message, .success-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: #ffdddd;
+    color: #ff3333;
+    animation: fadeOut 4s forwards;
+}
+
+.success-message {
+    background-color: #ddffdd;
+    color: #4CAF50;
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .players-list-item {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.uploaded-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+.player-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}

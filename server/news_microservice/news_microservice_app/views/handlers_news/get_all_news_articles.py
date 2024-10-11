@@ -24,7 +24,6 @@ from ...serializers import NewsArticleSerializer
     })}
 )
 @api_view(['GET'])
-@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 def get_all_news_articles(request):
     articles = NewsArticle.objects.all()
     serializer = NewsArticleSerializer(articles, many=True)
