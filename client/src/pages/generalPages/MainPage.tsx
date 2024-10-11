@@ -2,9 +2,9 @@ import React, {Suspense} from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import NearestMatch from "../../components/NearestMatch";
-import ClubPreiew from '../../components/ClubPreview'
-import Carousel from '../../components/Carousel';
+import TeamPreview from '../../components/TeamPreview';
 import './MainPage.css';
+import ClubPreview from "../../components/ClubPreview";
 
 const ShopPreview = React.lazy(() => import('../../components/ShopPreview'));
 const NewsPreview = React.lazy(() => import('../../components/NewsPreview'));
@@ -38,9 +38,9 @@ const MainPage: React.FC = () => {
                     <NewsPreview/>
                 </Suspense>
             </div>
-            <ClubPreiew/>
-            <Carousel/>
             <Suspense fallback={<div className="loading-spinner"></div>}>
+                <ClubPreview/>
+                <TeamPreview/>
                 <ShopPreview/>
             </Suspense>
             <Footer/>

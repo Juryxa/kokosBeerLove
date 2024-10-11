@@ -68,7 +68,7 @@ const News = () => {
         value={searchQuery}
         onChange={handleSearchChange}
         sx={{
-            width: '300px', // Уменьшаем ширину строки поиска
+            maxWidth: '300px', // Уменьшаем ширину строки поиска
             '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                     borderColor: 'red', // Красная рамка
