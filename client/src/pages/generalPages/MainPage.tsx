@@ -32,9 +32,15 @@ const MainPage: React.FC = () => {
                 background: `linear-gradient(180deg, rgba(227,39,38,0) 0%, rgba(0,0,0,0) 0%, rgba(227,38,39,0.5) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(227,39,38,0.5) 50%, rgba(0,0,0,0) 100%, rgba(227,39,38,0) 100%)`
 
             }}>
+
+                <NearestMatch />
+                <MatchesPreview/>
+                 <Suspense fallback={<div className="loading-spinner"></div>}> 
+
                 <Suspense fallback={<div className="loading-spinner"></div>}>
                     <NearestMatch/>
                     <MatchesPreview/>
+                    </Suspense>
                     <NewsPreview/>
                 </Suspense>
             </div>
@@ -42,7 +48,7 @@ const MainPage: React.FC = () => {
                 <ClubPreview/>
                 <TeamPreview/>
                 <ShopPreview/>
-            </Suspense>
+              </Suspense> 
             <Footer/>
         </div>
     );

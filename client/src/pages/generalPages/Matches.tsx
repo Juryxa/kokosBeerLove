@@ -77,7 +77,7 @@ const Matches: FC = () => {
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
-            setVideosToShow(window.innerWidth < 768 ? 2 : 4);
+            setVideosToShow(window.innerWidth < 768 ? 0 : 0);
         };
 
         window.addEventListener('resize', handleResize);
