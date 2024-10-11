@@ -29,9 +29,9 @@ from drf_yasg import openapi
         }
     )}
 )
-@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 @api_view(['GET'])
 def get_last_three_matches(request):
-    matches = Match.objects.all().order_by('-match_date')[:3]  # Sort by match_date descending and limit to 3
+    # Sort by id descending to get the latest 3 matches
+    matches = Match.objects.all().order_by('-id')[:3]
     serializer = MatchSerializer(matches, many=True)
     return Response(serializer.data)

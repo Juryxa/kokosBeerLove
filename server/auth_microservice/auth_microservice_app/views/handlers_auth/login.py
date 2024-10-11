@@ -6,9 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.utils import timezone
 
-from ..models import CustomUser, RefreshToken as RefreshTokenModel
-from ..serializers import LoginSerializer
-from ..custom_tokens import CustomRefreshToken  # Используем кастомный токен
+from ...models import CustomUser, RefreshToken as RefreshTokenModel
+from ...serializers import LoginSerializer
+from ...custom_tokens import CustomRefreshToken  # Используем кастомный токен
 
 @swagger_auto_schema(
     method='post',
