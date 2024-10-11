@@ -1,23 +1,11 @@
 # Шаг 1: Сборка фронтенда
 FROM node:18 AS build
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
-
-# Копируем файлы package.json и package-lock.json в контейнер
 COPY package*.json ./
-
-# Устанавливаем зависимости
 RUN npm install
-
-# Копируем остальной исходный код приложения в контейнер
 COPY . ./
-
-# Собираем фронтенд-приложение
 RUN npm run build
-
-# Проверяем содержимое папки dist
-RUN ls -la /app/dist
 
 # Шаг 2: Обслуживание фронтенда через Nginx
 FROM nginx:alpine
@@ -32,13 +20,13 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Создаем директории для загрузки файлов
-RUN mkdir -p /uploads/news_images /uploads/shop_images
+RUN mkdir -p /uploads/news_images /uploads/shop_images /uploads/player_photos /uploads/team_logos
 
-# Устанавливаем права доступа
-RUN chmod -R 755 /uploads
+# Устанавливаем владельца и права доступа для кэша Nginx и директории /uploads
+RUN chown -R nginx:nginx /var/cache/nginx /uploads
 
 # Открываем порт 80
 EXPOSE 80
 
-# Запускаем сервер Nginx
+# Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]

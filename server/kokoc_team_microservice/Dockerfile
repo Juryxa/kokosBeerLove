@@ -1,30 +1,44 @@
-# Используем базовый образ с установленными зависимостями
-FROM python:3.12-alpine
+# Этап сборки
+FROM python:3.12-alpine AS builder
 
-# Установим необходимые пакеты для сборки
-RUN apk add --no-cache gcc musl-dev python3-dev linux-headers
+# Устанавливаем зависимости для сборки
+RUN apk add --no-cache gcc musl-dev python3-dev linux-headers libpq-dev busybox-extras
 
 # Устанавливаем рабочую директорию
 WORKDIR /kokoc_team_microservice
 
-# Скопируй файл с зависимостями в контейнер
+# Копируем файл с зависимостями
 COPY requirements.txt .
 
-# Установи зависимости
-RUN pip install --no-cache-dir -r requirements.txt
+# Собираем колеса (wheels) для зависимостей
+RUN pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 
+# Финальный этап
+FROM python:3.12-alpine
 
-# Копируем код микросервиса
+# Устанавливаем зависимости для выполнения
+RUN apk add --no-cache libpq
+
+# Устанавливаем рабочую директорию
+WORKDIR /kokoc_team_microservice
+
+# Копируем колеса из этапа сборки и устанавливаем зависимости
+COPY --from=builder /wheels /wheels
+RUN pip install --no-cache-dir /wheels/*
+
+# Копируем код приложения
 COPY . /kokoc_team_microservice
 
 
-
-# Окружающие переменные для Django
+# Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Открываем порт для приложения
+
+# Открываем порт
 EXPOSE 8004
 
-# Запускаем сервер Django
+# Задаем команду по умолчанию для запуска сервера
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8004"]
+
+

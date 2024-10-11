@@ -3,7 +3,7 @@ services:
     build:
       context: ./server/auth_microservice
     container_name: auth_microservice_container
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c 'until nc -z $DATABASE_HOST_AUTH $DATABASE_PORT_AUTH; do echo "Ожидание базы данных..."; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
     ports:
       - "8000:8000"
     volumes:
@@ -26,7 +26,7 @@ services:
     build:
       context: ./server/news_microservice
     container_name: news_microservice_container
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8001"
+    command: sh -c 'until nc -z $DATABASE_HOST_NEWS $DATABASE_PORT_NEWS; do echo "Ожидание базы данных..."; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8001'
     ports:
       - "8001:8001"
     volumes:
@@ -50,7 +50,7 @@ services:
     build:
       context: ./server/shop_microservice
     container_name: shop_microservice_container
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8003"
+    command: sh -c 'until nc -z $DATABASE_HOST_SHOP $DATABASE_PORT_SHOP; do echo "Ожидание базы данных..."; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8003'
     ports:
       - "8003:8003"
     volumes:
@@ -74,7 +74,7 @@ services:
     build:
       context: ./server/match_microservice
     container_name: match_microservice_container
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    command: sh -c 'until nc -z $DATABASE_HOST_MATCH $DATABASE_PORT_MATCH; do echo "Ожидание базы данных..."; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8002'
     ports:
       - "8002:8002"
     volumes:
@@ -98,7 +98,7 @@ services:
     build:
       context: ./server/kokoc_team_microservice
     container_name: kokoc_team_microservice_container
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8004"
+    command: sh -c 'until nc -z $DATABASE_HOST_KOKOC_TEAM $DATABASE_PORT_KOKOC_TEAM; do echo "Ожидание базы данных..."; sleep 1; done; python manage.py migrate && python manage.py runserver 0.0.0.0:8004'
     ports:
       - "8004:8004"
     volumes:
