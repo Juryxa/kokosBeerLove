@@ -137,18 +137,18 @@ const NewsAdmin = () => {
                 {isEditing ? 'Сохранить изменения' : 'Добавить новость'}
             </button>
 
-            <div className="news-list">
-                <h3 className="news-list-title">Список новостей</h3>
-                <ul className="news-list-items">
+            <div className="news-admin-list">
+                <h3 className="news-admin-list-title">Список новостей</h3>
+                <ul className="news-admin-list-items">
                     {Array.isArray(newsList) && newsList.length > 0 ? (
                         newsList.map((news) => (
-                            <li key={news.id} className="news-list-item">
-                                <div className="news-list-item-content">
+                            <li key={news.id} className="news-admin-list-item">
+                                <div className="news-admin-list-item-content">
                                     <h4>{news.title}</h4>
                                     <p>{news.text}</p>
-                                    <img src={news.image} alt={news.title} className="news-image"/>
+                                    <img src={news.image} alt={news.title} className="news-admin-image"/>
                                 </div>
-                                <div className="news-list-item-actions">
+                                <div className="news-admin-list-item-actions">
                                     <button onClick={() => handleEditNews(news.id)} className="edit-button">
                                         <EditIcon/>
                                     </button>

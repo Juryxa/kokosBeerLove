@@ -1,8 +1,8 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import "./MatchesPreview.css";
 import MatchService from "../api/services/MatchService";
-import {MatchResponse} from '../api/models/response/MatchResponse';
-import {AboutResponse} from "../api/models/response/AboutResponse";
+import { MatchResponse } from '../api/models/response/MatchResponse';
+import { AboutResponse } from "../api/models/response/AboutResponse";
 import AboutService from "../api/services/AboutService";
 
 function getWeekDay(date: Date) {
@@ -10,22 +10,20 @@ function getWeekDay(date: Date) {
     return days[date.getDay()];
 }
 
-
-const MatchCard: FC<{ match: MatchResponse, index: number }> = ({match, index}) => (
+const MatchCard: FC<{ match: MatchResponse, index: number }> = ({ match, index }) => (
     <div className="card">
-        <h5>{index % 2 === 0 ? 'Следующий матч' : 'Предыдущий матч'}</h5>
+        <h5>{index === 0 ? 'Следующий матч' : 'Предыдущий матч'}</h5>
         <div className='card-content'>
             <h5>{match.division}</h5>
             <h6>{match.team_home} - {match.team_away_name}</h6>
-            <p>{match.match_date}  - {getWeekDay(new Date(match.match_date))} - {match.match_time}</p>
+            <p>{match.match_date} - {getWeekDay(new Date(match.match_date))} - {match.match_time}</p>
             <h4>{match.score_home} - {match.score_away}</h4>
             <p>{match.location}</p>
         </div>
-
     </div>
 );
 
-const StatsCard: FC<{ stats: AboutResponse }> = ({stats}) => (
+const StatsCard: FC<{ stats: AboutResponse }> = ({ stats }) => (
     <div className="stats-card">
         <h5>Статистика</h5>
         <div className='stats-card-content'>
@@ -35,12 +33,11 @@ const StatsCard: FC<{ stats: AboutResponse }> = ({stats}) => (
             <p>Турниры: {stats.tournaments}</p>
         </div>
     </div>
-
 );
 
 const MatchesPreview: FC = () => {
     const [matches, setMatches] = useState<MatchResponse[]>([]);  // Используем интерфейс MatchResponse для типа матчей
-    const [stats, setStats] = useState<AboutResponse | null>(null);       // Статистика
+    const [stats, setStats] = useState<AboutResponse | null>(null); // Статистика
     const [errorMessage, setErrorMessage] = useState<string | null>(null); // Для обработки ошибок
     const [isLoading, setIsLoading] = useState(false);
 
@@ -51,8 +48,12 @@ const MatchesPreview: FC = () => {
     const fetchMatches = async () => {
         setIsLoading(true);
         try {
-            const response = await MatchService.getLastTwo();
-            setMatches(response.data);
+            const upComingResponse = await MatchService.getUpComing();
+            const lastTwoResponse = await MatchService.getLastTwo();
+
+            // Комбинируем два результата в массив
+            const combinedMatches = [upComingResponse.data[0], lastTwoResponse.data[0]];
+            setMatches(combinedMatches);
 
             const statsResponse = await AboutService.getInfoClub();
             setStats(statsResponse.data);
