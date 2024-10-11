@@ -2,9 +2,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from ...models import Match
 from ...serializers import MatchSerializer
-from datetime import date
+from datetime import date, datetime
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
 
 @swagger_auto_schema(
     method='get',
@@ -22,7 +23,7 @@ from drf_yasg import openapi
                     "location": "Стадион 1",
                     "division": "Премьер-лига",
                     "video_url": "http://example.com/match_video",
-                    "match_date": "2024-10-09",
+                    "match_date": "2024-11-10",
                     "match_time": "14:00:00"
                 }
             ]
@@ -31,7 +32,16 @@ from drf_yasg import openapi
 )
 @api_view(['GET'])
 def get_upcoming_matches(request):
-    # Фильтруем предстоящие матчи (match_date >= текущая дата)
-    upcoming_matches = Match.objects.filter(match_date__gte=date.today()).order_by('match_date')
+    # Получаем текущее время
+    now = datetime.now()
+
+    # Фильтруем матчи по дате и времени (где дата и время еще не прошли)
+    upcoming_matches = Match.objects.filter(
+        match_date__gte=now.date()
+    ).exclude(
+        match_date=now.date(), match_time__lte=now.time()
+    ).order_by('match_date', 'match_time')
+
+    # Сериализуем данные
     serializer = MatchSerializer(upcoming_matches, many=True)
     return Response(serializer.data)

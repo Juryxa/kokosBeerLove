@@ -8,7 +8,7 @@ from drf_yasg import openapi
 
 @swagger_auto_schema(
     method='get',
-    operation_description="Получение списка всех матчей. Данные о team_away включают название и логотип команды.",
+    operation_description="Получение списка всех матчей, отсортированных по дате и времени (от ближайшего к прошедшему).",
     responses={200: openapi.Response(
         description="Успешный ответ с данными всех матчей",
         examples={
@@ -29,9 +29,11 @@ from drf_yasg import openapi
         }
     )}
 )
-@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 @api_view(['GET'])
 def get_all_matches(request):
-    matches = Match.objects.all()
+    # Получаем все матчи, отсортированные по дате и времени (сначала предстоящие, затем прошедшие)
+    matches = Match.objects.all().order_by('-match_date', '-match_time')
+
+    # Сериализуем данные
     serializer = MatchSerializer(matches, many=True)
     return Response(serializer.data)
