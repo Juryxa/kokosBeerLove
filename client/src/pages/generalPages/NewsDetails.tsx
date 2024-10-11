@@ -8,6 +8,7 @@ import {parseAndFormatDate} from "./functions/dateParser";
 import "./NewsDetails.css";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import {truncateText} from "../generalPages/functions/truncateText";
 
 const NewsDetails: React.FC = () => {
     const {id} = useParams<{ id: string }>();
@@ -46,7 +47,7 @@ const NewsDetails: React.FC = () => {
                 ) : (
                     newsItem && (
                         <>
-                            <h1 className="newsdetails-title">{newsItem.title}</h1>
+                            <h1 className="newsdetails-title">{truncateText(newsItem.title, 40)}</h1>
                             <div className="newsdetails-meta">
                                 <span className="newsdetails-date">{parseAndFormatDate(newsItem.created_at)}</span>
                                 <div className="newsdetails-share-icons">
