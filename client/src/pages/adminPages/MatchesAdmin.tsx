@@ -6,7 +6,7 @@ import './MatchesAdmin.css';
 import { uploadImage } from './functions/uploadImage';
 
 const MatchesAdmin = () => {
-    const [team1, setTeam1] = useState('');
+    const [team1, setTeam1] = useState('КОКОС ГРУПП');
     const [team2, setTeam2] = useState('');
     const [opponentEmblem, setOpponentEmblem] = useState('');
     const [score1, setScore1] = useState<number>(0);
@@ -80,7 +80,7 @@ const MatchesAdmin = () => {
     }, [isEditing, originalMatch]);
 
     const resetForm = () => {
-        setTeam1('');
+        setTeam1('КОКОС ГРУПП');
         setTeam2('');
         setOpponentEmblem('');
         setScore1(0);
@@ -98,7 +98,7 @@ const MatchesAdmin = () => {
     const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
-            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage);
+            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage, 'team_logos');
             if (imageUrl) {
                 setOpponentEmblem(imageUrl);
             }
@@ -242,13 +242,13 @@ const MatchesAdmin = () => {
                 {isEditing ? 'Сохранить изменения' : 'Добавить матч'}
             </button>
 
-            <div className="matches-list">
-                <h3 className="matches-list-title">Список матчей</h3>
-                <ul className="matches-list-items">
+            <div className="matches-admin-list">
+                <h3 className="matches-admin-list-title">Список матчей</h3>
+                <ul className="matches-admin-list-items">
                     {Array.isArray(matchesList) && matchesList.length > 0 ? (
                         matchesList.map((match) => (
-                            <li key={match.id} className="matches-list-item">
-                                <div className="matches-list-item-content">
+                            <li key={match.id} className="matches-admin-list-item">
+                                <div className="matches-admin-list-item-content">
                                     <h4>{match.team_home} vs {match.team_away_name}</h4>
                                     <p>Счет: {match.score_home} - {match.score_away}</p>
                                     <p>Лига: {match.division}</p>
@@ -256,9 +256,9 @@ const MatchesAdmin = () => {
                                     <p>Дата: {match.match_date}, Время: {match.match_time}</p>
                                     {match.team_away_logo_url &&
                                         <img src={match.team_away_logo_url} alt="Эмблема команды"
-                                             className="match-image"/>}
+                                             className="match-admin-image"/>}
                                 </div>
-                                <div className="matches-list-item-actions">
+                                <div className="matches-admin-list-item-actions">
                                     <button onClick={() => handleEditMatch(match.id)} className="edit-button">
                                         <EditIcon/>
                                     </button>

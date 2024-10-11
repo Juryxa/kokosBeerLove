@@ -32,7 +32,6 @@ from ...serializers import PlayerSerializer
         )
     }
 )
-@cache_page(60 * 15)  # Кэширование результата на 15 минут
 @api_view(['GET'])
 def get_all_players(request):
     players = Player.objects.all()

@@ -4,6 +4,7 @@ import { Box, IconButton } from '@mui/material';
 import './Footer.css';
 import logokokos from '../images/логоокос.png'
 import phone from '../images/icons/telephone.png'
+import logohorizontal from '../images/kokocgroup_logo_horizontal_red_background (1).jpg'
 
 const Footer: React.FC = () => {
   return (

@@ -6,6 +6,14 @@ export default class MatchService{
         // @ts-ignore
         return matchApi.get<MatchResponse[]>('/get_all/');
     }
+    static async getLastTwo(){
+        // @ts-ignore
+        return matchApi.get<MatchResponse[]>('/get_last_two/');
+    }
+    static async getUpComing(){
+        // @ts-ignore
+        return matchApi.get<MatchResponse[]>('/get_upcoming/');
+    }
     static async getMatchId(matchId: number) {
         // @ts-ignore
         return matchApi.get<MatchResponse>(`/get_by_id/${matchId}/`);

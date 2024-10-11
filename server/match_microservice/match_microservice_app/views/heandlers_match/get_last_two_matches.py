@@ -5,12 +5,14 @@ from ...models import Match
 from ...serializers import MatchSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from datetime import datetime
+
 
 @swagger_auto_schema(
     method='get',
-    operation_description="Получение последних 3 матчей. Данные о team_away включают название и логотип команды.",
+    operation_description="Получение последних 2 матчей. Данные о team_away включают название и логотип команды.",
     responses={200: openapi.Response(
-        description="Успешный ответ с данными последних 3 матчей",
+        description="Успешный ответ с данными последних 2 матчей",
         examples={
             "application/json": [
                 {
@@ -22,7 +24,7 @@ from drf_yasg import openapi
                     "location": "Стадион 1",
                     "division": "Премьер-лига",
                     "video_url": "http://example.com/match_video",
-                    "match_date": "2024-10-09",
+                    "match_date": "2024-11-10",
                     "match_time": "14:00:00"
                 }
             ]
@@ -30,8 +32,16 @@ from drf_yasg import openapi
     )}
 )
 @api_view(['GET'])
-def get_last_three_matches(request):
-    # Sort by id descending to get the latest 3 matches
-    matches = Match.objects.all().order_by('-id')[:3]
-    serializer = MatchSerializer(matches, many=True)
+def get_last_two_matches(request):
+    now = datetime.now()
+
+    # Фильтруем завершённые матчи (включаем матчи сегодняшнего дня, время которых уже прошло)
+    last_matches = Match.objects.filter(
+        match_date__lt=now.date()
+    ).union(
+        Match.objects.filter(match_date=now.date(), match_time__lte=now.time())
+    ).order_by('-match_date', '-match_time')[:2]
+
+    # Сериализуем данные
+    serializer = MatchSerializer(last_matches, many=True)
     return Response(serializer.data)

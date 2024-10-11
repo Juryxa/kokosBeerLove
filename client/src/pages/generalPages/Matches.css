@@ -13,6 +13,12 @@
   display: none;
 }
 
+.low-content-matches{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .content {
   position: relative;
   display: flex;
@@ -92,6 +98,7 @@ iframe {
   display: flex;
   flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
   justify-content: center; /* Центрируем видео по горизонтали */
+  
 }
 
 .ephir-1 {

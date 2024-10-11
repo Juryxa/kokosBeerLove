@@ -1,20 +1,20 @@
 .club-container {
     background-color: #ffffff;
     padding: 20px 0 20px 0; /* Добавляем отступ сверху */
-    
-    
+
+
     margin: 0 auto; /* Центрируем контейнер */
     width: 80%;
 }
- 
+
 .image-container {
-    
+
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    flex-direction: row; 
+    flex-direction: row;
 }
- 
+
 .club-image {
     width: 100%;
     height: 100%;
@@ -24,9 +24,9 @@
     max-height: 400px;
     z-index: 0; /* Картинка на заднем плане */
 }
- 
+
 .text-overlay {
-    
+
     top: -50px; /* Сдвиг блока вверх */
     background-color: white;
     padding: 20px;
@@ -37,17 +37,25 @@
     z-index: 1; /* Текст поверх изображения */
 }
 
- 
+
 .text-overlay h2 {
     margin: 0;
     font-size: 24px;
 }
- 
+
 .text-overlay p {
     margin: 10px 0;
     font-size: 16px;
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    overflow: hidden; /* Обрезка лишнего текста */
+    text-overflow: ellipsis;
+    display: -webkit-box; /* Для создания текстового блока */
+    -webkit-line-clamp: 5; /* Максимум 5 строк */
+    -webkit-box-orient: vertical;
 }
- 
+
 .text-overlay a {
     color: blue;
     text-decoration: underline;

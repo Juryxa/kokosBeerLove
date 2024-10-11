@@ -49,7 +49,7 @@ const TeamAdmin = () => {
             // Загрузка фото, если оно выбрано
             let uploadedPhotoUrl = '';
             if (photo) {
-                uploadedPhotoUrl = await uploadImage(photo, setSuccessMessage, setErrorMessage);
+                uploadedPhotoUrl = await uploadImage(photo, setSuccessMessage, setErrorMessage, 'player_photos');
             }
 
             if (isEditing && editPlayerId !== null) {
@@ -113,7 +113,7 @@ const TeamAdmin = () => {
             setAssistsMade(player.assists_made);
             setYellowCards(player.yellow_cards);
             setRedCards(player.red_cards);
-            setPhotoUrl(player.photo_url); // Сохранение URL фото
+            setPhotoUrl(player.photo_url);
             setIsEditing(true);
             setEditPlayerId(player.id);
             setOriginalPlayer(player);
@@ -253,25 +253,25 @@ const TeamAdmin = () => {
                     }}
                 />
             </label>
-            {photoUrl && <img src={photoUrl} alt="Uploaded" className="uploaded-image" />} {/* Предварительный просмотр изображения */}
+            {photoUrl && <img src={photoUrl} alt="Uploaded" className="uploaded-admin-image" />} {/* Предварительный просмотр изображения */}
 
             <button className="team-admin-button" onClick={handleAddOrUpdatePlayer}>
                 {isEditing ? 'Сохранить изменения' : 'Добавить игрока'}
             </button>
 
-            <div className="players-list">
-                <h3 className="players-list-title">Список игроков</h3>
-                <ul className="players-list-items">
+            <div className="players-admin-list">
+                <h3 className="players-admin-list-title">Список игроков</h3>
+                <ul className="players-admin-list-items">
                     {playersList.map((player) => (
-                        <li key={player.id} className="players-list-item">
-                            <div className="players-list-item-content">
+                        <li key={player.id} className="players-admin-list-item">
+                            <div className="players-admin-list-item-content">
                                 <h4>{`${player.first_name} ${player.last_name} ${player.middle_name}`}</h4>
                                 <p>{`Роль: ${player.role}`}</p>
                                 <p>{`Игр: ${player.games_played}, Голов: ${player.goals_scored}`}</p>
                                 <p>{`Ассисты: ${player.assists_made}, Желтые: ${player.yellow_cards}, Красные: ${player.red_cards}`}</p>
-                                {player.photo_url && <img src={player.photo_url} alt="Player" className="player-image" />} {/* Предварительный просмотр изображения игрока */}
+                                {player.photo_url && <img src={player.photo_url} alt="Player" className="player-admin-image" />} {/* Предварительный просмотр изображения игрока */}
                             </div>
-                            <div className="players-list-item-actions">
+                            <div className="players-admin-list-item-actions">
                                 <button className="edit-button" onClick={() => handleEditPlayer(player.id)}>
                                     <EditIcon />
                                 </button>

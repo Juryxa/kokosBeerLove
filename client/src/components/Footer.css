@@ -1,5 +1,5 @@
 .footer {
-    background: linear-gradient(240deg, #a50b0b, #d11d1d); /* Градиент */
+    background: #E02A26;
     color: white;
     padding: 5px 0 20px 0;
     text-align: center;
@@ -8,7 +8,7 @@
     align-items: center;
     width: 100%;
     position: static;
-
+    margin-top: auto;
   }
 
   .footer-content {
@@ -19,6 +19,7 @@
     width: 100%;
     padding: 0 40px 0 40px;
   }
+  
 
   .social-icons i {
     /* margin: 0 10px; */
@@ -38,6 +39,8 @@
   flex-wrap: wrap;
   flex-direction: column;
 }
+
+
 
 .icon_section img {
     margin-right: 5px;

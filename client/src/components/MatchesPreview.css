@@ -6,41 +6,35 @@
     background: white;
     width: 80%;
     padding: 20px 0 20px 0;
+    background-size: cover;
 }
 
-.card {
-
+.card, .stats-card {
     border-radius: 8px;
     margin: 15px;
-
     text-align: center;
     min-width: 364px;
     min-height: 248px;
     background-color: #FFFFFF; /* Белый фон для карточек */
 
     background-image: url("../images/Subtract.png");
-    background-size: cover; /* Масштабируем изображение, чтобы заполнить весь блок */
-    /* Центрируем изображение */
-    /* Устанавливаем фиксированную высоту блока (можно изменить) */
-
+    background-size: 100% auto; /* Ширина всегда 100%, высота пропорциональная */
+    background-repeat: no-repeat; /* Не повторяем изображение */
+    background-position: center; /* Центрируем изображение */
+    height: 248px; /* Фиксированная высота блока */
 }
 
-
-.stats-card {
-    border-radius: 8px;
-    margin: 15px;
-
-    text-align: center;
-    min-width: 364px;
-    min-height: 248px;
-    background-color: #FFFFFF; /* Белый фон для карточек */
-
-    background-image: url("../images/Subtract.png");
-    background-size: cover; /* Масштабируем изображение, чтобы заполнить весь блок */
-    /* Центрируем изображение */
-    /* Устанавливаем фиксированную высоту блока (можно изменить) */
-
+@media screen and (max-width: 480px) {
+    .card, .stats-card {
+        background-size: 100% auto; /* Ширина всегда 100%, высота пропорциональная */
+        background-repeat: no-repeat; /* Не повторяем изображение */
+        background-position: center;
+        width: 100%; /* Ширина 100% для маленьких экранов */
+        min-width: 0;
+        height: auto; /* Высота будет регулироваться автоматически на малых экранах */
+    }
 }
+
 
 
 h6 {
@@ -78,19 +72,4 @@ h4 {
   p{
     font-size: 3vw;
   }
-    .card {
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .stats-card {
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 100%;
-      min-width: 0;
-    }
 }

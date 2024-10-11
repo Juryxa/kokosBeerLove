@@ -62,7 +62,7 @@ const ShopAdmin = () => {
             let imageUrl: string[] = [];
 
             if (image) {
-                const uploadedImageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
+                const uploadedImageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage, 'shop_images');
                 imageUrl = [uploadedImageUrl];
             }
 
@@ -175,13 +175,13 @@ const ShopAdmin = () => {
                 {isEditing ? 'Сохранить изменения' : 'Добавить товар'}
             </button>
 
-            <div className="product-list">
-                <h3 className="product-list-title">Список товаров</h3>
-                <ul className="product-list-items">
+            <div className="product-admin-list">
+                <h3 className="product-admin-list-title">Список товаров</h3>
+                <ul className="product-admin-list-items">
                     {Array.isArray(productList) && productList.length > 0 ? (
                         productList.map((product) => (
-                            <li key={product.id} className="product-list-item">
-                                <div className="product-list-item-content">
+                            <li key={product.id} className="product-admin-list-item">
+                                <div className="product-admin-list-item-content">
                                     <h4>{product.name}</h4>
                                     <p>{product.description}</p>
                                     <p>{product.price} ₽</p>  {/* Оставляем цену как строку */}
@@ -189,7 +189,7 @@ const ShopAdmin = () => {
                                         <img src={product.url_images[0]} alt={product.name} className="product-image" />
                                     )}
                                 </div>
-                                <div className="product-list-item-actions">
+                                <div className="product-admin-list-item-actions">
                                     <button onClick={() => handleEditProduct(product.id)} className="edit-button">
                                         <EditIcon />
                                     </button>

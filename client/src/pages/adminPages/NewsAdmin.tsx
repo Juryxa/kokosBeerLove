@@ -8,7 +8,7 @@ import './NewsAdmin.css';
 const NewsAdmin = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState<string>('');
     const [newsList, setNewsList] = useState<NewsResponse[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editNewsId, setEditNewsId] = useState<number | null>(null);
@@ -29,9 +29,15 @@ const NewsAdmin = () => {
         }
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setImage(e.target.files[0]);
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage, 'news_images');
+            if (imageUrl) {
+                setImage(imageUrl);
+            }
+        } else {
+            setErrorMessage('Пожалуйста, загрузите изображение в формате PNG или JPEG.');
         }
     };
 
@@ -42,39 +48,30 @@ const NewsAdmin = () => {
         }
 
         try {
-            let imageUrl: string | '';
-
-            if (image) {
-                imageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
-                console.log("Image URL:", imageUrl);
-            }
-            else{
-                imageUrl = '';
-            }
 
             if (isEditing && editNewsId !== null) {
                 if (originalNews) {
                     const isTitleChanged = originalNews.title !== title;
                     const isContentChanged = originalNews.text !== content;
-                    const isImageChanged = image !== null;
+                    const isImageChanged = image !== '';
 
                     if (isTitleChanged && isContentChanged && isImageChanged) {
-                        await NewsService.updateFullNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updateFullNews(editNewsId, title, content, image || originalNews.image);
                         setSuccessMessage('Новость полностью обновлена.');
                     } else {
-                        await NewsService.updatePartNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updatePartNews(editNewsId, title, content, image || originalNews.image);
                         setSuccessMessage('Новость частично обновлена.');
                     }
                 }
             } else {
-                await NewsService.createNews(title, content, imageUrl);
+                await NewsService.createNews(title, content, image);
                 setSuccessMessage('Новость добавлена.');
             }
 
             // Очистка формы
             setTitle('');
             setContent('');
-            setImage(null);
+            setImage('');
             setIsEditing(false);
             setEditNewsId(null);
             setOriginalNews(null);
@@ -134,24 +131,24 @@ const NewsAdmin = () => {
                 Загрузить изображение
                 <input type="file" accept="image/png, image/jpeg" className="news-admin-file-input" onChange={handleFileChange}/>
             </label>
-            {image && <p className="news-admin-image-name">Файл: {image.name}</p>}
+            {image && <img src={image} alt="Новость" className="match-image"/>}
 
             <button className="news-admin-button" onClick={handleAddOrUpdateNews}>
                 {isEditing ? 'Сохранить изменения' : 'Добавить новость'}
             </button>
 
-            <div className="news-list">
-                <h3 className="news-list-title">Список новостей</h3>
-                <ul className="news-list-items">
+            <div className="news-admin-list">
+                <h3 className="news-admin-list-title">Список новостей</h3>
+                <ul className="news-admin-list-items">
                     {Array.isArray(newsList) && newsList.length > 0 ? (
                         newsList.map((news) => (
-                            <li key={news.id} className="news-list-item">
-                                <div className="news-list-item-content">
+                            <li key={news.id} className="news-admin-list-item">
+                                <div className="news-admin-list-item-content">
                                     <h4>{news.title}</h4>
                                     <p>{news.text}</p>
-                                    <img src={news.image} alt={news.title} className="news-image"/>
+                                    <img src={news.image} alt={news.title} className="news-admin-image"/>
                                 </div>
-                                <div className="news-list-item-actions">
+                                <div className="news-admin-list-item-actions">
                                     <button onClick={() => handleEditNews(news.id)} className="edit-button">
                                         <EditIcon/>
                                     </button>
