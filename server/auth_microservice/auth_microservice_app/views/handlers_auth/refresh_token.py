@@ -6,7 +6,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.utils import timezone
 
-from ..models import RefreshToken as RefreshTokenModel
+from ...models import RefreshToken as RefreshTokenModel
 
 
 @swagger_auto_schema(
