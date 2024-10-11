@@ -40,9 +40,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         }
     )
     password = models.CharField(max_length=128)  # Хешированный пароль
+    first_name = models.CharField(max_length=150, blank=True)  # Имя
+    last_name = models.CharField(max_length=150, blank=True)   # Фамилия
+    phone_number = models.CharField(max_length=15, blank=True)  # Номер телефона
+    telegram = models.CharField(max_length=100, blank=True)  # Telegram
+    avatar_url = models.URLField(blank=True)  # URL для аватара
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)  # Новое поле для статуса подтверждения email
+    is_verified = models.BooleanField(default=False)  # Подтверждение email
 
     objects = CustomUserManager()
 
