@@ -5,10 +5,11 @@ from ...models import Match
 from ...serializers import MatchSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from datetime import datetime
 
 @swagger_auto_schema(
     method='get',
-    operation_description="Получение списка всех матчей. Данные о team_away включают название и логотип команды.",
+    operation_description="Получение списка всех матчей. Сначала выводятся предстоящие матчи, затем прошедшие. Данные о team_away включают название и логотип команды.",
     responses={200: openapi.Response(
         description="Успешный ответ с данными всех матчей",
         examples={
@@ -29,9 +30,26 @@ from drf_yasg import openapi
         }
     )}
 )
-@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 @api_view(['GET'])
 def get_all_matches(request):
-    matches = Match.objects.all()
+    # Текущее время
+    now = datetime.now()
+
+    # Получаем предстоящие матчи (match_date больше или равно текущей дате)
+    upcoming_matches = Match.objects.filter(
+        match_date__gte=now.date()
+    ).exclude(
+        match_date=now.date(), match_time__lte=now.time()
+    ).order_by('match_date', 'match_time')
+
+    # Получаем прошедшие матчи (match_date меньше текущей даты)
+    past_matches = Match.objects.filter(
+        match_date__lt=now.date()
+    ).order_by('-match_date', '-match_time')
+
+    # Объединяем оба набора данных
+    matches = list(upcoming_matches) + list(past_matches)
+
+    # Сериализуем данные
     serializer = MatchSerializer(matches, many=True)
     return Response(serializer.data)
