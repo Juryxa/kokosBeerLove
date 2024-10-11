@@ -1,0 +1,145 @@
+/* MatchesAdmin.css */
+.matches-admin-container {
+    margin: 80px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.matches-admin-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.matches-admin-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.matches-admin-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.matches-admin-button:hover {
+    background-color: #45a049;
+}
+
+.matches-list {
+    margin-top: 30px;
+}
+
+.matches-list-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.matches-list-items {
+    list-style: none;
+    padding: 0;
+}
+
+.matches-list-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.matches-list-item-content {
+    flex: 1;
+}
+
+.matches-list-item h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.matches-list-item p {
+    font-size: 14px;
+    color: #666;
+}
+
+.match-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-left: 15px;
+    border-radius: 5px;
+}
+
+.matches-list-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.edit-button, .delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-button svg {
+    fill: #4CAF50;
+}
+
+.delete-button svg {
+    fill: #ff3333;
+}
+
+.error-message, .success-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: #ffdddd;
+    color: #ff3333;
+    animation: fadeOut 4s forwards;
+}
+
+.success-message {
+    background-color: #ddffdd;
+    color: #4CAF50;
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .matches-list-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .match-image {
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+    }
+
+    .matches-admin-container {
+        padding: 10px;
+    }
+}

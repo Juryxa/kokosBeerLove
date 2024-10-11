@@ -3,33 +3,39 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from rest_framework.permissions import IsAuthenticated
-from ...serializers import MatchCreateSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from ...serializers import PlayerSerializer
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Создание нового матча с указанием названия и логотипа гостевой команды в формате JSON (name и logo_url). ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true (то пользователь-администратор).",
-    request_body=MatchCreateSerializer,
+    operation_description="Создание нового игрока. Доступно только администраторам (is_superuser == true).",
+    request_body=PlayerSerializer,
     responses={
-        201: openapi.Response(description="Матч успешно создан"),
+        201: openapi.Response(description="Игрок успешно создан"),
         400: openapi.Response(description="Неправильные данные"),
         401: openapi.Response(description="Неавторизован"),
         403: openapi.Response(description="Нет прав доступа"),
     }
 )
-
 @api_view(['POST'])
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
-def create_match(request):
+def create_player(request):
     # Проверка прав администратора
     if not request.user.is_superuser:
-        return Response({'error': 'У вас нет прав для создания матчей'}, status=status.HTTP_403_FORBIDDEN)
+        return Response({'error': 'У вас нет прав для создания игроков'}, status=status.HTTP_403_FORBIDDEN)
 
-    serializer = MatchCreateSerializer(data=request.data)
+    data = request.data.copy()
+
+    # Преобразуем значение role в нижний регистр
+    if 'role' in data:
+        data['role'] = data['role'].lower()
+
+    serializer = PlayerSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
