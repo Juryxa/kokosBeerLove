@@ -40,7 +40,7 @@ const MainPage: React.FC = () => {
                 <Suspense fallback={<div className="loading-spinner"></div>}>
                     <NearestMatch/>
                     <MatchesPreview/>
-
+                    </Suspense>
                     <NewsPreview/>
                 </Suspense>
             </div>

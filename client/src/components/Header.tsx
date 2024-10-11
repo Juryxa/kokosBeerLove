@@ -180,7 +180,7 @@ const Header = () => {
                             <>
                                 <IconButton onClick={handleProfileClick}>
                                     <AccountCircle style={{color: '#E62526'}}/> <MenuItem style={{color: "black"}}
-                                                                                          onClick={handleProfileNavigate}>Профиль</MenuItem>
+                                      onClick={handleProfileNavigate}>Профиль</MenuItem>
                                 </IconButton>
 
 
