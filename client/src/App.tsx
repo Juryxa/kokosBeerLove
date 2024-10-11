@@ -20,6 +20,7 @@ import NewsDetails from './pages/generalPages/NewsDetails';
 import UserProfile from './pages/generalPages/UserProfile';
 import MatchDetails from './pages/generalPages/MatchDetails';
 import ShopDetails from "./pages/generalPages/ShopDetails";
+import TeamAdmin from "./pages/adminPages/TeamAdmin";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
                 <Route path='/admin/' element={<RequireAuth><AdminPage/></RequireAuth>}>
                     <Route path="news" element={<NewsAdmin/>}/>
                     <Route path="matches" element={<MatchesAdmin/>}/>
+                    <Route path="team" element={<TeamAdmin/>}/>
                     <Route path="about" element={<AboutClubAdmin/>}/>
                     <Route path="shop" element={<ShopAdmin/>}/>
                 </Route>

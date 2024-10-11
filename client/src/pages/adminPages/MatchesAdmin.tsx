@@ -42,6 +42,10 @@ const MatchesAdmin = () => {
             return;
         }
 
+
+        // Оптимистично добавляем новый матч в список
+
+
         try {
             const formattedDate = matchDate;
 
@@ -59,6 +63,21 @@ const MatchesAdmin = () => {
             setErrorMessage('Ошибка при сохранении матча.');
         }
     };
+    useEffect(() => {
+        if (isEditing && originalMatch) {
+            // Обновляем поля формы на основе загруженных данных
+            setTeam1(originalMatch.team_home);
+            setTeam2(originalMatch.team_away_name);
+            setOpponentEmblem(originalMatch.team_away_logo_url);
+            setScore1(originalMatch.score_home);
+            setScore2(originalMatch.score_away);
+            setVenue(originalMatch.location);
+            setLeague(originalMatch.division);
+            setVkVideoLink(originalMatch.video_url);
+            setMatchDate(originalMatch.match_date);
+            setMatchTime(originalMatch.match_time);
+        }
+    }, [isEditing, originalMatch]);
 
     const resetForm = () => {
         setTeam1('');
@@ -88,11 +107,13 @@ const MatchesAdmin = () => {
         }
     };
 
+    // Этот метод загружает матч и заполняет все поля
     const handleEditMatch = async (matchId: number) => {
         try {
             const response = await MatchesService.getMatchId(matchId);
             const match = response.data;
 
+            // Установка полей редактирования
             setTeam1(match.team1);
             setTeam2(match.team2);
             setOpponentEmblem(match.opponentEmblem);
@@ -103,6 +124,8 @@ const MatchesAdmin = () => {
             setVkVideoLink(match.vkVideoLink);
             setMatchDate(match.matchDate);
             setMatchTime(match.matchTime);
+
+            // Переходим в режим редактирования
             setIsEditing(true);
             setEditMatchId(match.id);
             setOriginalMatch(match);
@@ -199,7 +222,6 @@ const MatchesAdmin = () => {
                 onChange={(e) => setVkVideoLink(e.target.value)}
             />
 
-            {/* Дата матча в формате "гггг-мм-чч" */}
             <input
                 type="date"
                 className="matches-admin-input"
@@ -208,7 +230,6 @@ const MatchesAdmin = () => {
                 onChange={(e) => setMatchDate(e.target.value)}
             />
 
-            {/* Переименованное поле */}
             <input
                 type="text"
                 className="matches-admin-input"
