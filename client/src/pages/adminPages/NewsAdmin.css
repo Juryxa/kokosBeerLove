@@ -62,21 +62,21 @@
 }
 
 /* Список новостей */
-.news-list {
+.news-admin-list {
     margin-top: 30px;
 }
 
-.news-list-title {
+.news-admin-list-title {
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.news-list-items {
+.news-admin-list-items {
     list-style: none;
     padding: 0;
 }
 
-.news-list-item {
+.news-admin-list-item {
     display: flex;
     justify-content: space-between;
     background-color: white;
@@ -85,7 +85,7 @@
     border-radius: 5px;
     margin-bottom: 15px;
 }
-.news-list-item h4 {
+.news-admin-list-item h4 {
     margin: 0;
     font-size: 18px;
     word-wrap: break-word; /* Перенос слов */
@@ -95,7 +95,7 @@
     text-overflow: ellipsis; /* Троеточие для длинного текста */
 }
 
-.news-list-item p, .news-list-item img{
+.news-admin-list-item p, .news-admin-list-item img{
     font-size: 14px;
     color: #666;
     word-wrap: break-word; /* Перенос слов */
@@ -109,21 +109,21 @@
     -webkit-box-orient: vertical; /* Вертикальная ориентация текста */
 }
 
-.news-list-item-content {
+.news-admin-list-item-content {
     flex: 1;
 }
 
-.news-list-item h4 {
+.news-admin-list-item h4 {
     margin: 0;
     font-size: 18px;
 }
 
-.news-list-item p {
+.news-admin-list-item p {
     font-size: 14px;
     color: #666;
 }
 
-.news-image {
+.news-admin-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -131,22 +131,22 @@
     border-radius: 5px;
 }
 
-.news-list-item-actions {
+.news-admin-list-item-actions {
     display: flex;
     align-items: center;
 }
 
-.edit-button, .delete-button {
+.edit-admin-button, .delete-admin-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
 
-.edit-button svg {
+.edit-admin-button svg {
     fill: #4CAF50;
 }
 
-.delete-button svg {
+.delete-admin-button svg {
     fill: #ff3333;
 }
 
@@ -177,12 +177,12 @@
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .news-list-item {
+    .news-admin-list-item {
         flex-direction: column;
         align-items: center;
     }
 
-    .news-image {
+    .news-admin-image {
         width: 100%;
         height: auto;
         margin: 15px 0;

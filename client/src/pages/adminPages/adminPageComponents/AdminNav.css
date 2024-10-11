@@ -1,9 +1,9 @@
 /* Общие стили */
-.nav-container {
+.admin-nav-container {
     position: relative;
 }
 
-.nav {
+.admin-nav {
     display: flex;
     justify-content: space-around;
     background-color: #333;
@@ -15,19 +15,19 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.nav a {
+.admin-nav a {
     color: white;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
 }
 
-.nav a:hover {
+.admin-nav a:hover {
     background-color: #575757;
     border-radius: 5px;
 }
 
-.nav button {
+.admin-nav button {
     background-color: #ff3333;
     color: white;
     border: none;
@@ -36,12 +36,12 @@
     cursor: pointer;
 }
 
-.nav button:hover {
+.admin-nav button:hover {
     background-color: #cc0000;
 }
 
 /* Скрываем меню на маленьких экранах по умолчанию */
-.burger-menu {
+.admin-burger-menu {
     display: none;
     font-size: 30px;
     cursor: pointer;
@@ -50,7 +50,7 @@
 
 /* Адаптивное бургер-меню */
 @media (max-width: 768px) {
-    .burger-menu {
+    .admin-burger-menu {
         display: block;
         position: fixed;
         top: 10px;
@@ -58,10 +58,10 @@
         z-index: 20;
     }
 
-    .nav {
+    .admin-nav {
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
+        justify-content: flex-start; /* Оставляем элементы в верхней части */
+        align-items: center; /* Центрируем элементы по горизонтали */
         background-color: #333;
         padding-top: 50px;
         position: fixed;
@@ -72,19 +72,20 @@
         transform: translateX(-100%); /* Меню скрыто */
     }
 
-    .nav.open {
+    .admin-nav.open {
         transform: translateX(0); /* Меню открыто */
     }
 
-    .nav a {
+    .admin-nav a {
         padding: 15px;
         font-size: 18px;
         width: 100%;
         text-align: center;
     }
 
-    .nav button {
+    .admin-nav button {
         padding: 15px;
         width: 100%;
+        text-align: center;
     }
 }
