@@ -42,15 +42,15 @@ const MainPage: React.FC = () => {
             }}>
                 <NearestMatch tabloinfo={tabloinfo}/>
                 <MatchesPreview/>
-                <Suspense fallback={<div className="loading-spinner"></div>}>
+                 <Suspense fallback={<div className="loading-spinner"></div>}> 
                     <NewsPreview/>
                 </Suspense>
             </div>
             <ClubPreiew/>
-            <Carousel/>
-            <Suspense fallback={<div className="loading-spinner"></div>}>
+            
+             <Suspense fallback={<div className="loading-spinner"></div>}> 
                 <ShopPreview/>
-            </Suspense>
+              </Suspense> 
             <Footer/>
         </div>
     );

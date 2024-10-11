@@ -9,7 +9,7 @@ import logo from '../images/logo.jpg';
 
 const Header = () => {
     const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // Для меню профиля
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
     
@@ -21,6 +21,8 @@ const Header = () => {
     };
 
     const handleMenuClose = () => {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
         setAnchorEl(null);
     };
 
@@ -129,14 +131,7 @@ const Header = () => {
 
                         {/* Поиск и Логин / Профиль */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto', color: 'white' }}>
-                            <IconButton>
-                                <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="10" r="8" stroke="#E62526" strokeWidth="2" />
-                                    <path d="M17 16L22 21" stroke="#E62526" strokeWidth="2" />
-                                </svg>
-                                <Typography color={'#E62526'}> Поиск</Typography>
-                            </IconButton>
+                            
 
                             {store.isAuth ? (
                                 <>
