@@ -2,13 +2,13 @@ import React, {Suspense} from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import NearestMatch from "../../components/NearestMatch";
-import TeamPreview from '../../components/TeamPreview';
 import './MainPage.css';
-import ClubPreview from "../../components/ClubPreview";
 
 const ShopPreview = React.lazy(() => import('../../components/ShopPreview'));
 const NewsPreview = React.lazy(() => import('../../components/NewsPreview'));
+const ClubPreview = React.lazy(() => import('../../components/ClubPreview'));
 const MatchesPreview = React.lazy(() => import('../../components/MatchesPreview'));
+const TeamPreview = React.lazy(() => import('../../components/TeamPreview');
 
 const MainPage: React.FC = () => {
 
