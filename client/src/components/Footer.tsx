@@ -5,16 +5,22 @@ import './Footer.css';
 import logokokos from '../images/логоокос.png'
 import phone from '../images/icons/telephone.png'
 import logohorizontal from '../images/kokocgroup_logo_horizontal_red_background (1).jpg'
-
+import { Link } from 'react-router-dom';
 const Footer: React.FC = () => {
   return (
     <footer className="footer"  id="footer">
       <div className="footer-content">
 
-        <div className="contacts_koks">
-        <h2>КОНТАКТЫ</h2>
-        <img src={logokokos} alt="error"/>
-          </div>
+      <div className="contacts_koks">
+    <Link to="/">
+        <img src={logokokos} alt="error" className="contacts_koks-img" onClick={() => {
+                                          const footerElement = document.getElementById('header');
+                                          if (footerElement) {
+                                              footerElement.scrollIntoView({behavior: 'smooth'});
+                                          }
+                                      }}/>
+    </Link>
+</div>
 
           <div className='icon_section'>
             <h3><img src={phone} alt="error"/><a href="tel:+7988552222222">+7 (988) 552 - 22 - 22</a></h3>
