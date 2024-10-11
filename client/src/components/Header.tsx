@@ -157,7 +157,7 @@ const Header = () => {
                             )}
                         </Box>
                     </Box>
-                
+
 
                 {/* Бургер-меню */}
                 <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
@@ -178,10 +178,11 @@ const Header = () => {
                         <MenuItem component={Link} to="/shop">Магазин</MenuItem>
                         {store.isAuth ? (
                             <>
-                                <IconButton onClick={handleProfileClick}>
-                                    <AccountCircle style={{color: '#E62526'}}/> <MenuItem style={{color: "black"}}
-                                      onClick={handleProfileNavigate}>Профиль</MenuItem>
+                                <IconButton onClick={handleProfileNavigate} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                    <AccountCircle style={{color: '#E62526'}}/>
+                                    <Typography style={{color: 'black'}}>Профиль</Typography>
                                 </IconButton>
+
 
 
                                 <MenuItem onClick={handleLogout}>Выйти</MenuItem>
