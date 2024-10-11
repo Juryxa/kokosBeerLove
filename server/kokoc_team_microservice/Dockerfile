@@ -13,9 +13,11 @@ COPY requirements.txt .
 # Установи зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN wget https://github.com/eficode/wait-for/releases/download/v2.1.0/wait-for -O /usr/local/bin/wait-for && chmod +x /usr/local/bin/wait-for
+
 # Копируем код микросервиса
 COPY . /kokoc_team_microservice
+
+
 
 # Окружающие переменные для Django
 ENV PYTHONDONTWRITEBYTECODE 1

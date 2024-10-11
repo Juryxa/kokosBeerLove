@@ -10,7 +10,7 @@ WORKDIR /news_microservice
 # Скопируй файл с зависимостями в контейнер
 COPY requirements.txt .
 
-RUN wget https://github.com/eficode/wait-for/releases/download/v2.1.0/wait-for -O /usr/local/bin/wait-for && chmod +x /usr/local/bin/wait-for
+
 
 # Установи зависимости
 RUN pip install --no-cache-dir -r requirements.txt

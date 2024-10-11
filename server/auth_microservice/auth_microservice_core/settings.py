@@ -188,8 +188,9 @@ SIMPLE_JWT = {
 #SILKY_PYTHON_PROFILER = True  # Включает профайлер
 #SILKY_META = True  # Включает сбор дополнительной информации о запросах
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MMEDIA_ROOT = '/uploads'
+MEDIA_URL = '/uploads/'
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -199,4 +200,6 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS_AUTH', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER_AUTH')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD_AUTH')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 

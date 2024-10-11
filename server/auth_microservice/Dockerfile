@@ -10,11 +10,13 @@ WORKDIR /auth_microservice
 # Скопируем файл с зависимостями в контейнер
 COPY requirements.txt .
 
+
+
 # Установим зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Скачиваем и устанавливаем wait-for
-RUN wget https://github.com/eficode/wait-for/releases/download/v2.1.0/wait-for -O /usr/local/bin/wait-for && chmod +x /usr/local/bin/wait-for
+
 
 # Копируем код микросервиса
 COPY . /auth_microservice
