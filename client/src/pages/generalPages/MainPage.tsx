@@ -19,8 +19,8 @@ const MainPage: React.FC = () => {
             alignItems: 'center',
             flexDirection: 'column',
             width: '100%'
-        }}>
-            <Header/>
+        }} id="header">
+            <Header />
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',

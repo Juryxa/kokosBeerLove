@@ -114,7 +114,9 @@
     -webkit-box-orient: vertical;
 }
 
-.product-admin-image {
+
+.shop-admin-product-image {
+
     width: 100px;
     height: 100px;
     object-fit: cover;

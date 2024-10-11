@@ -186,7 +186,7 @@ const ShopAdmin = () => {
                                     <p>{product.description}</p>
                                     <p>{product.price} ₽</p>  {/* Оставляем цену как строку */}
                                     {product.url_images && product.url_images.length > 0 && (
-                                        <img src={product.url_images[0]} alt={product.name} className="product-image" />
+                                        <img src={product.url_images[0]} alt={product.name} className="shop-admin-product-image" />
                                     )}
                                 </div>
                                 <div className="product-admin-list-item-actions">
