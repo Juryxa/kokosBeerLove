@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    word-wrap: break-word; /* Позволяет разрывать слова, чтобы они умещались */
+    overflow-wrap: break-word;
 }
 
 .notfound{
@@ -18,17 +20,20 @@
 
 .newsdetails-details {
     max-width: 800px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    height: 100vw;
+    height: 100vh;
 }
+
 
 .newsdetails-title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
+    
 }
 
 .newsdetails-meta {
@@ -77,4 +82,6 @@
     font-size: 18px;
     line-height: 1.6;
     text-align: justify;
+    word-wrap: break-word; /* Позволяет разрывать слова, чтобы они умещались */
+    overflow-wrap: break-word; /* Альтернативное свойство для разрыва слов */
 }
