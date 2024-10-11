@@ -39,6 +39,8 @@ const Team = () => {
         return acc;
     }, {});
 
+    let index = 1;
+
     return (
         <div className="team-container">
             <Header/>
@@ -74,7 +76,7 @@ const Team = () => {
                         </tr>
                         {groupedPlayers[role].map((player) => (
                             <tr key={player.id}>
-                                <td>{player.id}</td>
+                                <td>{index++}</td>
                                 <td>
                                     <div className="player-info">
                                         <img src={player.photo_url} alt={`${player.middle_name} ${player.first_name} ${player.last_name}`}
