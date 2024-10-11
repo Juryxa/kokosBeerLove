@@ -157,7 +157,7 @@ const Header = () => {
                             )}
                         </Box>
                     </Box>
-                </Box>
+                
 
                 {/* Бургер-меню */}
                 <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
