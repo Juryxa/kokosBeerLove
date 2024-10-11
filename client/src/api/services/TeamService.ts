@@ -10,7 +10,7 @@ export default class TeamService {
 
     static async getPlayerId(playerId: number) {
         // @ts-ignore
-        return teamAboutApi.get<TeamResponse>(`/get_player_by_id/${playerId}/`);
+        return teamAboutApi.get<TeamResponse>(`/get_player/${playerId}/`);
     }
 
     static async createPlayer(first_name: string, last_name: string, middle_name: string, role: string, games_played: number, goals_scored: number, assists_made: number, yellow_cards: number, red_cards: number, photo_url: string) {
