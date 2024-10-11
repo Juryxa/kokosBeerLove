@@ -74,7 +74,7 @@ const NewsDetails: React.FC = () => {
                                 </div>
                             </div>
                             <div className='img-container'>
-                                <img src={newsItem.image} alt={newsItem.title} className="newsdetails-image"/>
+                                <img src={newsItem.image_url} alt={newsItem.title} className="newsdetails-image"/>
                             </div>
                             <div className="newsdetails-content">{newsItem.text}</div>
                         </>
