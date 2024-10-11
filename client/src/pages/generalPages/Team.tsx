@@ -67,8 +67,22 @@ const Team = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {isLoading && <div className="loading-spinner"></div>}
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {isLoading && (
+                    <tr>
+                        <td colSpan={8}>
+                            <div className="loading-spinner"></div>
+                            {/* можно заменить на текст или оставить div */}
+                        </td>
+                    </tr>
+                )}
+                {errorMessage && (
+                    <tr>
+                        <td colSpan={8}>
+                            <div className="error-message">{errorMessage}</div>
+                            {/* можно заменить на текст или оставить div */}
+                        </td>
+                    </tr>
+                )}
                 {Object.keys(groupedPlayers).map((role) => (
                     <React.Fragment key={role}>
                         <tr className="category-row">
@@ -79,8 +93,11 @@ const Team = () => {
                                 <td>{index++}</td>
                                 <td>
                                     <div className="player-info">
-                                        <img src={player.photo_url} alt={`${player.middle_name} ${player.first_name} ${player.last_name}`}
-                                             className="player-image"/>
+                                        <img
+                                            src={player.photo_url}
+                                            alt={`${player.middle_name} ${player.first_name} ${player.last_name}`}
+                                            className="player-image"
+                                        />
                                         <div className="player-name-role">
                                             <strong>{`${player.middle_name} ${player.first_name} ${player.last_name}`}</strong>
                                             <span>{player.role}</span>
@@ -97,6 +114,7 @@ const Team = () => {
                     </React.Fragment>
                 ))}
                 </tbody>
+
             </table>
             <Footer/>
         </div>
