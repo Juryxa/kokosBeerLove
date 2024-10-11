@@ -85,6 +85,29 @@
     border-radius: 5px;
     margin-bottom: 15px;
 }
+.news-list-item h4 {
+    margin: 0;
+    font-size: 18px;
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    overflow: hidden; /* Обрезка лишнего текста */
+    text-overflow: ellipsis; /* Троеточие для длинного текста */
+}
+
+.news-list-item p, .news-list-item img{
+    font-size: 14px;
+    color: #666;
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    max-height: 150px; /* Ограничение по высоте */
+    overflow: hidden; /* Обрезка текста по высоте */
+    text-overflow: ellipsis; /* Троеточие для длинного текста */
+    display: -webkit-box; /* Для создания текстового блока */
+    -webkit-line-clamp: 5; /* Максимум 5 строк */
+    -webkit-box-orient: vertical; /* Вертикальная ориентация текста */
+}
 
 .news-list-item-content {
     flex: 1;

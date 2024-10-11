@@ -13,6 +13,11 @@
   display: none;
 }
 
+.low-content-matches{
+  display: flex;
+  flex-direction: column;
+}
+
 .content {
   position: relative;
   display: flex;

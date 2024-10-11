@@ -4,6 +4,9 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 100vh;
+    word-wrap: break-word; /* Позволяет разрывать слова, чтобы они умещались */
+    overflow-wrap: break-word;
 }
 
 .notfound{
@@ -11,7 +14,6 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    
     flex: 1;
 }
 
@@ -21,7 +23,7 @@
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    height: 100vw;
+    flex-grow: 1;
 }
 
 .newsdetails-title {
@@ -29,6 +31,11 @@
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    overflow: hidden; /* Обрезка лишнего текста */
+    text-overflow: ellipsis;
 }
 
 .newsdetails-meta {
@@ -71,10 +78,20 @@
     margin: 20px 0;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    overflow: hidden; /* Обрезка лишнего текста */
+    text-overflow: ellipsis;
 }
 
 .newsdetails-content {
     font-size: 18px;
     line-height: 1.6;
     text-align: justify;
+    word-wrap: break-word; /* Перенос слов */
+    word-break: break-all; /* Перенос длинных слов */
+    max-width: 100%; /* Ограничение по ширине */
+    overflow: hidden; /* Обрезка лишнего текста */
+    text-overflow: ellipsis;
 }

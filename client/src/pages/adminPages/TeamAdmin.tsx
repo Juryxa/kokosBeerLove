@@ -113,7 +113,7 @@ const TeamAdmin = () => {
             setAssistsMade(player.assists_made);
             setYellowCards(player.yellow_cards);
             setRedCards(player.red_cards);
-            setPhotoUrl(player.photo_url); // Сохранение URL фото
+            setPhotoUrl(player.photo_url);
             setIsEditing(true);
             setEditPlayerId(player.id);
             setOriginalPlayer(player);
