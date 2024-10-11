@@ -3,13 +3,14 @@ import axios from 'axios';
 export const uploadImage = async (
     file: File,
     setSuccessMessage: (message: string | null) => void,
-    setErrorMessage: (message: string | null) => void
+    setErrorMessage: (message: string | null) => void,
+    folder: string,
 ): Promise<string> => {
     const uniqueFileName = `${Date.now()}_${file.name}`;
 
     try {
         const response = await axios.put(
-            `http://localhost/uploads/news_images/${uniqueFileName}`,
+            `http://localhost/uploads/${folder}/${uniqueFileName}`,
             file,
             {
                 headers: {

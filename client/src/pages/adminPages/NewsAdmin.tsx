@@ -32,7 +32,7 @@ const NewsAdmin = () => {
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
-            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage);
+            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage, 'news_images');
             if (imageUrl) {
                 setImage(imageUrl);
             }
