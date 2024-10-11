@@ -1,9 +1,9 @@
 /* Общие стили */
-.nav-container {
+.admin-nav-container {
     position: relative;
 }
 
-.nav {
+.admin-nav {
     display: flex;
     justify-content: space-around;
     background-color: #333;
@@ -15,19 +15,19 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.nav a {
+.admin-nav a {
     color: white;
     text-decoration: none;
     padding: 10px;
     font-weight: bold;
 }
 
-.nav a:hover {
+.admin-nav a:hover {
     background-color: #575757;
     border-radius: 5px;
 }
 
-.nav button {
+.admin-nav button {
     background-color: #ff3333;
     color: white;
     border: none;
@@ -36,7 +36,7 @@
     cursor: pointer;
 }
 
-.nav button:hover {
+.admin-nav button:hover {
     background-color: #cc0000;
 }
 

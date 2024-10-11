@@ -22,12 +22,12 @@ const AdminNav = () => {
     };
 
     return (
-        <div className='nav-container'>
-            <div className="burger-menu" onClick={toggleMenu}>
+        <div className='admin-nav-container'>
+            <div className="admin-burger-menu" onClick={toggleMenu}>
                 &#9776; {/* Иконка бургер-меню */}
             </div>
 
-            <div className={`nav ${isMenuOpen ? 'open' : ''}`}>
+            <div className={`admin-nav ${isMenuOpen ? 'open' : ''}`}>
                 <Link to='/' onClick={closeMenu}>На главную</Link>
                 <Link to='news' onClick={closeMenu}>Новости</Link>
                 <Link to='matches' onClick={closeMenu}>Матчи</Link>

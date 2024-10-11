@@ -36,21 +36,21 @@
     background-color: #45a049;
 }
 
-.matches-list {
+.matches-admin-list {
     margin-top: 30px;
 }
 
-.matches-list-title {
+.matches-admin-list-title {
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.matches-list-items {
+.matches-admin-list-items {
     list-style: none;
     padding: 0;
 }
 
-.matches-list-item {
+.matches-admin-list-item {
     display: flex;
     justify-content: space-between;
     background-color: white;
@@ -60,21 +60,21 @@
     margin-bottom: 15px;
 }
 
-.matches-list-item-content {
+.matches-admin-list-item-content {
     flex: 1;
 }
 
-.matches-list-item h4 {
+.matches-admin-list-item h4 {
     margin: 0;
     font-size: 18px;
 }
 
-.matches-list-item p {
+.matches-admin-list-item p {
     font-size: 14px;
     color: #666;
 }
 
-.match-image {
+.match-admin-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -82,7 +82,7 @@
     border-radius: 5px;
 }
 
-.matches-list-item-actions {
+.matches-admin-list-item-actions {
     display: flex;
     align-items: center;
 }
@@ -128,12 +128,12 @@
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .matches-list-item {
+    .matches-admin-list-item {
         flex-direction: column;
         align-items: center;
     }
 
-    .match-image {
+    .match-admin-image {
         width: 100%;
         height: auto;
         margin: 15px 0;
