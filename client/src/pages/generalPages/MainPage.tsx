@@ -8,7 +8,7 @@ const ShopPreview = React.lazy(() => import('../../components/ShopPreview'));
 const NewsPreview = React.lazy(() => import('../../components/NewsPreview'));
 const ClubPreview = React.lazy(() => import('../../components/ClubPreview'));
 const MatchesPreview = React.lazy(() => import('../../components/MatchesPreview'));
-const TeamPreview = React.lazy(() => import('../../components/TeamPreview');
+const TeamPreview = React.lazy(() => import('../../components/TeamPreview'));
 
 const MainPage: React.FC = () => {
 
