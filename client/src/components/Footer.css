@@ -32,12 +32,19 @@
   }
 
 
-.contacts_koks{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-  flex-direction: column;
+ 
+.contacts_koks-img {
+  
+  transition: transform 0.3s ease; /* Анимация при масштабировании */
+}
+
+.contacts_koks-img:hover {
+  transform: scale(1.2); /* Увеличение изображения в 1.5 раза */
+}
+
+.contacts_koks-img {
+  max-width: 100%; /* Изображение адаптируется по ширине контейнера */
+  height: auto; /* Высота автоматически подстраивается */
 }
 
 
