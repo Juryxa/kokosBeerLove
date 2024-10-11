@@ -62,7 +62,7 @@ const ShopAdmin = () => {
             let imageUrl: string[] = [];
 
             if (image) {
-                const uploadedImageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
+                const uploadedImageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage, 'shop_images');
                 imageUrl = [uploadedImageUrl];
             }
 

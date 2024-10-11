@@ -8,7 +8,7 @@ import './NewsAdmin.css';
 const NewsAdmin = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState<string>('');
     const [newsList, setNewsList] = useState<NewsResponse[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editNewsId, setEditNewsId] = useState<number | null>(null);
@@ -29,9 +29,15 @@ const NewsAdmin = () => {
         }
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setImage(e.target.files[0]);
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+            const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage, 'news_images');
+            if (imageUrl) {
+                setImage(imageUrl);
+            }
+        } else {
+            setErrorMessage('Пожалуйста, загрузите изображение в формате PNG или JPEG.');
         }
     };
 
@@ -42,39 +48,30 @@ const NewsAdmin = () => {
         }
 
         try {
-            let imageUrl: string | '';
-
-            if (image) {
-                imageUrl = await uploadImage(image, setSuccessMessage, setErrorMessage);
-                console.log("Image URL:", imageUrl);
-            }
-            else{
-                imageUrl = '';
-            }
 
             if (isEditing && editNewsId !== null) {
                 if (originalNews) {
                     const isTitleChanged = originalNews.title !== title;
                     const isContentChanged = originalNews.text !== content;
-                    const isImageChanged = image !== null;
+                    const isImageChanged = image !== '';
 
                     if (isTitleChanged && isContentChanged && isImageChanged) {
-                        await NewsService.updateFullNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updateFullNews(editNewsId, title, content, image || originalNews.image);
                         setSuccessMessage('Новость полностью обновлена.');
                     } else {
-                        await NewsService.updatePartNews(editNewsId, title, content, imageUrl || originalNews.image);
+                        await NewsService.updatePartNews(editNewsId, title, content, image || originalNews.image);
                         setSuccessMessage('Новость частично обновлена.');
                     }
                 }
             } else {
-                await NewsService.createNews(title, content, imageUrl);
+                await NewsService.createNews(title, content, image);
                 setSuccessMessage('Новость добавлена.');
             }
 
             // Очистка формы
             setTitle('');
             setContent('');
-            setImage(null);
+            setImage('');
             setIsEditing(false);
             setEditNewsId(null);
             setOriginalNews(null);
@@ -134,7 +131,7 @@ const NewsAdmin = () => {
                 Загрузить изображение
                 <input type="file" accept="image/png, image/jpeg" className="news-admin-file-input" onChange={handleFileChange}/>
             </label>
-            {image && <p className="news-admin-image-name">Файл: {image.name}</p>}
+            {image && <img src={image} alt="Новость" className="match-image"/>}
 
             <button className="news-admin-button" onClick={handleAddOrUpdateNews}>
                 {isEditing ? 'Сохранить изменения' : 'Добавить новость'}

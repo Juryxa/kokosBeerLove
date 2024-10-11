@@ -49,7 +49,7 @@ const TeamAdmin = () => {
             // Загрузка фото, если оно выбрано
             let uploadedPhotoUrl = '';
             if (photo) {
-                uploadedPhotoUrl = await uploadImage(photo, setSuccessMessage, setErrorMessage);
+                uploadedPhotoUrl = await uploadImage(photo, setSuccessMessage, setErrorMessage, 'player_photos');
             }
 
             if (isEditing && editPlayerId !== null) {
@@ -113,7 +113,7 @@ const TeamAdmin = () => {
             setAssistsMade(player.assists_made);
             setYellowCards(player.yellow_cards);
             setRedCards(player.red_cards);
-            setPhotoUrl(player.photo_url); // Сохранение URL фото
+            setPhotoUrl(player.photo_url);
             setIsEditing(true);
             setEditPlayerId(player.id);
             setOriginalPlayer(player);

@@ -12,11 +12,26 @@ class SignupSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser(
             username=validated_data['username'],
-            email=validated_data['email']
+            email=validated_data['email'],
+            first_name='',  # Поля профиля будут пустыми при регистрации
+            last_name='',
+            phone_number='',
+            telegram='',
+            avatar_url=''
         )
         user.set_password(validated_data['password'])  # Шифруем пароль
         user.save()
         return user
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'phone_number', 'telegram', 'avatar_url']
+
+class AvatarUploadSerializer(serializers.Serializer):
+    avatar_url = serializers.URLField(required=True)
+
 
 class EmailVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()
