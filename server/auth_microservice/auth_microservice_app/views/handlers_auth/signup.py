@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from django.utils import timezone
 from datetime import timedelta
 
-from ..models import RefreshToken as RefreshTokenModel
-from ..serializers import SignupSerializer
+from ...models import RefreshToken as RefreshTokenModel
+from ...serializers import SignupSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 @swagger_auto_schema(
