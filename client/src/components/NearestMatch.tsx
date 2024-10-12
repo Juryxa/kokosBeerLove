@@ -11,6 +11,19 @@ function getWeekDay(date: Date) {
     return days[date.getDay()];
 }
 
+// Функция для форматирования даты
+function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        day: '2-digit',    // Два символа для дня
+        month: 'long',     // Полное название месяца
+        year: 'numeric'    // Год в формате 4 цифры
+    };
+
+    // Форматируем дату с нужными параметрами и на русском языке
+    return date.toLocaleDateString('ru-RU', options).replace(' г.', ''); // Убираем лишнее "г."
+}
+
 const NearestMatch: React.FC = () => {
     const [matchData, setMatchData] = useState<MatchResponse | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -66,7 +79,8 @@ const NearestMatch: React.FC = () => {
                     </div>
                 </div>
                 <div className='dateInfo'>
-                    <div>{matchData.match_date} — {getWeekDay(new Date(matchData.match_date))} — {matchData.match_time}</div>
+                    {/* Форматируем дату и убираем секунды из времени */}
+                    <div>{formatDate(matchData.match_date)} — {getWeekDay(new Date(matchData.match_date))} — {matchData.match_time.slice(0, 5)}</div>
                 </div>
                 {/* Логотипы команд */}
                 <div className='logosTeams' style={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>

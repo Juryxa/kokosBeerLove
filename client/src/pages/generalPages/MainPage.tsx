@@ -20,7 +20,7 @@ const MainPage: React.FC = () => {
             flexDirection: 'column',
             width: '100%'
         }} id="header">
-            <Header />
+            <Header/>
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',

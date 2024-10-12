@@ -44,28 +44,26 @@ const Team = () => {
     return (
         <div className="team-container">
             <Header/>
+            <div className='content-team-page'>
             <BigBosses/>
+            <div className='table-container'>
             <table className="team-table">
-                <thead>
-                <tr>
-                    <th>№</th>
-                    <th>ФИО</th>
-                    <th>ИГРЫ</th>
-                    <th>ГОЛЫ</th>
-                    <th>ПАСЫ</th>
-                    <th>
-                        <div style={{
-                            backgroundColor: "yellow",
-                            height: "20px",
-                            width: "15px",
-                            borderRadius: "5px"
-                        }}></div>
-                    </th>
-                    <th>
-                        <div style={{backgroundColor: "red", height: "20px", width: "15px", borderRadius: "5px"}}></div>
-                    </th>
-                </tr>
-                </thead>
+            <thead>
+    <tr>
+        <th className="shorten">№</th>
+        <th className="shorten">ФИО</th>
+        <th className="shorten">ИГРЫ</th>
+        <th className="shorten">ГОЛЫ</th>
+        <th className="shorten">ПАСЫ</th>
+        <th>
+            <div style= {{backgroundColor: "yellow", height: "20px", width: "15px", borderRadius: "5px"}}></div>
+        </th>
+        <th>
+            <div style= {{backgroundColor: "red", height: "20px", width: "15px", borderRadius: "5px"}}></div>
+        </th>
+    </tr>
+</thead>
+
                 <tbody>
                 {isLoading && (
                     <tr>
@@ -116,6 +114,8 @@ const Team = () => {
                 </tbody>
 
             </table>
+            </div>
+            </div>
             <Footer/>
         </div>
     );

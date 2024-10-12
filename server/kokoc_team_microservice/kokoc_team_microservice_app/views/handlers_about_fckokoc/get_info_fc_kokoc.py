@@ -15,7 +15,6 @@ from drf_yasg import openapi
     }
 )
 @api_view(['GET'])
-@cache_page(60 * 10)
 def get_info_fc_kokoc(request):
     about_fc_kokoc = AboutFcKokoc.get_instance()  # Получаем единственную запись
     serializer = AboutFcKokocSerializer(about_fc_kokoc)
