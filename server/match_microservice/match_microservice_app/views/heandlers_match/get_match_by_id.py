@@ -18,7 +18,6 @@ from drf_yasg import openapi
         404: openapi.Response(description="Матч не найден"),
     }
 )
-@cache_page(60 * 20)  # Кэшируем результат на 20 минут
 @api_view(['GET'])
 def get_match_by_id(request, id):
     try:
