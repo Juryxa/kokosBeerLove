@@ -12,7 +12,7 @@ const Shop = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const [searchQuery, setSearchQuery] = useState(''); // Состояние для текста поиска
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Shop = () => {
   const filteredShopData = shopData.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -54,7 +54,7 @@ const Shop = () => {
       <div className="container-shop">
         <Header />
         <div className="shop-section">
-          <h1>Магазин</h1>
+          <h1 style={{color:"black"}}>Магазин</h1>
           {/* Поле поиска */}
           <div className="search-container">
             <input

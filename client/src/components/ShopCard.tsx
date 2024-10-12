@@ -10,21 +10,22 @@ import tshirt from '../images/T-shirt Mockup.png'
 
 const ShopCard: React.FC<ShopResponse> = ({ id, name, description, price, url_images }) => {
     return (
-        <Link to={`/`} className="shop-card">
+        <Link to={`/shop/${id}`} className="shop-card">
             <div className='shopcard-container'>
             <div className='shopcard-img'>
                 <img src={tshirt} alt='error'/>
             </div>
-            <div className='img-red-line'>
+            
             <div className="shopcard-preview-text">
                 <h3 className="shopcard-title">{name}</h3>
                 <p className="shopcard-description">{description}</p>
             </div>
-            <img src={imgredline} alt='error' className='redline'/>
+            
             <div className="shopcard-action">
                 <Button variant="contained" color="error" className="shop-order-button">Заказать</Button>
             </div>
-            </div>
+            
+            <img src={imgredline} alt='error' className='redline'/>
             </div>
         </Link>
     );
