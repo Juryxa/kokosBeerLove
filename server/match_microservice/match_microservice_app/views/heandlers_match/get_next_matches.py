@@ -45,4 +45,8 @@ def get_next_matches(request):
 
     # Сериализуем данные
     serializer = MatchSerializer(next_matches, many=True)
-    return Response(serializer.data)
+
+    # Переворачиваем список
+    reversed_data = serializer.data[::-1]
+
+    return Response(reversed_data)
