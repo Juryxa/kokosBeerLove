@@ -10,6 +10,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='get',
     operation_description="Получение информации о конкретном матче по ID",
+    tags=["getHandlers"],
     manual_parameters=[
         openapi.Parameter('id', openapi.IN_PATH, description="ID матча", type=openapi.TYPE_INTEGER)
     ],

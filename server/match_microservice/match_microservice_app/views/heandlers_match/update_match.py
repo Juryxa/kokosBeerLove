@@ -13,6 +13,7 @@ from ...serializers import MatchCreateSerializer
 @swagger_auto_schema(
     method='put',
     operation_description="Полное обновление информации о матче. Доступно только администраторам (is_superuser == true).",
+    tags=["Create Update Delete"],
     request_body=MatchCreateSerializer,
     responses={
         200: openapi.Response(description="Информация о матче успешно обновлена"),
@@ -25,6 +26,7 @@ from ...serializers import MatchCreateSerializer
 @swagger_auto_schema(
     method='patch',
     operation_description="Частичное обновление информации о матче. Доступно только администраторам (is_superuser == true).",
+    tags=["Create Update Delete"],
     request_body=MatchCreateSerializer,
     responses={
         200: openapi.Response(description="Информация о матче успешно частично обновлена"),

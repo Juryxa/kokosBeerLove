@@ -10,6 +10,7 @@ from datetime import datetime
 @swagger_auto_schema(
     method='get',
     operation_description="Получение последнего завершенного матча. Данные о team_away включают название и логотип команды.",
+    tags=["getHandlers"],
     responses={200: openapi.Response(
         description="Успешный ответ с данными последнего завершенного матча",
         examples={

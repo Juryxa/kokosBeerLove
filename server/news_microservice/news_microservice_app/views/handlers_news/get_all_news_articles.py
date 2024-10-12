@@ -11,6 +11,7 @@ from ...serializers import NewsArticleSerializer
 @swagger_auto_schema(
     method='get',
     operation_description="Получение всех новостей",
+    tags=['NewsArticle'],
     responses={200: openapi.Response(description="Список всех новостей", examples={
         "application/json": [
             {

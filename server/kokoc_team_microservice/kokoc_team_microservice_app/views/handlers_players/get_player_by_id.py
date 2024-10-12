@@ -10,6 +10,7 @@ from rest_framework import status
 @swagger_auto_schema(
     method='get',
     operation_description="Получение информации об игроке по ID.",
+    tags=["playerHandlers"],
     manual_parameters=[
         openapi.Parameter('player_id', openapi.IN_PATH, description="ID игрока", type=openapi.TYPE_INTEGER)
     ],

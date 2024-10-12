@@ -11,6 +11,7 @@ from rest_framework import status
 @swagger_auto_schema(
     method='get',
     operation_description="Получить новостную статью по идентификатору",
+    tags=['NewsArticle'],
     manual_parameters=[
         openapi.Parameter('article_id', openapi.IN_PATH, description="ID статьи", type=openapi.TYPE_INTEGER)
     ],

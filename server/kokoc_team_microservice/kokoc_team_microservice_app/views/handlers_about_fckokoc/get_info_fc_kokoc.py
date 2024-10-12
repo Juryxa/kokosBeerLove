@@ -9,6 +9,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='get',
     operation_description="Получение информации о клубе. Для просмотра данных авторизация не обязательна.",
+    tags=["aboutKokocHandlers"],
     responses={
         200: openapi.Response(description="Информация о клубе успешно получена"),
         404: openapi.Response(description="Информация о клубе не найдена")

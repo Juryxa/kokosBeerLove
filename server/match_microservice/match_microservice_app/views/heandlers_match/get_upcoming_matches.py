@@ -10,6 +10,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='get',
     operation_description="Получение списка предстоящих матчей. Данные включают название команд, логотипы и другую информацию о матче.",
+    tags=["getHandlers"],
     responses={200: openapi.Response(
         description="Успешный ответ с данными предстоящих матчей",
         examples={

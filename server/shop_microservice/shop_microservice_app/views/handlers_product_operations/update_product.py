@@ -13,6 +13,7 @@ from ...serializers import ProductCreateSerializer, ProductSerializer
 @swagger_auto_schema(
     method='put',
     operation_description="Полное обновление существующего товара. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true (то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['productHandlers'],
     manual_parameters=[
         openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER)
     ],
@@ -28,6 +29,7 @@ from ...serializers import ProductCreateSerializer, ProductSerializer
 @swagger_auto_schema(
     method='patch',
     operation_description="Частичное обновление существующего товара. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true (то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['productHandlers'],
     manual_parameters=[
         openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER)
     ],
