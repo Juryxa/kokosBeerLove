@@ -1,14 +1,15 @@
+
 import React, {useState} from 'react';
-import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography, Drawer, Menu} from '@mui/material';
-import {YouTube, Telegram, WhatsApp, Menu as MenuIcon, AccountCircle} from '@mui/icons-material';
+import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu} from '@mui/material';
+import {YouTube, Telegram, WhatsApp,Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
 import {Link, useNavigate} from 'react-router-dom';
 import RegistrationModal from './RegistrationModal';
-import {store} from '../index';
+import { store } from '../index';
 import logo from '../images/logo.jpg';
 
 const Header = () => {
     const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // Для меню профиля
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -16,12 +17,11 @@ const Header = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+        event.stopPropagation(); // Предотвращает распространение события
+        setAnchorEl(event.currentTarget); // Открываем меню профиля
     };
 
     const handleMenuClose = () => {
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
         setAnchorEl(null);
     };
 
@@ -43,6 +43,7 @@ const Header = () => {
     const handleDrawerToggle = () => {
         setDrawerOpen(!drawerOpen);
     };
+
 
 
     return (
@@ -76,39 +77,38 @@ const Header = () => {
                         }}
                     >
                         {/* Логотип */}
-                        <Box sx={{display: 'flex', alignItems: 'center'}}>
-                            <IconButton component={Link} to="/" sx={{padding: 0}}>
-                                <img src={logo} alt="Logo" style={{height: '50px'}}/>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <IconButton component={Link} to="/" sx={{ padding: 0 }}>
+                                <img src={logo} alt="Logo" style={{ height: '50px' }} />
                             </IconButton>
                         </Box>
 
                         {/* Бургер-кнопка, отображается только на мобильных устройствах */}
-                        <Box sx={{display: {xs: 'block', md: 'none'}}}>
+                        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                             <IconButton onClick={handleDrawerToggle} color="inherit">
-                                <MenuIcon/>
+                                <MenuIcon />
                             </IconButton>
                         </Box>
 
 
                         {/* Навигация */}
-                        <Box className="links"
-                             sx={{display: {xs: 'none', md: 'flex'}, alignItems: 'center', flexWrap: 'wrap'}}>
+                        <Box className="links" sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', flexWrap: 'wrap' }}>
                             <MenuItem component={Link} to="/news">Новости</MenuItem>
                             <MenuItem component={Link} to="/matches">Матчи</MenuItem>
                             <MenuItem component={Link} to="/team">Команда</MenuItem>
                             <MenuItem component={Link} to="/about">О клубе</MenuItem>
                             <MenuItem component={Link} to="/shop">Магазин</MenuItem>
-                            <MenuItem component="div"
-                                      onClick={() => {
-                                          const footerElement = document.getElementById('footer');
-                                          if (footerElement) {
-                                              footerElement.scrollIntoView({behavior: 'smooth'});
-                                          }
-                                      }}>Контакты</MenuItem>
+                            <MenuItem  component="div"
+                                       onClick={() => {
+                                           const footerElement = document.getElementById('footer');
+                                           if (footerElement) {
+                                               footerElement.scrollIntoView({ behavior: 'smooth' });
+                                           }
+                                       }}>Контакты</MenuItem>
                         </Box>
 
                         {/* Социальные сети */}
-                        <Box sx={{display: {xs: 'none', md: 'flex'}, alignItems: 'center', marginLeft: 'auto'}}>
+                        <Box sx={{display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto'}}>
                             <IconButton color="inherit">
                                 <YouTube/>
                             </IconButton>
@@ -128,6 +128,8 @@ const Header = () => {
                         </Box>
 
 
+                        {/* Поиск и Логин / Профиль */}
+                        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto', color: 'white' }}>
 
 
                             {store.isAuth ? (
@@ -150,43 +152,32 @@ const Header = () => {
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
-                                            fill="#E62526"/>
+                                            fill="#E62526" />
                                     </svg>
                                     <Typography color={'#E62526'}> Войти</Typography>
                                 </IconButton>
                             )}
                         </Box>
                     </Box>
-
+                </Box>
 
                 {/* Бургер-меню */}
                 <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
-                    <Box sx={{width: 250}} role="presentation" onClick={handleDrawerToggle}
-                         onKeyDown={handleDrawerToggle}>
-                        <IconButton>
-                            <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="10" r="8" stroke="#E62526" strokeWidth="2"/>
-                                <path d="M17 16L22 21" stroke="#E62526" strokeWidth="2"/>
-                            </svg>
-                            <Typography color={'#E62526'}> Поиск</Typography>
-                        </IconButton>
-                        <MenuItem component={Link} to="/news">Новости</MenuItem>
-                        <MenuItem component={Link} to="/matches">Матчи</MenuItem>
-                        <MenuItem component={Link} to="/team">Команда</MenuItem>
-                        <MenuItem component={Link} to="/about">О клубе</MenuItem>
-                        <MenuItem component={Link} to="/shop">Магазин</MenuItem>
+                    <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
+
                         {store.isAuth ? (
                             <>
-                                <IconButton onClick={handleProfileNavigate} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                <IconButton onClick={handleProfileClick}>
                                     <AccountCircle style={{color: '#E62526'}}/>
-                                    <Typography style={{color: 'black'}}>Профиль</Typography>
                                 </IconButton>
-
-
-
-                                <MenuItem onClick={handleLogout}>Выйти</MenuItem>
-
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleMenuClose}
+                                >
+                                    <MenuItem onClick={handleProfileNavigate}>Профиль</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+                                </Menu>
                             </>
                         ) : (
                             <IconButton onClick={handleOpen}>
@@ -194,11 +185,17 @@ const Header = () => {
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
-                                        fill="#E62526"/>
+                                        fill="#E62526" />
                                 </svg>
                                 <Typography color={'#E62526'}> Войти</Typography>
                             </IconButton>
                         )}
+                        <MenuItem component={Link} to="/news">Новости</MenuItem>
+                        <MenuItem component={Link} to="/matches">Матчи</MenuItem>
+                        <MenuItem component={Link} to="/team">Команда</MenuItem>
+                        <MenuItem component={Link} to="/about">О клубе</MenuItem>
+                        <MenuItem component={Link} to="/shop">Магазин</MenuItem>
+
                         <div className='icons'>
                             <IconButton color="inherit">
                                 <YouTube/>

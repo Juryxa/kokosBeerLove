@@ -51,8 +51,7 @@ const MatchDetails: React.FC = () => {
           )}
           <div style={{ width: '60vw', display: isLoading ? 'none' : 'block' }}>
             <CreateVideoFrame
-              oid={match.oid}
-              id={match.idVideo}
+              video_url={match.idVideo}
               hd={match.hd}
               width={match.width}
               height={match.height}

@@ -1,8 +1,8 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import "./MatchesPreview.css";
 import MatchService from "../api/services/MatchService";
-import {MatchResponse} from '../api/models/response/MatchResponse';
-import {AboutResponse} from "../api/models/response/AboutResponse";
+import { MatchResponse } from '../api/models/response/MatchResponse';
+import { AboutResponse } from "../api/models/response/AboutResponse";
 import AboutService from "../api/services/AboutService";
 
 function getWeekDay(date: Date) {
@@ -10,20 +10,33 @@ function getWeekDay(date: Date) {
     return days[date.getDay()];
 }
 
-const MatchCard: FC<{ match: MatchResponse, index: number }> = ({match, index}) => (
+// Функция для форматирования даты
+function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        day: '2-digit',    // Два символа для дня
+        month: 'long',     // Полное название месяца
+        year: 'numeric'    // Год в формате 4 цифры
+    };
+
+    // Форматируем дату с нужными параметрами и на русском языке
+    return date.toLocaleDateString('ru-RU', options).replace(' г.', ''); // Убираем лишнее "г."
+}
+
+const MatchCard: FC<{ match: MatchResponse, label: string }> = ({ match, label }) => (
     <div className="card">
-        <h5>{index === 0 ? 'Следующий матч' : 'Предыдущий матч'}</h5>
+        <h5>{label}</h5>
         <div className='card-content'>
             <h5>{match.division}</h5>
             <h6>{match.team_home} - {match.team_away_name}</h6>
-            <p>{match.match_date} - {getWeekDay(new Date(match.match_date))} - {match.match_time}</p>
+            <p>{formatDate(match.match_date)} - {getWeekDay(new Date(match.match_date))} - {match.match_time.slice(0, 5)}</p> {/* Убираем секунды */}
             <h4>{match.score_home} - {match.score_away}</h4>
             <p>{match.location}</p>
         </div>
     </div>
 );
 
-const StatsCard: FC<{ stats: AboutResponse }> = ({stats}) => (
+const StatsCard: FC<{ stats: AboutResponse }> = ({ stats }) => (
     <div className="stats-card">
         <h5>Статистика</h5>
         <div className='stats-card-content'>
@@ -51,8 +64,15 @@ const MatchesPreview: FC = () => {
             const upComingResponse = await MatchService.getUpComing();
             const lastTwoResponse = await MatchService.getLastTwo();
 
-            // Комбинируем два результата в массив
-            const combinedMatches = [upComingResponse.data[0], lastTwoResponse.data[0]];
+            let combinedMatches: MatchResponse[] = [];
+
+            if (upComingResponse.data.length !== 0) {
+                // Если есть будущий матч, показываем "Следующий матч" и "Предыдущий матч"
+                combinedMatches = [upComingResponse.data[0], lastTwoResponse.data[0]];
+            } else if (lastTwoResponse.data.length >= 2) {
+                // Если нет будущего матча, показываем два "Предыдущий матч"
+                combinedMatches = [lastTwoResponse.data[0], lastTwoResponse.data[1]];
+            }
             setMatches(combinedMatches);
 
             const statsResponse = await AboutService.getInfoClub();
@@ -69,14 +89,15 @@ const MatchesPreview: FC = () => {
             {isLoading && <div className="loading-spinner"></div>}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-            {matches
-                .filter((match) => match && match.id)  // Проверяем, что матч существует и у него есть id
-                .map((match, index) => (
-                    <MatchCard key={match.id} match={match} index={index}/>
-                ))
-            }
+            {matches.length === 2 && (
+                <>
+                    {/* Логика отображения в зависимости от наличия предстоящего матча */}
+                    {matches[0] && <MatchCard match={matches[0]} label={matches[0].match_date > new Date().toISOString().split("T")[0] ? 'Следующий матч' : 'Предыдущий матч'} />}
+                    {matches[1] && <MatchCard match={matches[1]} label="Предыдущий матч" />}
+                </>
+            )}
 
-            {stats && <StatsCard stats={stats}/>}
+            {stats && <StatsCard stats={stats} />}
         </div>
     );
 };
