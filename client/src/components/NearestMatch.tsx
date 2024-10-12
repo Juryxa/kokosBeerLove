@@ -36,8 +36,8 @@ const NearestMatch: React.FC = () => {
     const fetchNearestMatch = async () => {
         setIsLoading(true);
         try {
-            const response = await MatchService.getLastTwo();
-            setMatchData(response.data[0]);
+            const response = await MatchService.getLastOne();
+            setMatchData(response.data);
         } catch (error) {
             setErrorMessage('Ошибка загрузки данных о ближайшем матче.');
         } finally {
@@ -85,7 +85,7 @@ const NearestMatch: React.FC = () => {
                         marginLeft: '10px'
                     }}/>
                 </div>
-                <Link to="/matches">
+                <Link to={`/matches/${matchData.id}`}>
                     <button className="styled-button">
                         О матче
                     </button>

@@ -180,8 +180,22 @@
     }
 
     .player-image {
-        margin: 0 auto 10px; /* Центрируем изображение на мобильных устройствах */
+        margin: 0 auto 10px; 
+        
     }
+    .team-table th {
+        font-size: 0; /* Делаем текст невидимым */
+        position: relative; /* Для правильного позиционирования псевдоэлемента */
+    }
+    .player-name-role {
+        display: none; /* Скрываем имя и роль на очень маленьких экранах */
+    }
+    /* Устанавливаем сокращенные обозначения через псевдоэлементы */
+    .team-table th:nth-child(1)::after { content: "№"; font-size: 1rem;  }
+    .team-table th:nth-child(2)::after { content: "ФИО"; font-size: 1rem;  }
+    .team-table th:nth-child(3)::after { content: "И"; font-size: 1rem;  }
+    .team-table th:nth-child(4)::after { content: "Г"; font-size: 1rem;  }
+    .team-table th:nth-child(5)::after { content: "П"; font-size: 1rem;  }
 }
 
     @media (max-width: 400px) {

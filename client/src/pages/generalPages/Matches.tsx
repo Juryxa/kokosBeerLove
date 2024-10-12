@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './Matches.css';
-
 import CreateVideoFrame from '../../components/CreateVideoFrame';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -231,7 +230,7 @@ const filterMatchesByDate = () => {
                         <div className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
                     {/* Элементы управления для фильтрации по месяцу, году и дню */}
-                <Box mb={3} display="flex" gap={2}>
+                <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
 
 
                     <FormControl variant="outlined" sx={{ minWidth: 120 }}>
