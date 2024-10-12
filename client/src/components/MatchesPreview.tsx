@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import "./MatchesPreview.css";
 import MatchService from "../api/services/MatchService";
-import { MatchResponse } from '../api/models/response/MatchResponse';
-import { AboutResponse } from "../api/models/response/AboutResponse";
+import {MatchResponse} from '../api/models/response/MatchResponse';
+import {AboutResponse} from "../api/models/response/AboutResponse";
 import AboutService from "../api/services/AboutService";
 
 function getWeekDay(date: Date) {
@@ -10,7 +10,7 @@ function getWeekDay(date: Date) {
     return days[date.getDay()];
 }
 
-const MatchCard: FC<{ match: MatchResponse, index: number }> = ({ match, index }) => (
+const MatchCard: FC<{ match: MatchResponse, index: number }> = ({match, index}) => (
     <div className="card">
         <h5>{index === 0 ? 'Следующий матч' : 'Предыдущий матч'}</h5>
         <div className='card-content'>
@@ -23,7 +23,7 @@ const MatchCard: FC<{ match: MatchResponse, index: number }> = ({ match, index }
     </div>
 );
 
-const StatsCard: FC<{ stats: AboutResponse }> = ({ stats }) => (
+const StatsCard: FC<{ stats: AboutResponse }> = ({stats}) => (
     <div className="stats-card">
         <h5>Статистика</h5>
         <div className='stats-card-content'>
@@ -69,11 +69,14 @@ const MatchesPreview: FC = () => {
             {isLoading && <div className="loading-spinner"></div>}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-            {matches.map((match, index) => (
-                <MatchCard key={match.id} match={match} index={index} />
-            ))}
+            {matches
+                .filter((match) => match && match.id)  // Проверяем, что матч существует и у него есть id
+                .map((match, index) => (
+                    <MatchCard key={match.id} match={match} index={index}/>
+                ))
+            }
 
-            {stats && <StatsCard stats={stats} />}
+            {stats && <StatsCard stats={stats}/>}
         </div>
     );
 };

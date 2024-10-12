@@ -159,7 +159,11 @@ const Header = () => {
                             )}
                         </Box>
                     </Box>
+
                 </Box>
+
+
+
 
                 {/* Бургер-меню */}
                 <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
@@ -195,7 +199,33 @@ const Header = () => {
                         <MenuItem component={Link} to="/team">Команда</MenuItem>
                         <MenuItem component={Link} to="/about">О клубе</MenuItem>
                         <MenuItem component={Link} to="/shop">Магазин</MenuItem>
+
                         
+
+                        {store.isAuth ? (
+                            <>
+                                <IconButton onClick={handleProfileNavigate} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                                    <AccountCircle style={{color: '#E62526'}}/>
+                                    <Typography style={{color: 'black'}}>Профиль</Typography>
+                                </IconButton>
+
+
+
+                                <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+
+                            </>
+                        ) : (
+                            <IconButton onClick={handleOpen}>
+                                <svg width="25" height="25" viewBox="2 -2 31 31" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9 18.3333L7.6 16.7L10.2 13.6667H0V11.3333H10.2L7.6 8.3L9 6.66667L14 12.5L9 18.3333ZM18 4.33333H10V2H18C19.1 2 20 3.05 20 4.33333V20.6667C20 21.95 19.1 23 18 23H10V20.6667H18V4.33333Z"
+                                        fill="#E62526"/>
+                                </svg>
+                                <Typography color={'#E62526'}> Войти</Typography>
+                            </IconButton>
+                        )}
+
                         <div className='icons'>
                         <IconButton color="inherit">
                                 <YouTube/>
