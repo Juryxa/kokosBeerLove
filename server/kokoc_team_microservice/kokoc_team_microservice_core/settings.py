@@ -47,6 +47,7 @@ ROOT_URLCONF = 'kokoc_team_microservice_core.urls'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost",
+    "https://localhost",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']

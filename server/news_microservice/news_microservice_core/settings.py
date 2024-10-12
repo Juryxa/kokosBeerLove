@@ -65,11 +65,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'news_microservice_core.urls'
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000',
-                        'http://localhost',]
+                        'http://localhost',
+                        "https://localhost",
+                        ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost",
+    "https://localhost",
 ]
 
 

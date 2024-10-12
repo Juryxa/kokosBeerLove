@@ -26,3 +26,4 @@ def get_all_products(request):
 
     # Возвращаем успешный ответ с данными товаров
     return Response(serializer.data, status=status.HTTP_200_OK)
+

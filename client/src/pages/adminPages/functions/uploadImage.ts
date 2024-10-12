@@ -10,7 +10,7 @@ export const uploadImage = async (
 
     try {
         const response = await axios.put(
-            `http://localhost/uploads/${folder}/${uniqueFileName}`,
+            `https://localhost/uploads/${folder}/${uniqueFileName}`,
             file,
             {
                 headers: {
@@ -21,7 +21,7 @@ export const uploadImage = async (
 
         if (response.status === 201) {
             setSuccessMessage('Изображение успешно загружено.');
-            return `http://localhost/uploads/${folder}/${uniqueFileName}`;
+            return `https://localhost/uploads/${folder}/${uniqueFileName}`;
         }
         if (response.status === 401){
             setErrorMessage('Вы не авторизованы');
