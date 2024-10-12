@@ -2,10 +2,8 @@ import React, { FC, useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './Matches.css';
-import mathes from './Mathes.json';
-import translation from './Translation.json';
 import CreateVideoFrame from '../../components/CreateVideoFrame';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     TextField,
     Box,
@@ -19,21 +17,8 @@ import {
 } from '@mui/material';
 import { IVideo } from '../../api/models/IVideo';
 import MatchService from '../../api/services/MatchService';
-import { extractNumbersFromUrl } from './functions/linkParser';
-// interface MatchesType {
-//     id?: number;
-//     oid: string;
-//     idVideo: string;
-//     hd: number;
-//     width: number;
-//     height: number;
-//     autoplay?: boolean;
-//     data?: string; // Дата в формате 'YYYY-MM-DD'
-//     scoreteam1?: number;
-//     scoreteam2?: number;
-//     location?: string;
-//     league?: string;
-// }
+import imglogo from '../../images/logoteam1.png'
+
 
 const Matches: FC = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +30,7 @@ const Matches: FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState<IVideo[]>([]);
 
-    // Состояния для фильтрации по месяцу, году и дню
+    
     const [selectedMonth, setSelectedMonth] = useState<number | ''>('');
     const [selectedYear, setSelectedYear] = useState<number | ''>('');
     const [selectedDay, setSelectedDay] = useState<number | ''>('');
@@ -117,10 +102,10 @@ const Matches: FC = () => {
 
     const navigate = useNavigate();
 
-    const handleCardClick = (id: number | undefined) => {
-        if (id) {
+    const handleCardClick = (id: number ) => {
+       
             navigate(`/match/${id}`);
-        }
+        
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,9 +121,7 @@ const Matches: FC = () => {
         }
     };
 
-    const handleSuggestionClick = (id: number) => {
-        navigate(`/match/${id}`);
-    };
+   
 
 // Функция для фильтрации матчей по выбранным месяцу, году и дню
 const filterMatchesByDate = () => {
@@ -162,6 +145,25 @@ const filterMatchesByDate = () => {
 };
 
     const filteredMatches = filterMatchesByDate();
+
+
+
+  // Function to format the date as "дд - месяц словами - гггг"
+  function formatDate(dateString:string):string {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0'); // Get day of the month
+    const monthNames = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    const month = monthNames[date.getMonth()]; // Get month name
+    const year = date.getFullYear(); // Get full year
+  
+    return `${day} - ${month} - ${year}`;
+  }
+  
+  // Function to format the time as "чч:мм" (removing seconds)
+  function formatTime(timeString:string):string {
+    const [hours, minutes] = timeString.split(':'); // Split the time string into hours and minutes
+    return `${hours}:${minutes}`; // Return the time in "чч:мм" format
+  }
 
     return (
         <div>
@@ -214,13 +216,14 @@ const filterMatchesByDate = () => {
                     {isLoading && <div className="loading-spinner"></div>}
                     {translationData.map((video) => (
                         <div className={`TraslateVk ${isLoading ? 'hidden' : ''}`} key={video.id}>
+                            <Link to={`/match/${video.id}`}>
                             <CreateVideoFrame
                                 video_url={video.video_url}
                                 hd={video.hd}
                                 width={video.width}
                                 height={video.height}
                                 autoplay={1}
-                            />
+                            /></Link>
                         </div>
                     ))}
                     <div className='low-content-matches'>
@@ -302,7 +305,7 @@ const filterMatchesByDate = () => {
                         {filteredMatches.slice(0, videosToShow).map((video) => (
                             <div className="ephir-1" key={video.id} onClick={() => handleCardClick(video.id)}>
                                 <div className={`videosVk ${isLoading ? 'hidden' : ''}`}>
-                                    
+                                
                                     <CreateVideoFrame
                                         video_url={video.video_url}
                                         hd={video.hd}
@@ -311,26 +314,35 @@ const filterMatchesByDate = () => {
                                         
                                     />
                                     <div className="video-info">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <th>Запись матча</th>
-                                                    <td>{video.match_date}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Счет</th>
-                                                    <td>{video.score_home} - {video.score_away}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Место</th>
-                                                    <td>{video.location}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Лига</th>
-                                                    <td>{video.division}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <table className="match-table">
+        <tbody>
+        <tr>
+    <th>Дата</th>
+    <td>{formatDate(video.match_date)}</td>
+</tr>
+<tr>
+    <th>Время</th>
+    <td>{formatTime(video.match_time)}</td>
+</tr>
+
+            <tr>
+                <th>Счет</th>
+                <td>
+                    <img src={imglogo} alt="Home Team Logo" className='team-logo' />
+                    {video.score_home} - {video.score_away}
+                    <img src={video.team_away_logo_url} alt='Away Team Logo' className='team-logo' />
+                </td>
+            </tr>
+            <tr>
+                <th>Место</th>
+                <td>{video.location}</td>
+            </tr>
+            <tr>
+                <th>Лига</th>
+                <td>{video.division}</td>
+            </tr>
+        </tbody>
+    </table>
                                         <button className="button" onClick={() => handleCardClick(video.id)}>
                                             Подробнее
                                             <span className="arrow">→</span>
