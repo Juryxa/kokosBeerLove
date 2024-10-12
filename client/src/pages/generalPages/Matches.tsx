@@ -112,7 +112,7 @@ const Matches: FC = () => {
     }, []);
 
     const handleShowMore = () => {
-        setVideosToShow((prevCount) => prevCount + (isMobile ? 4 : 8));
+        setVideosToShow((prevCount) => prevCount + (isMobile ? 4 : 4));
     };
 
     const navigate = useNavigate();

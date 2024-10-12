@@ -46,7 +46,7 @@ const NewsPreview = () => {
                         id={news.id}
                         title={news.title}
                         text={news.text}
-                        image={img}
+                        image_url={news.image_url}
                         created_at={news.created_at}
                     />
                 ))}

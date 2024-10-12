@@ -315,7 +315,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
 
                         {successMessage && (
                             <Typography sx={{ color: 'green', mt: 1 }}>
-                                Успешно! Войдите в аккаунт
+                                Успешно!
                             </Typography>
                         )}
 

@@ -111,7 +111,7 @@ const News = () => {
                             id={news.id}
                             title={news.title}
                             text={news.text}
-                            image={news.image}
+                            image_url={news.image_url}
                             created_at={news.created_at}
                         />
                     ))}
