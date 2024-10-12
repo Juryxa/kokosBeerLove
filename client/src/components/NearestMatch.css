@@ -15,6 +15,9 @@
     color: white;
     text-align: center;
 }
+.logosTeams img{
+    width: 60px;
+}
 
 @media screen and (max-width: 600px) {
     .matchBlock .titleMatch {
