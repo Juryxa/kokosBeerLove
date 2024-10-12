@@ -1,199 +1,228 @@
+.video-info {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.video-info th,
+.video-info td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    max-width: 150px; /* Максимальная ширина для каждой ячейки */
+    overflow: hidden; /* Скрываем переполненный текст */
+    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+    text-overflow: ellipsis; /* Добавляем многоточие при обрезке текста */
+}
+
+/* Дополнительные стили для заголовков */
+.video-info th {
+    background-color: #f2f2f2;
+    text-align: left;
+    max-width: 150px; /* Максимальная ширина для заголовков */
+}
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  flex: 1;
-  min-height: 90vh;
+    flex: 1;
+    min-height: 90vh;
 }
 
 .searchMAtch.hidden {
-  display: none;
+    display: none;
 }
 
-.low-content-matches{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.low-content-matches {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .content {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  width:80vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 80vw;
 }
 
 .loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(0, 0, 0, 0.1);
-  border-top: 5px solid #ff0000;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  position: absolute; /* Задаем абсолютное позиционирование */
-  top: 50%; /* Центрируем по вертикали */
-  left: 50%; /* Центрируем по горизонтали */
-  transform: translate(-50%, -50%); /* Сдвигаем влево и вверх на 50% от его размеров */
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute; /* Задаем абсолютное позиционирование */
+    top: 50%; /* Центрируем по вертикали */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translate(-50%, -50%); /* Сдвигаем влево и вверх на 50% от его размеров */
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Адаптивные стили для iframe */
 iframe {
-  max-width: 100% !important; /* Заставляет iframe быть адаптивным */
-  height: auto; /* Автоматически подстраивает высоту */
-  aspect-ratio: 16/9; /* Сохраняет соотношение сторон */
+    max-width: 100% !important; /* Заставляет iframe быть адаптивным */
+    height: auto; /* Автоматически подстраивает высоту */
+    aspect-ratio: 16/9; /* Сохраняет соотношение сторон */
 }
+
 .TraslateVk.hidden {
-  display: none;
+    display: none;
 }
 
 .videosVk.hidden {
-  display: none;
+    display: none;
 }
 
-.hiddenToo.hidden{
-  display: none;
+.hiddenToo.hidden {
+    display: none;
 }
 
 /* Адаптивные стили */
 @media (max-width: 768px) {
-  .loading-spinner {
-      width: 40px;
-      height: 40px;
-  }
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+    }
 
-  .content {
-      min-height: 400px; /* Уменьшаем минимальную высоту для планшетов */
-  }
+    .content {
+        min-height: 400px; /* Уменьшаем минимальную высоту для планшетов */
+    }
 }
 
 @media (max-width: 480px) {
-  .loading-spinner {
-      width: 30px;
-      height: 30px;
-  }
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+    }
 
-  .content {
-      min-height: 300px; /* Уменьшаем минимальную высоту для мобильных устройств */
-  }
+    .content {
+        min-height: 300px; /* Уменьшаем минимальную высоту для мобильных устройств */
+    }
 }
 
 
-.TraslateVk{
-  width: 100%; /* Занимает всю ширину */
+.TraslateVk {
+    width: 100%; /* Занимает всю ширину */
 }
 
 .lastephire {
-  display: flex;
-  flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
-  justify-content: center; /* Центрируем видео по горизонтали */
-  
+    display: flex;
+    flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку */
+    justify-content: center; /* Центрируем видео по горизонтали */
+
 }
 
 .ephir-1 {
-  flex: 1 1 calc(25% - 20px); /* Занимает 25% ширины минус отступ */
-  max-width: calc(25% - 20px); /* Максимальная ширина */
-  margin: 10px; /* Отступ между видео */
-  box-sizing: border-box; /* Учитываем отступы в ширине */
+    flex: 1 1 calc(25% - 20px); /* Занимает 25% ширины минус отступ */
+    max-width: calc(25% - 20px); /* Максимальная ширина */
+    margin: 10px; /* Отступ между видео */
+    box-sizing: border-box; /* Учитываем отступы в ширине */
 }
 
 /* Адаптивные стили для уменьшения количества элементов в ряд */
 @media (max-width: 1200px) {
-  .ephir-1 {
-      flex: 1 1 calc(33.33% - 20px); /* 3 элемента в ряд для экранов меньше 1200px */
-      max-width: calc(33.33% - 20px);
-  }
+    .ephir-1 {
+        flex: 1 1 calc(33.33% - 20px); /* 3 элемента в ряд для экранов меньше 1200px */
+        max-width: calc(33.33% - 20px);
+    }
 }
 
 @media (max-width: 800px) {
-  .ephir-1 {
-      flex: 1 1 calc(50% - 20px); /* 2 элемента в ряд для экранов меньше 800px */
-      max-width: calc(50% - 20px);
-  }
+    .ephir-1 {
+        flex: 1 1 calc(50% - 20px); /* 2 элемента в ряд для экранов меньше 800px */
+        max-width: calc(50% - 20px);
+    }
 }
 
 @media (max-width: 480px) {
-  .ephir-1 {
-      flex: 1 1 100%; /* 1 элемент в ряд для мобильных устройств */
-      max-width: 100%;
-  }
+    .ephir-1 {
+        flex: 1 1 100%; /* 1 элемент в ряд для мобильных устройств */
+        max-width: 100%;
+    }
 }
 
 .video-info table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .video-info th, .video-info td {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .video-info th {
-  background-color: #f2f2f2;
-  text-align: left;
+    background-color: #f2f2f2;
+    text-align: left;
 }
 
 .video-caption {
-  font-size: 16px;
-  font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.video-league,
-.video-score,
-.video-location {
-  font-size: 14px;
-  margin: 0;
-  padding: 5px;
+.video-league, .video-score, .video-location {
+    font-size: 14px;
+    margin: 0;
+    padding: 5px;
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
+
 
 .show-more-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #E62526;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
-  transition: background-color 0.3s;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #E62526;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    transition: background-color 0.3s;
 }
 
 .show-more-button:hover {
-  background-color: #ff4444;
+    background-color: #ff4444;
 }
 
-.show-more-button.hidden{
-  display: none;
+.show-more-button.hidden {
+    display: none;
 }
 
 
 .button {
-  width: 100%;
-  color: white;
-  font-size: 15px;
-  border: none;
-  background-color: #E62526;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  padding: 10px;
-  margin-bottom: 1px;
-  cursor: pointer; /* Изменяет курсор на указатель при наведении */
-  transition: transform 0.2s ease; /* Плавный переход для эффекта уменьшения */
+    width: 100%;
+    color: white;
+    font-size: 15px;
+    border: none;
+    background-color: #E62526;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    margin-bottom: 1px;
+    cursor: pointer; /* Изменяет курсор на указатель при наведении */
+    transition: transform 0.2s ease; /* Плавный переход для эффекта уменьшения */
 }
 
 .button:hover {
-  transform: scale(0.98); /* Уменьшение кнопки при наведении */
+    transform: scale(0.98); /* Уменьшение кнопки при наведении */
 }
