@@ -190,6 +190,7 @@ const Header = () => {
                                 <Typography color={'#E62526'}> Войти</Typography>
                             </IconButton>
                         )}
+                        <MenuItem component={Link} to="/">Главная</MenuItem>
                         <MenuItem component={Link} to="/news">Новости</MenuItem>
                         <MenuItem component={Link} to="/matches">Матчи</MenuItem>
                         <MenuItem component={Link} to="/team">Команда</MenuItem>
