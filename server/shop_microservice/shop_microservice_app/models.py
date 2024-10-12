@@ -8,6 +8,9 @@ class Product(models.Model):
     url_images = ArrayField(
         models.CharField(max_length=500), blank=True, default=list
     )  # Поле для массива URL изображений
+    material = models.CharField(max_length=255, blank=True, null=True)
+    color = models.CharField(max_length=255, blank=True, null=True)
+    size = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         db_table = 'shop_products'

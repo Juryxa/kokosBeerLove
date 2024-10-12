@@ -8,6 +8,13 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'price', 'url_images']
 
 
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'description', 'price', 'url_images', 'material', 'color', 'size']
+
+
 class ProductCreateSerializer(serializers.ModelSerializer):
     url_images = serializers.ListField(
         child=serializers.CharField(), write_only=True, required=False

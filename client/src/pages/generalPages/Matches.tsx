@@ -230,7 +230,7 @@ const filterMatchesByDate = () => {
                         <div className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
                     {/* Элементы управления для фильтрации по месяцу, году и дню */}
-                <Box mb={3} display="flex" gap={2}>
+                <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
                     
 
                     <FormControl variant="outlined" sx={{ minWidth: 120 }}>
