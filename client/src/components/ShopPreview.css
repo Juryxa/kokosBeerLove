@@ -6,6 +6,7 @@
     background-size: cover; /* Растягивает изображение по всему блоку */
     background-position: center;
     display: flex;
+    justify-content: center;
     position: relative;
     background-color: #000;
     z-index: 1;
@@ -23,6 +24,18 @@
   backdrop-filter: blur(10px);
   z-index: 0;
   }
+
+
+
+
+  .shop-content {
+    width: 80vw;
+    
+    
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
   .title-links a {
     color: black; /* Черный цвет текста */

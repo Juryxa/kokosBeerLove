@@ -1,78 +1,86 @@
-.shop-card {
-    width: 300px;
-    text-decoration: none;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 15px; /* Добавляем радиус скругления к карточкам */
-    transition: transform 0.5s ease; /* Плавный переход для трансформации */
-    overflow: hidden;
+.shop-card{
+    height: 587px;
+    width: 376px;
 }
 
-.shop-card:hover {
-    transform: scale(1.05); /* Увеличение карточки при наведении */
+
+.redline{
+    z-index: 0;
 }
 
-.shop-content-text {
-    padding: 15px;
+
+.shopcard-preview-text{
+    z-index: 1;
 }
 
-.shop-title {
-    font-size: 20px;
-    font-weight: bold;
+.shopcard-img{
+    z-index: 1;
+}
+
+/* ShopCard.css */
+
+.shopcard-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Относительное позиционирование для правильного наложения элементов */
+    width: 100%; /* Занимаем всю доступную ширину */
+    height: 100%; /* Фиксированная высота контейнера */
+    overflow: hidden; /* Скрываем всё, что выходит за пределы контейнера */
+    box-sizing: border-box; /* Включаем padding в расчёт размеров */
+}
+
+.shopcard-img {
+    position: absolute; /* Абсолютное позиционирование внутри контейнера */
+    
+    z-index: 1; /* Задаем уровень наложения, чтобы изображение было поверх фона */
+}
+
+.redline {
+    
+    
+    z-index: 0; /* Задаем уровень наложения, чтобы линия была позади остальных элементов */
+    width: 100%; /* Делаем линию по ширине контейнера */
+    height: 100%; /* Делаем линию по высоте контейнера */
+}
+
+.shopcard-preview-text {
+    position: absolute; /* Абсолютное позиционирование внутри контейнера */
+    bottom: 70px; /* Отступ от нижней части контейнера */
+    text-align: center;
+    z-index: 2; /* Текст должен находиться поверх линии и изображения */
     color: #333;
-    overflow: hidden; /* Обрезка лишнего текста */
-    text-overflow: ellipsis;
-    display: -webkit-box; /* Для создания текстового блока */
-    -webkit-line-clamp: 2; /* Максимум 5 строк */
-    -webkit-box-orient: vertical;
 }
 
-.shop-description {
+.shopcard-title {
+    font-size: 18px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.shopcard-description {
     font-size: 14px;
     color: #666;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
 }
 
-.shop-price {
-    font-size: 18px;
-    color: #ff0000;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.shop-content-img {
-    height: 400px;
+.shopcard-action {
+    position: absolute; /* Абсолютное позиционирование внутри контейнера */
+    bottom: 20px; /* Отступ от нижней части контейнера */
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.shop-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.shop-content-action {
-    padding: 15px;
-    display: flex;
-    justify-content: center;
+    z-index: 3; /* Кнопка должна находиться поверх всех остальных элементов */
 }
 
 .shop-order-button {
-    width: 95%; /* Ширина кнопки 95% от карточки */
-    background: linear-gradient(to right, #ff0000, #8a1a1a); /* Красный градиент */
-    color: white; /* Цвет текста на кнопке */
-    margin: 0 auto; /* Центрируем кнопку */
-    transition: background 0.3s; /* Плавный переход цвета фона */
-    padding: 10px;
-    border: none;
-    cursor: pointer;
+    background-color: #d32f2f; /* Красный цвет кнопки */
+    color: white;
+    font-weight: bold;
+    text-transform: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s ease;
 }
 
 .shop-order-button:hover {
-    background: linear-gradient(to right, #e60000, #8a1a1a); /* Изменение градиента при наведении */
+    background-color: #b71c1c; /* Более тёмный красный при наведении */
 }
