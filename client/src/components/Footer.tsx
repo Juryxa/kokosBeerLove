@@ -2,7 +2,7 @@ import React from 'react';
 import { YouTube, Telegram, WhatsApp,MailOutline   } from '@mui/icons-material';
 import { Box, IconButton } from '@mui/material';
 import './Footer.css';
-import logokokos from '../images/логоокос.png'
+import logokokos from '../images/logo.jpg';
 import phone from '../images/icons/telephone.png'
 import logohorizontal from '../images/kokocgroup_logo_horizontal_red_background (1).jpg'
 import { Link } from 'react-router-dom';
@@ -12,15 +12,42 @@ const Footer: React.FC = () => {
       <div className="footer-content">
 
       <div className="contacts_koks">
-    <Link to="/">
-        <img src={logokokos} alt="error" className="contacts_koks-img" onClick={() => {
-                                          const footerElement = document.getElementById('header');
-                                          if (footerElement) {
-                                              footerElement.scrollIntoView({behavior: 'smooth'});
-                                          }
-                                      }}/>
-    </Link>
+      <Box
+    sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '@media (max-width: 600px)': { // Для мобильных устройств
+            justifyContent: 'flex-start',
+        }
+    }}
+    onClick={() => {
+        const headerElement = document.getElementById('header');
+        if (headerElement) {
+            headerElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    }}
+>
+    <IconButton component={Link} to="/" sx={{ padding: 0 }}>
+        <Box
+            component="img"
+            src={logohorizontal}
+            alt="Logo"
+            sx={{
+                height: '60px',
+                '@media (max-width: 600px)': { // Для мобильных устройств
+                    height: '40px', // Уменьшаем размер логотипа на маленьких экранах
+                },
+                '@media (max-width: 400px)': { // Для мобильных устройств
+                    height: '30px', // Уменьшаем размер логотипа на маленьких экранах
+                }
+            }}
+        />
+    </IconButton>
+</Box>
+
 </div>
+
 
           <div className='icon_section'>
             <h3><img src={phone} alt="error"/><a href="tel:+7988552222222">+7 (988) 552 - 22 - 22</a></h3>

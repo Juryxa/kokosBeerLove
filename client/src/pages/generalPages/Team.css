@@ -1,33 +1,33 @@
+/* Основной блок */
 .h1-block {
     width: 80vw;
     background-color: white;
     display: flex;
-
 }
 
-
+/* Контейнер с командой */
 .team-container {
     background-image: url("../../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg");
     height: 100vh;
-
+    background-size: cover;
+    background-position: center;
+    
+    flex: 1;
 }
 
+/* Таблица команды */
 .team-table {
     width: 80%;
     border-collapse: collapse;
     text-align: left;
-    margin: 30px;
     margin: 0 auto;
     margin-bottom: 30px;
     background-color: white;
-
-
 }
 
 .team-table th, .team-table td {
     padding: 10px;
     border: 1px solid #ddd;
-
 }
 
 .team-table th {
@@ -35,12 +35,14 @@
     text-transform: uppercase;
 }
 
+/* Категории */
 .category-row {
     background-color: #e9e9e9;
     text-align: center;
     font-weight: bold;
 }
 
+/* Информация о игроке */
 .player-info {
     display: flex;
     align-items: center;
@@ -52,14 +54,13 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    object-fit: cover; /* Сохраняет соотношение сторон и обрезает изображение */
+    object-fit: cover;
 }
 
 .player-name-role {
     display: flex;
     flex-direction: column;
 }
-
 
 .player-name-role strong {
     font-size: 16px;
@@ -70,6 +71,7 @@
     color: #666;
 }
 
+/* Спиннер загрузки */
 .loading-spinner {
     width: 50px;
     height: 50px;
@@ -82,3 +84,117 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Адаптивность через медиа-запросы */
+
+/* Для мобильных устройств */
+@media (max-width: 600px) {
+    .h1-block {
+        width: 100vw;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .team-table {
+        width: 100%;
+        margin: 10px;
+    }
+
+    .team-table th, .team-table td {
+        padding: 8px;
+    }
+
+    .player-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .player-image {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .player-name-role strong {
+        font-size: 14px;
+    }
+
+    .player-name-role span {
+        font-size: 10px;
+    }
+}
+
+/* Для планшетов */
+@media (max-width: 900px) {
+    .h1-block {
+        width: 90vw;
+    }
+
+    .team-table {
+        width: 90%;
+    }
+
+    .player-info {
+        flex-wrap: wrap;
+    }
+
+    .player-image {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Основной контейнер для всей страницы */
+.team-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Обеспечивает, что футер будет прижат к низу */
+}
+
+/* Контент страницы (заголовок, таблица и т.д.) */
+.team-content {
+    flex: 1; /* Растягиваем, чтобы занять все доступное пространство */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Контейнер для таблицы */
+.team-table-container {
+    width: 100%;
+    overflow-x: auto; /* Добавляет горизонтальную прокрутку для маленьких экранов */
+}
+
+/* Адаптивные стили для маленьких экранов */
+@media (max-width: 600px) {
+    .team-table th, .team-table td {
+        font-size: 12px; /* Уменьшаем размер шрифта для мобильных устройств */
+    }
+
+    .player-info {
+        flex-direction: column; /* Отображаем информацию в столбик для узких экранов */
+        text-align: center;
+    }
+
+    .player-image {
+        margin: 0 auto 10px; /* Центрируем изображение на мобильных устройствах */
+    }
+}
+
+@media (max-width: 400px) {
+    .player-name-role {
+        display: none; /* Скрываем имя и роль на очень маленьких экранах */
+    }
+
+    .team-table th {
+        text-transform: none; /* Убираем заглавные буквы */
+    }
+
+    .team-table th:nth-child(1)::after { content: "№"; }
+    .team-table th:nth-child(2)::after { content: "И"; }
+    .team-table th:nth-child(3)::after { content: "Г"; }
+    .team-table th:nth-child(4)::after { content: "П"; }
+    .team-table th:nth-child(5)::after { content: "Ж"; }
+    .team-table th:nth-child(6)::after { content: "К"; }
+}
+
