@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {truncateText} from "../pages/generalPages/functions/truncateText";
 import {parseAndFormatDate} from "../pages/generalPages/functions/dateParser";
 
-const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image, created_at }) => {
+const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image_url, created_at }) => {
     return (
         <Link to={`/news/${id}`} className="news-card">
             <div className="news-content-text">
@@ -13,7 +13,7 @@ const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image, created_at }
                 <p className="news-time">{parseAndFormatDate(created_at)}</p>
             </div>
             <div className="news-content-img">
-                <img src={image} alt="news" className="news-image" />
+                <img src={image_url} alt={title} className="news-image" />
             </div>
         </Link>
     );

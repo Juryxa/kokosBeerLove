@@ -56,10 +56,10 @@ const NewsAdmin = () => {
                     const isImageChanged = image !== '';
 
                     if (isTitleChanged && isContentChanged && isImageChanged) {
-                        await NewsService.updateFullNews(editNewsId, title, content, image || originalNews.image);
+                        await NewsService.updateFullNews(editNewsId, title, content, image || originalNews.image_url);
                         setSuccessMessage('Новость полностью обновлена.');
                     } else {
-                        await NewsService.updatePartNews(editNewsId, title, content, image || originalNews.image);
+                        await NewsService.updatePartNews(editNewsId, title, content, image || originalNews.image_url);
                         setSuccessMessage('Новость частично обновлена.');
                     }
                 }
@@ -146,7 +146,7 @@ const NewsAdmin = () => {
                                 <div className="news-admin-list-item-content">
                                     <h4>{news.title}</h4>
                                     <p>{news.text}</p>
-                                    <img src={news.image} alt={news.title} className="news-admin-image"/>
+                                    <img src={news.image_url} alt={news.title} className="news-admin-image"/>
                                 </div>
                                 <div className="news-admin-list-item-actions">
                                     <button onClick={() => handleEditNews(news.id)} className="edit-button">
