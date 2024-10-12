@@ -22,11 +22,18 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Создаем директории для загрузки файлов
 RUN mkdir -p /uploads/news_images /uploads/shop_images /uploads/player_photos /uploads/team_logos
 
+# **Копируем SSL-сертификаты в контейнер**
+COPY certificates/ /etc/nginx/ssl/
+
 # Устанавливаем владельца и права доступа для кэша Nginx и директории /uploads
 RUN chown -R nginx:nginx /var/cache/nginx /uploads
 
+
+# **Устанавливаем правильные права доступа**
+RUN chmod 600 /etc/nginx/ssl/*
+
 # Открываем порт 80
-EXPOSE 80
+EXPOSE 80 443
 
 # Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]

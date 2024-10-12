@@ -203,6 +203,7 @@ services:
     container_name: frontend_container
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - auth_microservice
       - news_microservice
@@ -210,7 +211,8 @@ services:
       - shop_microservice
       - kokoc_team_microservice
     volumes:
-      - uploads:/uploads  # Общий том для загрузок
+      - uploads:/uploads
+      - ./client/certificates:/etc/nginx/ssl:ro
     networks:
       - mynetwork
 
