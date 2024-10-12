@@ -1,5 +1,5 @@
 .shop-container{
-    background-image: url('../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg');
+    background-image: url('../images/image14.png');
     width: 100%;
     min-height: 934px;
     height: 100%;
@@ -68,7 +68,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px; /* расстояние между карточками */
+    gap: 50px; /* расстояние между карточками */
 
   }
 
