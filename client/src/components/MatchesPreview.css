@@ -4,72 +4,120 @@
     flex-wrap: wrap;
     flex-direction: row;
     background: white;
-    width: 80%;
-    padding: 20px 0 20px 0;
-    background-size: cover;
+    width: 80%; /* Ширина контейнера */
+    padding: 20px 0; /* Отступы сверху и снизу */
 }
 
 .card, .stats-card {
+    position: relative;
     border-radius: 8px;
     margin: 15px;
     text-align: center;
-    min-width: 364px;
-    min-height: 248px;
-    background-color: #FFFFFF; /* Белый фон для карточек */
+    width: 364px; /* Фиксированная ширина для карточки */
+    height: 248px; /* Фиксированная высота для карточки */
+    background-color: #FFFFFF;
 
     background-image: url("../images/Subtract.png");
-    background-size: 100% auto; /* Ширина всегда 100%, высота пропорциональная */
-    background-repeat: no-repeat; /* Не повторяем изображение */
-    background-position: center; /* Центрируем изображение */
-    height: 248px; /* Фиксированная высота блока */
+    background-size: cover; /* Рамка адаптируется по ширине */
+    background-repeat: no-repeat;
+    background-position: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Выравнивание содержимого */
 }
 
-@media screen and (max-width: 480px) {
-    .card, .stats-card {
-        background-size: 100% auto; /* Ширина всегда 100%, высота пропорциональная */
-        background-repeat: no-repeat; /* Не повторяем изображение */
-        background-position: center;
-        width: 100%; /* Ширина 100% для маленьких экранов */
-        min-width: 0;
-        height: auto; /* Высота будет регулироваться автоматически на малых экранах */
-    }
+.labelMatchPreview, .statsMatchPreview {
+    position: absolute;
+    top: -15px; /* Впадина для заголовка */
+    width: 100%;
+    font-size: 18px; /* Уменьшен размер шрифта */
+    margin-top: 0;
+    text-align: center;
 }
 
-
-
-h6 {
-    margin: 15px 0 0 0;
-    font-size: 18px;
-}
-
-h5 {
-    margin: 8px 0 0 0;
-    font-size: 22px;
+.divisionPreview {
+    margin: 8px auto 0 auto;
+    font-size: 16px; /* Уменьшен размер шрифта */
+    max-width: 90%; /* Ограничиваем ширину для длинных названий */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 h4 {
     color: #E62526;
-    margin: 8px 0;
-    font-size: 36px; /* Размер заголовка */
+    margin: 0 2px;
+    font-size: 24px; /* Уменьшен размер заголовка */
 }
 
+.logosTeamPreview {
+    width: 40px; /* Размер логотипа */
+    height: 40px;
+    border-radius: 50%; /* Округление */
+}
+
+.card-content {
+    padding: 10px; /* Уменьшены отступы */
+    flex-grow: 1; /* Чтобы содержимое занимало доступное пространство */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Вертикально выравниваем содержимое */
+    align-items: center;
+}
+
+h6 {
+    margin: 10px 0;
+    font-size: 16px; /* Уменьшен размер шрифта */
+}
+
+p {
+    font-size: 14px; /* Уменьшен размер шрифта */
+    margin: 5px 0;
+}
+
+.stats-card-content {
+    margin-top: 40px;
+}
+
+/* Адаптивность */
 @media screen and (max-width: 480px) {
-  h6 {
-    margin: 45px 0 0 0;
-    font-size: 3vw;
-  }
 
-  h5 {
-    margin: 18px 0 0 0;
-    font-size: 4vw;
-  }
+    .card, .stats-card {
+        width: 80%; /* Адаптивная ширина для карточки */
+        height: auto; /* Высота будет изменяться в зависимости от содержимого */
+        max-width: 310px; /* Ограничиваем максимальную ширину для маленьких экранов */
+        margin: 10px; /* Уменьшаем отступы */
+        padding: 10px; /* Уменьшаем отступы */
+        background-image: none;
+        border: 1px solid black;
+    }
 
-  h4 {
-    color: #E62526;
-    margin: 18px 0;
-    font-size: 5vw;
-  }
-  p{
-    font-size: 3vw;
-  }
+    .labelMatchPreview, .statsMatchPreview {
+        font-size: 15px;
+        top: 0;
+        position: static;
+    }
+
+    .divisionPreview {
+        font-size: 14px; /* Уменьшен размер текста */
+        margin-top: 15px; /* Отступ сверху */
+        max-width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    h4 {
+        font-size: 5vw; /* Масштабируем заголовок */
+    }
+
+    p {
+        font-size: 3vw; /* Масштабируем текст */
+    }
+
+    .logosTeamPreview {
+        width: 30px; /* Уменьшаем размер логотипа */
+        height: 30px;
+    }
 }

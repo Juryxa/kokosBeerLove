@@ -41,11 +41,18 @@
     display: none;
 }
 
-.shop-admin-image-name {
+.shop-admin-image-preview {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 15px;
+}
+
+.shop-admin-image-name {
     font-size: 14px;
     color: #555;
+    margin-right: 10px;
 }
+
 
 .shop-admin-button {
     width: 100%;
