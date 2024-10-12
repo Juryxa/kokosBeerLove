@@ -8,11 +8,13 @@
 /* Контейнер с командой */
 .team-container {
     background-image: url("../../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg");
-    height: 100vh;
+    height: 100%;
     background-size: cover;
-    background-position: center;
-    
     flex: 1;
+}
+
+.table-container{
+ height: 60vh;
 }
 
 /* Таблица команды */
@@ -23,6 +25,7 @@
     margin: 0 auto;
     margin-bottom: 30px;
     background-color: white;
+    
 }
 
 .team-table th, .team-table td {
@@ -181,20 +184,24 @@
     }
 }
 
-@media (max-width: 400px) {
-    .player-name-role {
-        display: none; /* Скрываем имя и роль на очень маленьких экранах */
+    @media (max-width: 400px) {
+        .player-name-role {
+            display: none; /* Скрываем имя и роль на очень маленьких экранах */
+        }
+        .team-table th {
+            font-size: 0; /* Делаем текст невидимым */
+            position: relative; /* Для правильного позиционирования псевдоэлемента */
+        }
+    
+        /* Устанавливаем сокращенные обозначения через псевдоэлементы */
+        .team-table th:nth-child(1)::after { content: "№"; font-size: 1rem;  }
+        .team-table th:nth-child(2)::after { content: "ФИО"; font-size: 1rem;  }
+        .team-table th:nth-child(3)::after { content: "И"; font-size: 1rem;  }
+        .team-table th:nth-child(4)::after { content: "Г"; font-size: 1rem;  }
+        .team-table th:nth-child(5)::after { content: "П"; font-size: 1rem;  }
+        
     }
 
-    .team-table th {
-        text-transform: none; /* Убираем заглавные буквы */
-    }
 
-    .team-table th:nth-child(1)::after { content: "№"; }
-    .team-table th:nth-child(2)::after { content: "И"; }
-    .team-table th:nth-child(3)::after { content: "Г"; }
-    .team-table th:nth-child(4)::after { content: "П"; }
-    .team-table th:nth-child(5)::after { content: "Ж"; }
-    .team-table th:nth-child(6)::after { content: "К"; }
-}
+
 
