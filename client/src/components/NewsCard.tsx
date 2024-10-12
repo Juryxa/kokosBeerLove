@@ -8,8 +8,8 @@ const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image, created_at }
     return (
         <Link to={`/news/${id}`} className="news-card">
             <div className="news-content-text">
-                <h3 className="news-title">{truncateText(title, 10)}</h3>
-                <p className="news-text">{truncateText(text, 20)}</p>
+                <h3 className="news-title">{truncateText(title, 20)}</h3>
+                <p className="news-text">{truncateText(text, 50)}</p>
                 <p className="news-time">{parseAndFormatDate(created_at)}</p>
             </div>
             <div className="news-content-img">

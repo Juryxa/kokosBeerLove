@@ -17,40 +17,65 @@ import {
     InputLabel,
     FormControl,
 } from '@mui/material';
-
-interface MatchesType {
-    id?: number;
-    oid: string;
-    idVideo: string;
-    hd: number;
-    width: number;
-    height: number;
-    autoplay?: boolean;
-    data?: string; // Дата в формате 'YYYY-MM-DD'
-    scoreteam1?: number;
-    scoreteam2?: number;
-    location?: string;
-    league?: string;
-}
+import { IVideo } from '../../api/models/IVideo';
+import MatchService from '../../api/services/MatchService';
+import { extractNumbersFromUrl } from './functions/linkParser';
+// interface MatchesType {
+//     id?: number;
+//     oid: string;
+//     idVideo: string;
+//     hd: number;
+//     width: number;
+//     height: number;
+//     autoplay?: boolean;
+//     data?: string; // Дата в формате 'YYYY-MM-DD'
+//     scoreteam1?: number;
+//     scoreteam2?: number;
+//     location?: string;
+//     league?: string;
+// }
 
 const Matches: FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [videosToShow, setVideosToShow] = useState(4);
     const [isMobile, setIsMobile] = useState(false);
-    const [mathesData, setMatchesData] = useState<MatchesType[]>([]);
-    const [translationData, setTranslationData] = useState<MatchesType[]>([]);
+    const [mathesData, setMatchesData] = useState<IVideo[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [translationData, setTranslationData] = useState<IVideo[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [suggestions, setSuggestions] = useState<MatchesType[]>([]);
+    const [suggestions, setSuggestions] = useState<IVideo[]>([]);
 
     // Состояния для фильтрации по месяцу, году и дню
     const [selectedMonth, setSelectedMonth] = useState<number | ''>('');
     const [selectedYear, setSelectedYear] = useState<number | ''>('');
     const [selectedDay, setSelectedDay] = useState<number | ''>('');
 
+
+
+    
+    // useEffect(() => {
+    //     setMatchesData();
+    //     setTranslationData();
+    // }, []);
+
+
     useEffect(() => {
-        setMatchesData(mathes.mathesvideo);
-        setTranslationData(translation.translation);
-    }, []);
+        fetchShop();
+      }, []);
+    
+      const fetchShop = async () => {
+        setIsLoading(true);
+        try {
+          const response = await MatchService.getAllMatches();
+          setMatchesData(response.data);
+        } catch (error) {
+          setErrorMessage('Ошибка загрузки товаров.');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+
 
     useEffect(() => {
         const iframes = document.querySelectorAll('iframe');
@@ -103,7 +128,7 @@ const Matches: FC = () => {
         setSearchQuery(query);
         if (query) {
             const filteredMatches = mathesData.filter((match) =>
-                match.data?.toLowerCase().includes(query.toLowerCase())
+                match.match_date?.toLowerCase().includes(query.toLowerCase())
             );
             setSuggestions(filteredMatches);
         } else {
@@ -118,10 +143,10 @@ const Matches: FC = () => {
 // Функция для фильтрации матчей по выбранным месяцу, году и дню
 const filterMatchesByDate = () => {
     return mathesData.filter((match) => {
-        if (!match.data) return false; // Проверка на наличие даты
+        if (!match.match_date) return false; // Проверка на наличие даты
 
         // Разделение даты на год, месяц и день
-        const [year, month, day] = match.data.split('.').map(Number);
+        const [year, month, day] = match.match_date.split('.').map(Number);
         const matchDate = new Date(year, month - 1, day); // Создание объекта Date
 
         const matchYear = matchDate.getFullYear();
@@ -176,7 +201,7 @@ const filterMatchesByDate = () => {
                                     onClick={() => handleCardClick(match.id)}
                                     sx={{ width: '200px' }}
                                 >
-                                    <ListItemText primary={match.data} />
+                                    <ListItemText primary={match.match_date} />
                                 </ListItemButton>
                             ))}
                         </List>
@@ -190,8 +215,7 @@ const filterMatchesByDate = () => {
                     {translationData.map((video) => (
                         <div className={`TraslateVk ${isLoading ? 'hidden' : ''}`} key={video.id}>
                             <CreateVideoFrame
-                                oid={video.oid}
-                                id={video.idVideo}
+                                video_url={video.video_url}
                                 hd={video.hd}
                                 width={video.width}
                                 height={video.height}
@@ -217,8 +241,8 @@ const filterMatchesByDate = () => {
                                 <em>Все</em>
                             </MenuItem>
                             {Array.from(new Set(mathesData.map((match) => {
-                                if (match.data) {
-                                    return new Date(match.data).getFullYear();
+                                if (match.match_date) {
+                                    return new Date(match.match_date).getFullYear();
                                 }
                                 return undefined; // Обработка случая, если дата отсутствует
                             })))
@@ -247,7 +271,6 @@ const filterMatchesByDate = () => {
                             ))}
                         </Select>
                     </FormControl>
-
                     <FormControl variant="outlined" sx={{ minWidth: 120 }}>
                         <InputLabel>День</InputLabel>
                         <Select
@@ -264,7 +287,6 @@ const filterMatchesByDate = () => {
                                 const isValidDay = selectedMonth && selectedYear
                                     ? new Date(selectedYear, selectedMonth - 1, day).getMonth() + 1 === selectedMonth
                                     : true;
-
                                 return isValidDay ? (
                                     <MenuItem key={day} value={day}>
                                         {day}
@@ -280,23 +302,24 @@ const filterMatchesByDate = () => {
                         {filteredMatches.slice(0, videosToShow).map((video) => (
                             <div className="ephir-1" key={video.id} onClick={() => handleCardClick(video.id)}>
                                 <div className={`videosVk ${isLoading ? 'hidden' : ''}`}>
+                                    
                                     <CreateVideoFrame
-                                        oid={video.oid}
-                                        id={video.idVideo}
+                                        video_url={video.video_url}
                                         hd={video.hd}
                                         width={video.width}
                                         height={video.height}
+                                        
                                     />
                                     <div className="video-info">
                                         <table>
                                             <tbody>
                                                 <tr>
                                                     <th>Запись матча</th>
-                                                    <td>{video.data}</td>
+                                                    <td>{video.match_date}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Счет</th>
-                                                    <td>{video.scoreteam1} - {video.scoreteam2}</td>
+                                                    <td>{video.score_home} - {video.score_away}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Место</th>
@@ -304,7 +327,7 @@ const filterMatchesByDate = () => {
                                                 </tr>
                                                 <tr>
                                                     <th>Лига</th>
-                                                    <td>{video.league}</td>
+                                                    <td>{video.division}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

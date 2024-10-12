@@ -1,17 +1,23 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React from 'react';
+import { extractNumbersFromUrl } from '../pages/generalPages/functions/linkParser';
+import { IVideo } from '../api/models/IVideo';
 
 interface IframeType {
-    oid: string; 
-    id: string;  
+    video_url:string; 
     hd?: number;           
     width?: number;       
     height?: number;
     autoplay?: number;     
 }
 
-const CreateVideoFrame: React.FC<IframeType> = ({ oid, id, hd = 2, width = 853, height = 480,autoplay }) => {
-    const iframeSrc = `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=${hd}&autoplay=${autoplay ? 1 : 0}&js_api=1`;
+
+
+
+const CreateVideoFrame: React.FC<IframeType> = ({ video_url, hd , width, height,autoplay }) => {
+    const link = extractNumbersFromUrl(video_url)
+
+    const iframeSrc = `https://vk.com/video_ext.php?oid=-${link?.firstNumber}&id=${link?.secondNumber}&hd=${hd}&autoplay=${autoplay ? 1 : 0}&js_api=1`;
     
 
     return (
