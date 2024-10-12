@@ -48,10 +48,10 @@ const Matches: FC = () => {
         fetchShop();
       }, []);
     
-      const fetchShop = async () => {
+      const fetchMathes = async () => {
         setIsLoading(true);
         try {
-          const response = await MatchService.getAllMatches();
+          const response = await MatchService.get();
           setMatchesData(response.data);
         } catch (error) {
           setErrorMessage('Ошибка загрузки товаров.');
