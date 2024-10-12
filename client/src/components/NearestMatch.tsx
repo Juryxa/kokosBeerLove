@@ -85,7 +85,7 @@ const NearestMatch: React.FC = () => {
                         marginLeft: '10px'
                     }}/>
                 </div>
-                <Link to={`/matches/${matchData.id}`}>
+                <Link to={`/match/${matchData.id}`}>
                     <button className="styled-button">
                         О матче
                     </button>

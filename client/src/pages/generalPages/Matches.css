@@ -9,7 +9,7 @@
     padding: 8px;
     max-width: 150px; /* Максимальная ширина для каждой ячейки */
     overflow: hidden; /* Скрываем переполненный текст */
-    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+    
     text-overflow: ellipsis; /* Добавляем многоточие при обрезке текста */
 }
 
@@ -225,4 +225,10 @@ iframe {
 
 .button:hover {
     transform: scale(0.98); /* Уменьшение кнопки при наведении */
+}
+
+.no-more-videos-message{
+    text-align: center;
+    color: red;
+    padding: 15px;
 }

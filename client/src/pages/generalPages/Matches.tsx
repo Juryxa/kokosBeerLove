@@ -23,7 +23,7 @@ import imglogo from '../../images/logoteam1.png'
 const Matches: FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [videosToShow, setVideosToShow] = useState(4);
-    const [isMobile, setIsMobile] = useState(false);
+    
     const [mathesData, setMatchesData] = useState<IVideo[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [translationData, setTranslationData] = useState<IVideo[]>([]);
@@ -34,7 +34,7 @@ const Matches: FC = () => {
     const [selectedMonth, setSelectedMonth] = useState<number | ''>('');
     const [selectedYear, setSelectedYear] = useState<number | ''>('');
     const [selectedDay, setSelectedDay] = useState<number | ''>('');
-
+     const [hasMoreVideos, setHasMoreVideos] = useState(true);
 
 
 
@@ -42,23 +42,35 @@ const Matches: FC = () => {
     //     setMatchesData();
     //     setTranslationData();
     // }, []);
-
+    
 
     useEffect(() => {
-        fetchShop();
-      }, []);
-
-      const fetchShop = async () => {
+        fetchMathes(videosToShow);
+    }, [videosToShow]);
+    
+    const fetchMathes = async (limit: number) => {
         setIsLoading(true);
         try {
-          const response = await MatchService.getAllMatches();
-          setMatchesData(response.data);
+            const response = await MatchService.getNext(limit);
+            if (response.data.length === 0) {
+                // Если новых видео нет, устанавливаем флаг, что больше нет данных
+                setHasMoreVideos(false);
+            } else {
+                setMatchesData((prevData) => [...prevData, ...response.data]); // Добавляем новые видео к уже загруженным
+            }
         } catch (error) {
-          setErrorMessage('Ошибка загрузки товаров.');
+            setErrorMessage('Ошибка загрузки товаров.');
         } finally {
-          setIsLoading(false);
+            setIsLoading(false);
         }
-      };
+    };
+    
+    const handleShowMore = () => {
+        const newLimit = videosToShow + 4; // Увеличиваем количество видео для показа
+        setVideosToShow(newLimit); // Обновляем состояние для отображаемого количества видео
+        fetchMathes(newLimit); // Вызываем функцию для загрузки дополнительных видео
+    };
+      
 
 
 
@@ -84,21 +96,9 @@ const Matches: FC = () => {
         };
     }, [translationData, mathesData]);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
-            setVideosToShow(window.innerWidth < 768 ? 0 : 0);
-        };
+   
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const handleShowMore = () => {
-        setVideosToShow((prevCount) => prevCount + (isMobile ? 4 : 4));
-    };
+    
 
     const navigate = useNavigate();
 
@@ -170,7 +170,7 @@ const filterMatchesByDate = () => {
             <Header />
             <div className="container">
                 <h1 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Матчи</h1>
-                <Box mb={3}>
+                {/* <Box mb={3}>
                     <TextField
                         label="Поиск матчей"
                         variant="outlined"
@@ -208,7 +208,7 @@ const filterMatchesByDate = () => {
                             ))}
                         </List>
                     )}
-                </Box>
+                </Box> */}
 
 
 
@@ -229,8 +229,9 @@ const filterMatchesByDate = () => {
                     <div className='low-content-matches'>
                         <div className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
-                    {/* Элементы управления для фильтрации по месяцу, году и дню */}
-                <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
+                    
+                    
+                {/* <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
 
 
                     <FormControl variant="outlined" sx={{ minWidth: 120 }}>
@@ -247,9 +248,9 @@ const filterMatchesByDate = () => {
                                 if (match.match_date) {
                                     return new Date(match.match_date).getFullYear();
                                 }
-                                return undefined; // Обработка случая, если дата отсутствует
+                                return undefined; 
                             })))
-                            .filter(year => year !== undefined) // Фильтрация неопределенных значений
+                            .filter(year => year !== undefined) 
                             .map((year) => (
                                 <MenuItem key={year} value={year}>
                                     {year}
@@ -284,7 +285,6 @@ const filterMatchesByDate = () => {
                             <MenuItem value="">
                                 <em>Все</em>
                             </MenuItem>
-                            {/* Динамическое создание списка дней на основе выбранного месяца и года */}
                             {Array.from(new Array(31)).map((_, index) => {
                                 const day = index + 1;
                                 const isValidDay = selectedMonth && selectedYear
@@ -298,7 +298,8 @@ const filterMatchesByDate = () => {
                             })}
                         </Select>
                     </FormControl>
-                </Box>
+                </Box> */}
+
                 </div>
                     <div className="lastephire">
 
@@ -352,11 +353,15 @@ const filterMatchesByDate = () => {
                             </div>
                         ))}
                     </div>
-                    {isLoading && <div className="loading-spinner"></div>}
-                    {videosToShow < filteredMatches.length && !isLoading && (
-                        <button onClick={handleShowMore} className={`show-more-button ${isLoading ? 'hidden' : ''}`}>
-                            Показать больше
+                    {hasMoreVideos && isLoading && <div className="loading-spinner"></div>}
+                    { !isLoading && (
+                        <button onClick={handleShowMore} className={`show-more-button ${!hasMoreVideos ? 'hidden' : ''}`} disabled={!hasMoreVideos}>
+                            Показать больше   
                         </button>
+                    )}{!hasMoreVideos && (
+                        <div className="no-more-videos-message">
+                            Видео больше нет
+                        </div>
                     )}
                     </div>
                 </div>
