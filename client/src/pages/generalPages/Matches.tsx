@@ -4,17 +4,6 @@ import Footer from '../../components/Footer';
 import './Matches.css';
 import CreateVideoFrame from '../../components/CreateVideoFrame';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    TextField,
-    Box,
-    List,
-    ListItemButton,
-    ListItemText,
-    MenuItem,
-    Select,
-    InputLabel,
-    FormControl,
-} from '@mui/material';
 import { IVideo } from '../../api/models/IVideo';
 import MatchService from '../../api/services/MatchService';
 import imglogo from '../../images/logoteam1.png'
@@ -22,8 +11,8 @@ import imglogo from '../../images/logoteam1.png'
 
 const Matches: FC = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [videosToShow, setVideosToShow] = useState(4);
-    
+    const [videosToShow, setVideosToShow] = useState(0);
+
     const [mathesData, setMatchesData] = useState<IVideo[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [translationData, setTranslationData] = useState<IVideo[]>([]);
@@ -42,12 +31,12 @@ const Matches: FC = () => {
     //     setMatchesData();
     //     setTranslationData();
     // }, []);
-    
+
 
     useEffect(() => {
         fetchMathes(videosToShow);
     }, [videosToShow]);
-    
+
     const fetchMathes = async (limit: number) => {
         setIsLoading(true);
         try {
@@ -64,13 +53,13 @@ const Matches: FC = () => {
             setIsLoading(false);
         }
     };
-    
+
     const handleShowMore = () => {
         const newLimit = videosToShow + 4; // Увеличиваем количество видео для показа
         setVideosToShow(newLimit); // Обновляем состояние для отображаемого количества видео
         fetchMathes(newLimit); // Вызываем функцию для загрузки дополнительных видео
     };
-      
+
 
 
 
@@ -96,9 +85,9 @@ const Matches: FC = () => {
         };
     }, [translationData, mathesData]);
 
-   
 
-    
+
+
 
     const navigate = useNavigate();
 
@@ -229,8 +218,8 @@ const filterMatchesByDate = () => {
                     <div className='low-content-matches'>
                         <div className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
-                    
-                    
+
+
                 {/* <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
 
 
@@ -248,9 +237,9 @@ const filterMatchesByDate = () => {
                                 if (match.match_date) {
                                     return new Date(match.match_date).getFullYear();
                                 }
-                                return undefined; 
+                                return undefined;
                             })))
-                            .filter(year => year !== undefined) 
+                            .filter(year => year !== undefined)
                             .map((year) => (
                                 <MenuItem key={year} value={year}>
                                     {year}
@@ -356,7 +345,7 @@ const filterMatchesByDate = () => {
                     {hasMoreVideos && isLoading && <div className="loading-spinner"></div>}
                     { !isLoading && (
                         <button onClick={handleShowMore} className={`show-more-button ${!hasMoreVideos ? 'hidden' : ''}`} disabled={!hasMoreVideos}>
-                            Показать больше   
+                            Показать больше
                         </button>
                     )}{!hasMoreVideos && (
                         <div className="no-more-videos-message">
