@@ -4,7 +4,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 60vh;
+    height: 70vh;
     width: 80%;
 }
 .count {
@@ -16,7 +16,13 @@
 .titleMatch{
     font-size: 25px;
     color: white;
-    text-align: center;
+    text-align: start;
+    overflow: hidden; /* Скрываем содержимое, выходящее за пределы */
+    display: -webkit-box; /* Для поддержки многострочного обрезания */
+    -webkit-line-clamp: 3; /* Обрезаем до 3 строк */
+    -webkit-box-orient: vertical; /* Ориентация для многострочного обрезания */
+    word-wrap: break-word; /* Разбиваем слишком длинные слова */
+    line-height: 1.2; /* Межстрочный интервал */
 }
 .dateInfo{
     font-size: 25px;
