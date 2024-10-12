@@ -6,7 +6,13 @@ export const uploadImage = async (
     setErrorMessage: (message: string | null) => void,
     folder: string,
 ): Promise<string> => {
-    const uniqueFileName = `${Date.now()}_${file.name}`;
+    // Преобразуем имя файла: заменяем пробелы на "_" и удаляем невалидные символы
+    const sanitizedFileName = file.name
+        .toLowerCase() // Делаем имя файла в нижнем регистре
+        .replace(/\s+/g, '_') // Заменяем пробелы на "_"
+        .replace(/[^a-z0-9_\.-]/g, ''); // Удаляем все символы, кроме букв, цифр, "_", ".", и "-"
+
+    const uniqueFileName = `${Date.now()}_${sanitizedFileName}`;
 
     try {
         const response = await axios.put(
@@ -23,13 +29,12 @@ export const uploadImage = async (
             setSuccessMessage('Изображение успешно загружено.');
             return `http://localhost/uploads/${folder}/${uniqueFileName}`;
         }
-        if (response.status === 401){
+        if (response.status === 401) {
             setErrorMessage('Вы не авторизованы');
-            return'';
-        }
-        else {
+            return '';
+        } else {
             setErrorMessage('Ошибка при загрузке изображения.');
-            return'';
+            return '';
         }
     } catch (error) {
         setErrorMessage('Ошибка при загрузке изображения.');
