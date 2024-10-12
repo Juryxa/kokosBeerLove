@@ -22,17 +22,17 @@
     overflow: hidden; /* Обрезка лишнего текста */
     text-overflow: ellipsis;
     display: -webkit-box; /* Для создания текстового блока */
-    -webkit-line-clamp: 5; /* Максимум 5 строк */
+    -webkit-line-clamp: 2; /* Максимум 5 строк */
     -webkit-box-orient: vertical;
 }
 
 .shop-description {
     font-size: 14px;
     color: #666;
-    overflow: hidden; /* Обрезка лишнего текста */
+    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box; /* Для создания текстового блока */
-    -webkit-line-clamp: 5; /* Максимум 5 строк */
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
