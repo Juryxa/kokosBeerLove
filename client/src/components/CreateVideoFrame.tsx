@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import React from 'react';
 import { extractNumbersFromUrl } from '../pages/generalPages/functions/linkParser';
 import { IVideo } from '../api/models/IVideo';
