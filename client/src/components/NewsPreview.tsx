@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import {NewsResponse} from "../api/models/response/NewsResponse";
 import NewsService from "../api/services/NewsService";
 import NewsCard from "./NewsCard";
-import img from '../images/news.png'
 
 const NewsPreview = () => {
     const [newsData, setNewsData] = useState<NewsResponse[]>([]);

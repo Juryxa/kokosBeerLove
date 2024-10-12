@@ -28,7 +28,7 @@
 .news-title {
     font-size: 20px;
     color: #E62526;
-   
+
 }
 
 .news-text {
@@ -68,6 +68,9 @@
 .news-content-text {
     padding: 15px;
     flex-grow: 1;
+    flex-direction: column; /* Вертикальная ориентация для текста */
+    max-width: calc(100% - 165px); /* Ограничиваем ширину, оставляя место для изображения (150px + 15px отступ) */
+    overflow: hidden;
 }
 
 .news-content-img {
