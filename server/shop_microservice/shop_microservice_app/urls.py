@@ -7,8 +7,8 @@ from .views.handlers_product_operations.get_all_products import get_all_products
 from .views.handlers_product_operations.get_product_by_id import get_product_by_id
 
 from .views.handlers_cart.add_to_cart import add_to_cart
-from .views.handlers_cart.remove_all_items_from_cart import remove_all_items_from_cart
 from .views.handlers_cart.remove_item_from_cart import remove_item_from_cart
+from .views.handlers_cart.get_all_items_from_cart import get_all_items_from_cart
 
 
 urlpatterns = [
@@ -19,6 +19,6 @@ urlpatterns = [
     path('delete_product/<int:product_id>/', delete_product, name='delete_product'),
 
     path('add_to_cart/', add_to_cart, name='add_to_cart'),
-    path('remove_all_items_from_cart/<int:product_id>/', remove_all_items_from_cart, name='remove_all_items_from_cart'),
     path('remove_item_from_cart/<int:product_id>/', remove_item_from_cart, name='remove_item_from_cart'),
+    path('get_all_items_from_cart/', get_all_items_from_cart, name='get_all_items_from_cart'),
 ]

@@ -11,7 +11,7 @@ from ...models import CartItem, Product
 
 @swagger_auto_schema(
     method='post',
-    operation_description="Добавление товара в корзину пользователя",
+    operation_description="Добавление товара с размером в корзину пользователя",
     tags=['cartHandlers'],
     request_body=AddToCartSerializer,
     responses={
@@ -25,28 +25,24 @@ from ...models import CartItem, Product
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
 def add_to_cart(request):
-    # Получаем ID пользователя из токена
     user_id = request.user.id
-
-    # Получаем данные из запроса
     serializer = AddToCartSerializer(data=request.data)
 
     if serializer.is_valid():
-        product_id = serializer.validated_data['product'].id
+        product = serializer.validated_data['product']
         quantity = serializer.validated_data['quantity']
+        size = serializer.validated_data['size_instance']  # Это объект ProductSize
 
-        # Проверяем наличие товара в корзине
-        cart_item, created = CartItem.objects.get_or_create(user_id=user_id, product_id=product_id)
+        # Проверяем наличие товара с указанным размером в корзине
+        cart_item, created = CartItem.objects.get_or_create(user_id=user_id, product=product, size=size)
 
         if not created:
-            # Если товар уже есть, обновляем количество
             cart_item.quantity += quantity
         else:
-            # Если товар новый, просто сохраняем
             cart_item.quantity = quantity
 
         cart_item.save()
 
-        return Response({"message": "Товар успешно добавлен в корзину"}, status=status.HTTP_201_CREATED)
+        return Response({"message": f"Товар ({size.size}) успешно добавлен в корзину"}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
