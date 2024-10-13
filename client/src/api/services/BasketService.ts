@@ -6,6 +6,9 @@ export default class BasketService{
         // @ts-ignore
         return basketApi.post<ProductToAdd>('/add_to_cart/', {product, quantity});
     }
-
+    static async removeItemFromBasket(productId: number) {
+        // @ts-ignore
+        return basketApi.delete(`/remove_item_from_cart/${productId}`);
+    }
 
 }
