@@ -2,9 +2,9 @@ import {basketApi} from "../http/basket";
 import {ProductToAdd} from "../models/ProductToAdd";
 
 export default class BasketService{
-    static async addToBasket(product: number, quantity: number, size_id:number) {
+    static async addToBasket(product: number, quantity: number, size:string) {
         // @ts-ignore
-        return basketApi.post<ProductToAdd>('/add_to_cart/', {product, quantity,size_id});
+        return basketApi.post<ProductToAdd>('/add_to_cart/', {product, quantity,size});
     }
     static async getAllBasket(productId: number) {
         // @ts-ignore

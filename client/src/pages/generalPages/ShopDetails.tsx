@@ -37,7 +37,7 @@ const ShopDetails = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
-    const [selectedSize, setSelectedSize] = useState<number |undefined>();
+    const [selectedSize, setSelectedSize] = useState<string>('');
 
     const productImages = [img1, img2]; // Массив изображений
 
@@ -81,8 +81,8 @@ const ShopDetails = () => {
     };
 
 
-    const handleSizeSelect = (size_id: number|undefined) => {
-        setSelectedSize(size_id);
+    const handleSizeSelect = (size: string) => {
+        setSelectedSize(size);
         console.log(selectedSize)
     };
 
@@ -101,8 +101,8 @@ const ShopDetails = () => {
 
     const addToBasket = async () => {
         try{
-        if(selectedSize !== undefined){
-            await BasketService.addToBasket(productId, selectedSize, 1)
+        if(selectedSize){
+            await BasketService.addToBasket(productId,1, selectedSize)
             
         } else {
             alert('Пожалуйста, выберите размер перед добавлением в корзину');
@@ -146,7 +146,7 @@ const ShopDetails = () => {
                                 <button
                                     key={index}  
                                     className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
-                                    onClick={() => handleSizeSelect(item.id)}
+                                    onClick={() => handleSizeSelect(item.size)}
                                     disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
                                     style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
                                     
