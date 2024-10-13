@@ -29,6 +29,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['first_name', 'last_name', 'phone_number', 'telegram', 'avatar_url']
 
+class UserAllDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'first_name', 'last_name', 'phone_number', 'telegram', 'avatar_url']
+
 class AvatarUploadSerializer(serializers.Serializer):
     avatar_url = serializers.URLField(required=True)
 
