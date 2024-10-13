@@ -1,15 +1,18 @@
 import random
 import string
-from locust import HttpUser, TaskSet, task, between
 
+from locust import HttpUser, TaskSet, between, task
 
-#для нагрузочного тестирования
-#locust --users 100 --spawn-rate 15 -f locustfile.py --host=http://localhost:8000
+# для нагрузочного тестирования
+# locust --users 100 --spawn-rate 15 -f locustfile.py
+# --host=http://localhost:8000
 
 # Функция для генерации случайного имени
+
+
 def generate_random_name(length=8):
     letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(length))
+    return "".join(random.choice(letters) for _ in range(length))
 
 
 # Класс задач
@@ -25,8 +28,7 @@ class UserBehavior(TaskSet):
         signup_data = {
             "username": name,
             "email": email,
-            "password": "testpassword123"
-        }
+            "password": "testpassword123"}
 
         # Отправка POST-запроса на /signup
         self.client.post("/api/signup/", json=signup_data)

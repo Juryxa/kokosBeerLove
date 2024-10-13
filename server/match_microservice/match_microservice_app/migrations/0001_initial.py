@@ -7,27 +7,43 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Match',
+            name="Match",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('team_home', models.CharField(max_length=500)),
-                ('team_away_name', models.CharField(max_length=500)),
-                ('team_away_logo_url', models.URLField(blank=True, max_length=1000, null=True)),
-                ('score_home', models.IntegerField()),
-                ('score_away', models.IntegerField()),
-                ('location', models.CharField(max_length=500)),
-                ('division', models.CharField(max_length=500)),
-                ('video_url', models.URLField(blank=True, max_length=1000, null=True)),
-                ('match_date', models.DateField(blank=True, null=True, verbose_name='Дата матча')),
-                ('match_time', models.TimeField(blank=True, null=True, verbose_name='Время матча')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("team_home", models.CharField(max_length=500)),
+                ("team_away_name", models.CharField(max_length=500)),
+                (
+                    "team_away_logo_url",
+                    models.URLField(blank=True, max_length=1000, null=True),
+                ),
+                ("score_home", models.IntegerField()),
+                ("score_away", models.IntegerField()),
+                ("location", models.CharField(max_length=500)),
+                ("division", models.CharField(max_length=500)),
+                ("video_url", models.URLField(blank=True, max_length=1000, null=True)),
+                (
+                    "match_date",
+                    models.DateField(blank=True, null=True, verbose_name="Дата матча"),
+                ),
+                (
+                    "match_time",
+                    models.TimeField(blank=True, null=True, verbose_name="Время матча"),
+                ),
             ],
             options={
-                'db_table': 'match',
+                "db_table": "match",
             },
         ),
     ]

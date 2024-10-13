@@ -1,18 +1,28 @@
 from rest_framework import serializers
+
 from .models import Product
+
 
 class ProductSerializer(serializers.ModelSerializer):
     # Сериализатор для отображения продукта
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'url_images']
-
+        fields = ["id", "name", "description", "price", "url_images"]
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'url_images', 'material', 'color', 'size']
+        fields = [
+            "id",
+            "name",
+            "description",
+            "price",
+            "url_images",
+            "material",
+            "color",
+            "size",
+        ]
 
 
 class ProductCreateSerializer(serializers.ModelSerializer):
@@ -22,11 +32,11 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'url_images']
+        fields = ["name", "description", "price", "url_images"]
 
     def create(self, validated_data):
         # Извлекаем данные из validated_data
-        url_images = validated_data.pop('url_images', [])
+        url_images = validated_data.pop("url_images", [])
 
         # Создаем продукт
         product = Product.objects.create(**validated_data)
