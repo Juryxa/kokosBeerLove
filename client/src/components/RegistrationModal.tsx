@@ -64,7 +64,6 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                 return;
             }
 
-            // Вызов функции логина и проверка успешности
             try {
                 const success = await store.login(email, password);
                 if (!store.isAuth) {
@@ -78,7 +77,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                     handleClose();
                 }
             } catch (e) {
-                setLoginError(true); // Обрабатываем ошибку при неверных данных
+                setLoginError(true);
             }
         } else {
             // Валидация для регистрации
@@ -93,12 +92,23 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                 setErrorFields(errors);
                 return;
             }
-
-            // Переход на шаг подтверждения email
-            setStep(2);
-            store.verify(email); // Отправляем код подтверждения
+            store.verify(email)
+                .then(() => {
+                    // Если верификация прошла успешно
+                    setStep(2); // Переход на шаг подтверждения email
+                })
+                .catch((e: any) => {
+                    // Обработка ошибки 400 (пользователь уже существует)
+                    if (e.response && e.response.status === 400) {
+                        setErrorFields(prev => ({ ...prev, email: 'Пользователь с таким email уже существует' }));
+                    } else {
+                        // Можно обработать другие ошибки здесь
+                        console.error('Ошибка при верификации:', e); // Логируем ошибку для отладки
+                    }
+                });
         }
     };
+
 
     const handleCodeChange = (value: string, index: number) => {
         const newCode = [...code];
@@ -161,12 +171,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                         color: "red"
                     }}
                 >
-                    <CloseIcon />
+                    <CloseIcon/>
                 </IconButton>
 
                 {step === 1 ? (
                     <>
-                        <Typography variant="h5" sx={{ mb: 2, color: '#E62526', fontSize: "30px" }}>
+                        <Typography variant="h5" sx={{mb: 2, color: '#E62526', fontSize: "30px"}}>
                             {isLogin ? "Вход" : "Регистрация"}
                         </Typography>
 
@@ -177,9 +187,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                     width: "300px",
                                     backgroundColor: 'white',
                                     '& .MuiOutlinedInput-root': {
-                                        '& fieldset': { borderColor: errorFields.name ? 'red' : '#E62526', borderWidth: '3px' },
+                                        '& fieldset': {
+                                            borderColor: errorFields.name ? 'red' : '#E62526',
+                                            borderWidth: '3px'
+                                        },
                                     },
-                                    '& .MuiInputLabel-root': { color: '#E62526' },
+                                    '& .MuiInputLabel-root': {color: '#E62526'},
                                 }}
                                 label="Имя"
                                 variant="outlined"
@@ -187,7 +200,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                 value={name}
                                 error={!!errorFields.name}
                                 helperText={errorFields.name}
-                                FormHelperTextProps={{ sx: { color: 'red' } }} // Ярко-красный цвет ошибок
+                                FormHelperTextProps={{sx: {color: 'red'}}} // Ярко-красный цвет ошибок
                             />
                         )}
 
@@ -197,9 +210,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                 width: "300px",
                                 backgroundColor: 'white',
                                 '& .MuiOutlinedInput-root': {
-                                    '& fieldset': { borderColor: errorFields.email ? 'red' : '#E62526', borderWidth: '3px' },
+                                    '& fieldset': {
+                                        borderColor: errorFields.email ? 'red' : '#E62526',
+                                        borderWidth: '3px'
+                                    },
                                 },
-                                '& .MuiInputLabel-root': { color: '#E62526' },
+                                '& .MuiInputLabel-root': {color: '#E62526'},
                             }}
                             label="Email"
                             variant="outlined"
@@ -207,8 +223,10 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                             value={email}
                             error={!!errorFields.email}
                             helperText={errorFields.email}
-                            FormHelperTextProps={{ sx: { color: 'red' } }} // Ярко-красный цвет ошибок
+                            FormHelperTextProps={{sx: {color: 'red'}}} // Ярко-красный цвет ошибок
+
                         />
+
 
                         <TextField
                             sx={{
@@ -216,9 +234,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                 width: "300px",
                                 backgroundColor: 'white',
                                 '& .MuiOutlinedInput-root': {
-                                    '& fieldset': { borderColor: errorFields.password ? 'red' : '#E62526', borderWidth: '3px' },
+                                    '& fieldset': {
+                                        borderColor: errorFields.password ? 'red' : '#E62526',
+                                        borderWidth: '3px'
+                                    },
                                 },
-                                '& .MuiInputLabel-root': { color: '#E62526' },
+                                '& .MuiInputLabel-root': {color: '#E62526'},
                             }}
                             label="Пароль"
                             variant="outlined"
@@ -227,7 +248,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                             value={password}
                             error={!!errorFields.password}
                             helperText={errorFields.password}
-                            FormHelperTextProps={{ sx: { color: 'red' } }} // Ярко-красный цвет ошибок
+                            FormHelperTextProps={{sx: {color: 'red'}}} // Ярко-красный цвет ошибок
                         />
 
                         {!isLogin && (
@@ -237,9 +258,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                     width: "300px",
                                     backgroundColor: 'white',
                                     '& .MuiOutlinedInput-root': {
-                                        '& fieldset': { borderColor: errorFields.confirmPassword ? 'red' : '#E62526', borderWidth: '3px' },
+                                        '& fieldset': {
+                                            borderColor: errorFields.confirmPassword ? 'red' : '#E62526',
+                                            borderWidth: '3px'
+                                        },
                                     },
-                                    '& .MuiInputLabel-root': { color: '#E62526' },
+                                    '& .MuiInputLabel-root': {color: '#E62526'},
                                 }}
                                 label="Подтвердите пароль"
                                 variant="outlined"
@@ -248,12 +272,12 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                                 value={confirmPassword}
                                 error={!!errorFields.confirmPassword}
                                 helperText={errorFields.confirmPassword}
-                                FormHelperTextProps={{ sx: { color: 'red' } }} // Ярко-красный цвет ошибок
+                                FormHelperTextProps={{sx: {color: 'red'}}} // Ярко-красный цвет ошибок
                             />
                         )}
 
                         {loginError && (
-                            <Typography sx={{ color: 'red', mb: 2 }}>
+                            <Typography sx={{color: 'red', mb: 2}}>
                                 Неверные данные для входа
                             </Typography>
                         )}
@@ -273,7 +297,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                         </Button>
 
                         <Button
-                            sx={{ mt: 2, color: '#E62526' }}
+                            sx={{mt: 2, color: '#E62526'}}
                             onClick={() => setIsLogin(!isLogin)}
                         >
                             {isLogin ? 'Нет аккаунта? Зарегистрироваться' : 'Уже есть аккаунт? Войти'}
@@ -281,23 +305,26 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                     </>
                 ) : (
                     <>
-                        <Typography variant="h5" sx={{ mb: 2, color: '#E62526', fontSize: "30px" }}>
+                        <Typography variant="h5" sx={{mb: 2, color: '#E62526', fontSize: "30px"}}>
                             Подтверждение почты
                         </Typography>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+                        <Box sx={{display: 'flex', justifyContent: 'center', gap: 1}}>
                             {code.map((digit, index) => (
                                 <TextField
                                     key={index}
                                     sx={{
                                         width: '40px',
                                         '& .MuiOutlinedInput-root': {
-                                            '& fieldset': { borderColor: codeError ? 'red' : '#E62526', borderWidth: '2px' },
+                                            '& fieldset': {
+                                                borderColor: codeError ? 'red' : '#E62526',
+                                                borderWidth: '2px'
+                                            },
                                         }
                                     }}
                                     inputProps={{
                                         maxLength: 1,
-                                        style: { textAlign: 'center' },
+                                        style: {textAlign: 'center'},
                                         onPaste: handlePaste, // Обработчик вставки
                                     }}
                                     variant="outlined"
@@ -308,13 +335,13 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                         </Box>
 
                         {codeError && (
-                            <Typography sx={{ color: 'red', mt: 1 }}>
+                            <Typography sx={{color: 'red', mt: 1}}>
                                 Неверный код подтверждения
                             </Typography>
                         )}
 
                         {successMessage && (
-                            <Typography sx={{ color: 'green', mt: 1 }}>
+                            <Typography sx={{color: 'green', mt: 1}}>
                                 Успешно!
                             </Typography>
                         )}

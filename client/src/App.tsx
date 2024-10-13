@@ -35,7 +35,7 @@ function App() {
     }, []);
 
     if (store.isLoading) {
-        return <div>Загрузка...</div>;
+        return <div className="loading-spinner"></div>;
     }
 
     return (
