@@ -74,10 +74,10 @@ const MatchesPreview: FC = () => {
 
             if (upComingResponse.data.length !== 0) {
                 // Если есть будущий матч, показываем "Следующий матч" и "Предыдущий матч"
-                combinedMatches = [upComingResponse.data[0], lastTwoResponse.data[0]];
+                combinedMatches = [upComingResponse.data[0], lastTwoResponse.data[1]];
             } else if (lastTwoResponse.data.length >= 2) {
                 // Если нет будущего матча, показываем два "Предыдущий матч"
-                combinedMatches = [lastTwoResponse.data[0], lastTwoResponse.data[1]];
+                combinedMatches = [lastTwoResponse.data[1], lastTwoResponse.data[2]];
             }
             setMatches(combinedMatches);
 
