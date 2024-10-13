@@ -31,7 +31,7 @@ export default class AuthService {
 
     static async profileEdit(first_name: string, last_name: string, phone_number: string, telegram: string, avatar_url: string){
         // @ts-ignore
-        return authApi.put<ProfileEdit>('/profile/update/', {first_name, last_name, phone_number, telegram, avatar_url})
+        return authApi.patch<ProfileEdit>('/profile/update/', {first_name, last_name, phone_number, telegram, avatar_url})
     }
 
 }

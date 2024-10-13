@@ -10,7 +10,7 @@ export const uploadImage = async (
     const sanitizedFileName = file.name
         .toLowerCase() // Делаем имя файла в нижнем регистре
         .replace(/\s+/g, '_') // Заменяем пробелы на "_"
-        .replace(/[^a-z0-9_\.-]/g, ''); // Удаляем все символы, кроме букв, цифр, "_", ".", и "-"
+        .replace(/[^a-z0-9_.-]/g, ''); // Удаляем все символы, кроме букв, цифр, "_", ".", и "-"
 
     const uniqueFileName = `${Date.now()}_${sanitizedFileName}`;
 

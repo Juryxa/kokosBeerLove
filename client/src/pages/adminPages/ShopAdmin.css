@@ -6,6 +6,9 @@
     background-color: #f5f5f5;
     border-radius: 10px;
 }
+.shop-admin-container h4{
+    color: black;
+}
 
 .shop-admin-title {
     font-size: 24px;
@@ -35,10 +38,55 @@
     cursor: pointer;
     margin-bottom: 15px;
     border-radius: 5px;
+    margin-top: 15px; /* Отступ сверху для кнопки загрузки изображений */
 }
 
 .shop-admin-file-input {
     display: none;
+}
+
+.shop-admin-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Отступ сверху для кнопок */
+}
+
+.shop-admin-button:hover {
+    background-color: #45a049;
+}
+
+.shop-admin-size-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 10px; /* Отступ сверху для кнопки "Добавить размер" */
+    margin-bottom: 15px; /* Дополнительный отступ снизу */
+}
+
+.shop-admin-size-button:hover {
+    background-color: #0056b3;
+}
+
+/* Кнопка удалить */
+.shop-admin-delete-button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.shop-admin-delete-button:hover {
+    background-color: #cc0000;
 }
 
 .shop-admin-image-preview {
@@ -51,21 +99,6 @@
     font-size: 14px;
     color: #555;
     margin-right: 10px;
-}
-
-
-.shop-admin-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.shop-admin-button:hover {
-    background-color: #45a049;
 }
 
 /* Список товаров */
@@ -97,47 +130,24 @@
     flex: 1;
 }
 
+
 .product-admin-list-item h4 {
     margin: 0;
     font-size: 18px;
-    word-wrap: break-word; /* Перенос слов */
-    word-break: break-all; /* Перенос длинных слов */
-    max-width: 100%; /* Ограничение по ширине */
-    overflow: hidden; /* Обрезка лишнего текста */
-    text-overflow: ellipsis; /* Троеточие для длинного текста */
 }
 
 .product-admin-list-item p {
     font-size: 14px;
     color: #666;
-    word-wrap: break-word; /* Перенос слов */
-    word-break: break-all; /* Перенос длинных слов */
-    max-width: 100%; /* Ограничение по ширине */
-    max-height: 150px; /* Ограничение по высоте */
-    overflow: hidden; /* Обрезка текста по высоте */
-    text-overflow: ellipsis; /* Троеточие для длинного текста */
-    display: -webkit-box; /* Для создания текстового блока */
-    -webkit-line-clamp: 5; /* Максимум 5 строк */
-    -webkit-box-orient: vertical;
+    margin: 5px 0;
 }
 
-
 .shop-admin-product-image {
-
     width: 100px;
     height: 100px;
     object-fit: cover;
     margin-left: 15px;
     border-radius: 5px;
-    word-wrap: break-word; /* Перенос слов */
-    word-break: break-all; /* Перенос длинных слов */
-    max-width: 100%; /* Ограничение по ширине */
-    max-height: 150px; /* Ограничение по высоте */
-    overflow: hidden; /* Обрезка текста по высоте */
-    text-overflow: ellipsis; /* Троеточие для длинного текста */
-    display: -webkit-box; /* Для создания текстового блока */
-    -webkit-line-clamp: 5; /* Максимум 5 строк */
-    -webkit-box-orient: vertical;
 }
 
 .product-admin-list-item-actions {
@@ -145,6 +155,7 @@
     align-items: center;
 }
 
+/* Кнопки редактирования и удаления */
 .edit-button, .delete-button {
     background-color: transparent;
     border: none;
@@ -169,19 +180,11 @@
 .error-message {
     background-color: #ffdddd;
     color: #ff3333;
-    animation: fadeOut 4s forwards;
 }
 
 .success-message {
     background-color: #ddffdd;
     color: #4CAF50;
-    animation: fadeOut 4s forwards;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
 }
 
 /* Адаптивность */
@@ -191,7 +194,7 @@
         align-items: center;
     }
 
-    .product-admin-image {
+    .shop-admin-product-image {
         width: 100%;
         height: auto;
         margin: 15px 0;
