@@ -4,7 +4,7 @@ import { ShopResponse } from "../../api/models/response/ShopResponse";
 import ShopService from "../../api/services/ShopService";
 import img1 from '../../images/T-shirt Mockup.png';
 import img2 from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
-
+import {ProductSize} from "../../api/models/ProductSize";
 import './ShopDetails.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -35,8 +35,8 @@ const ShopDetails = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [selectedColor, setSelectedColor] = useState<string | null>(null);
-    const [selectedSize, setSelectedSize] = useState<string | null>(null);
+    
+    const [selectedSize, setSelectedSize] = useState<string>("");
 
     const productImages = [img1, img2]; // Массив изображений
 
@@ -79,9 +79,6 @@ const ShopDetails = () => {
         }
     };
 
-    const handleColorSelect = (color: string) => {
-        setSelectedColor(color);
-    };
 
     const handleSizeSelect = (size: string) => {
         setSelectedSize(size);
@@ -123,38 +120,27 @@ const ShopDetails = () => {
                             <span className="new-price">{product.price} ₽</span>
                             <span className="old-price">{product.oldPrice}</span>
                         </div>
-                        <div className="product-colors">
-                            <p>Цвет:</p>
-                            <div>
-                                {product.colorOptions.map((color, index) => (
-                                    <button
-                                        key={index}
-                                        className={`color-option ${selectedColor === color ? 'selected' : ''}`}
-                                        onClick={() => handleColorSelect(color)}
-                                    >
-                                        {color}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
                         <div className="product-sizes">
                             <p>Размеры:</p>
                             <div>
-                                {product.sizeOptions.map((size, index) => (
-                                    <button
-                                        key={index}
-                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => handleSizeSelect(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                            {productItem?.sizes.map((item, index) => (
+                                <button
+                                    key={index}
+                                    className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
+                                    onClick={() => handleSizeSelect(item.size)}
+                                    disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
+                                    style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
+                                     // Задаем серый цвет для недоступных кнопок
+                                >
+                                    {item.size}
+                                </button>
+                            ))}
                             </div>
                         </div>
                         <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
                             <button className="add-to-cart">Добавить в корзину</button>
-                            <button className="buy-now">Купить сейчас</button>
+                            
                         </div>
                     </div>
                 </div>
