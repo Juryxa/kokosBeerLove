@@ -13,6 +13,7 @@ from ...models import NewsArticle
 @swagger_auto_schema(
     method='delete',
     operation_description="Удаление новости по ID. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['NewsArticle'],
     manual_parameters=[
         openapi.Parameter('article_id', openapi.IN_PATH, description="ID статьи", type=openapi.TYPE_INTEGER),
     ],

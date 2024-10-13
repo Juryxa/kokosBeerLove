@@ -11,6 +11,7 @@ from ...serializers import PlayerSerializer
 @swagger_auto_schema(
     method='post',
     operation_description="Создание нового игрока. Доступно только администраторам (is_superuser == true).",
+    tags=["playerHandlers"],
     request_body=PlayerSerializer,
     responses={
         201: openapi.Response(description="Игрок успешно создан"),

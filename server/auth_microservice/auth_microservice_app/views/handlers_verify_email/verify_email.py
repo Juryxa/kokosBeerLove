@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 @swagger_auto_schema(
     method='post',
     operation_description="Отправка кода подтверждения на email. Код отправляется только на @mail.ru",
+    tags=["verifyEmailHandlers"],
     request_body=EmailVerificationSerializer,
     responses={
         200: openapi.Response(description="Код отправлен на почту", examples={

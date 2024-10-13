@@ -12,6 +12,7 @@ from ...serializers import ProductDetailSerializer
 @swagger_auto_schema(
     method='get',
     operation_description="Получение конкретного товара по ID",
+    tags=['productHandlers'],
     responses={
         200: openapi.Response(description="Успешный ответ с данными товара", schema=ProductDetailSerializer),
         404: openapi.Response(description="Товар не найден")

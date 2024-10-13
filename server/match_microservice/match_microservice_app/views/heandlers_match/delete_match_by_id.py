@@ -10,6 +10,7 @@ from ...models import Match
 
 @swagger_auto_schema(
     method='delete',
+    tags=["Create Update Delete"],
     operation_description="Удаление матча по его ID. Доступно только администраторам (is_superuser == true).",
     responses={
         204: openapi.Response(description="Матч успешно удален"),

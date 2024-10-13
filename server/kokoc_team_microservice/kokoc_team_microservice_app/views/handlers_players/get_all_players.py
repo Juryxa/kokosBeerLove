@@ -9,6 +9,7 @@ from ...serializers import PlayerSerializer
 @swagger_auto_schema(
     method='get',
     operation_description="Получение списка всех игроков. Данные кэшируются на 15 минут.",
+    tags=["playerHandlers"],
     responses={
         200: openapi.Response(
             description="Успешный ответ с данными игроков",

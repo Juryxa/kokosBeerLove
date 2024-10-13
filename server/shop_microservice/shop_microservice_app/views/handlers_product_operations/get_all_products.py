@@ -12,6 +12,7 @@ from ...serializers import ProductSerializer
 @swagger_auto_schema(
     method='get',
     operation_description="Получение всех товаров",
+    tags=['productHandlers'],
     responses={
         200: openapi.Response(description="Успешный ответ с данными всех товаров", schema=ProductSerializer(many=True)),
     }
