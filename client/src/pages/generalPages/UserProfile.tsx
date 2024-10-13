@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Typography, Button, Avatar, Grid, TextField, Alert } from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, Avatar, TextField, Alert } from '@mui/material';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import userData from './user.json';
 import { uploadImage } from '../../pages/adminPages/functions/uploadImage';
 import AuthService from '../../api/services/AuthService';
+import { ProfileEdit } from '../../api/models/ProfileEdit';
 
-// Определение интерфейса для пользователя
-interface User {
-  id: number;
-  img: string;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  telegram: string;
-}
 
-const fieldNames: Record<keyof User, string> = {
-  name: 'Имя',
-  surname: 'Фамилия',
-  email: 'Электронная почта',
-  phone: 'Номер телефона',
+
+const fieldNames: Record<keyof ProfileEdit, string> = {
+  first_name: 'Имя',
+  last_name: 'Фамилия',
+  phone_number: 'Номер телефона',
   telegram: 'Телеграм',
-  img: 'Аватар',
-  id: 'ID'
+  avatar_url: 'Аватар',
+  
 };
 
 const UserProfile: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<ProfileEdit | null>();
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState<string>('');
   const [showInput, setShowInput] = useState(false);
@@ -36,83 +26,56 @@ const UserProfile: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  
-
   useEffect(() => {
     fetchUser();
-}, []);
+  }, []);
 
-const fetchUser = async () => {
+  const fetchUser = async () => {
     setIsLoading(true);
     try {
-        const response = await AuthService.getUserData();
-        setUser(response.data);
+      const response = await AuthService.getUserData();
+      setUser(response.data);
+      setErrorMessage(null);
     } catch (error: any) {
-        if (error.response && error.response.status === 404) {
-            setErrorMessage('Пользователь не найден.');
-        } else {
-            setErrorMessage('Ошибка загрузки пользователя.');
-        }
+      setErrorMessage('Ошибка загрузки пользователя.');
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
-
-const handleInputChange = (field: keyof User, value: string) => {
-  if (user) {
-    setUser((prevUser) => prevUser ? { ...prevUser, [field]: value } : null);
-  }
-};
-
-const handleImageEditing = async ()=>{
-  if(showInput && user){
-   try {
-        await AuthService.profileEdit(
-          user.name,
-          user.surname,
-          user.phone,
-          user.telegram,
-          image || user.img
-        );
-
-        setSuccessMessage('Профиль успешно обновлен!');
-        setErrorMessage(null);
-      } catch (error) {
-        console.error('Ошибка при обновлении профиля:', error);
-        setErrorMessage('Произошла ошибка при обновлении профиля.');
-        setSuccessMessage(null);
-      }
-    }
-  
-    setShowInput(!showInput);
-  }
-  
-  
-
-
-
-  const handleEditToggle = async () => {
-    if (isEditing && user) {
-      // При завершении редактирования отправляем запрос на обновление данных профиля
-      try {
-        await AuthService.profileEdit(
-          user.name,
-          user.surname,
-          user.phone,
-          user.telegram,
-          image || user.img
-        );
-
-        setSuccessMessage('Профиль успешно обновлен!');
-        setErrorMessage(null);
-      } catch (error) {
-        console.error('Ошибка при обновлении профиля:', error);
-        setErrorMessage('Произошла ошибка при обновлении профиля.');
-        setSuccessMessage(null);
-      }
-    }
-    setIsEditing(!isEditing);
   };
+
+  const handleInputChange = (field: keyof ProfileEdit, value: string) => {
+    if (user) {
+      setUser({ ...user, [field]: value });
+    }
+  };
+
+  const handleImageEditing = async () => {
+    if (showInput && user) {
+      // Проверка, изменил ли пользователь фотографию
+      const hasImageChanged = image && image !== user.avatar_url;
+  
+      if (hasImageChanged) {
+        try {
+          await AuthService.profileEdit(
+            user.first_name,
+            user.last_name,
+            user.phone_number,
+            user.telegram,
+            image || user.avatar_url
+          );
+          setSuccessMessage('Фотография успешно обновлена!');
+          setErrorMessage(null);
+        } catch (error) {
+          setErrorMessage('Произошла ошибка при обновлении фотографии.');
+          setSuccessMessage(null);
+        }
+      } else {
+        setErrorMessage('');
+      }
+    }
+    setShowInput(!showInput);
+  };
+  
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -135,43 +98,41 @@ const handleImageEditing = async ()=>{
 
   return (
     <>
-    <div style={{ height: '100%' }}>
-      <Header />
-      <div style={{ height: '100vh' }}>
-        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" p={3} sx={{ width: '100%' ,padding:"-24px"}}>
-          <Grid container spacing={2} justifyContent="center" maxWidth="lg">
-            <Grid item xs={12} md={4}>
-              <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff' }}>
+      <div style={{ height: '100%' }}>
+        <Header />
+        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={2} width="90%" maxWidth="1200px">
+            <Box flex="1" display="flex" justifyContent="center">
+              <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <Avatar
                   sx={{ width: 120, height: 120, margin: '0 auto 16px auto' }}
-                  src={image || user?.img}
+                  src={image || user?.avatar_url}
                   alt="Profile Image"
                 />
-
-                <Button style={{ margin: "15px" }} variant="outlined"  color="error" onClick={handleImageEditing}>
+                <Button style={{ margin: '15px' }} variant="outlined" color="error" onClick={handleImageEditing}>
                   {showInput ? 'Сохранить' : 'Загрузить аватар'}
                 </Button>
 
                 {showInput && (
-                  <input style={{ margin: "15px" }} type="file" onChange={handleFileChange}  accept="image/*" />
+                  <input style={{ margin: '15px' }} type="file" onChange={handleFileChange} accept="image/*" />
                 )}
 
                 {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
                 <Typography variant="h5" gutterBottom>
-                  {user?.name} {user?.surname}
+                  {user?.first_name} {user?.last_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
                 </Typography>
               </Card>
-            </Grid>
+            </Box>
 
-            <Grid item xs={12} md={8}>
-              <Card sx={{ padding: 2, backgroundColor: '#ffffff' }}>
+            <Box flex="2" display="flex" justifyContent="center">
+              <Card sx={{ padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <CardContent>
-                  {(['name', 'surname', 'email', 'phone', 'telegram'] as Array<keyof User>).map((field) => (
+                  {(['first_name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
                     <Box key={field} mb={2}>
                       <Typography variant="h6" gutterBottom>
                         {fieldNames[field]}
@@ -190,19 +151,16 @@ const handleImageEditing = async ()=>{
                       )}
                     </Box>
                   ))}
-
-                  <Button variant="contained" color="error" onClick={handleEditToggle}>
+                  <Button variant="contained" color="error" onClick={() => setIsEditing(!isEditing)}>
                     {isEditing ? 'Сохранить' : 'Редактировать'}
                   </Button>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </Box>
+            </Box>
+          </Box>
+        </div>
+        <Footer />
       </div>
-      
-    </div>
-    <Footer />
     </>
   );
 };

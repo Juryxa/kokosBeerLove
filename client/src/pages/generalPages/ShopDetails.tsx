@@ -4,7 +4,7 @@ import { ShopResponse } from "../../api/models/response/ShopResponse";
 import ShopService from "../../api/services/ShopService";
 import img1 from '../../images/T-shirt Mockup.png';
 import img2 from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
-import img3 from '../../images/T-shirt Mockup.png';
+
 import './ShopDetails.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -121,7 +121,7 @@ const ShopDetails = () => {
                         </div>
                         <div className="product-price">
                             <span className="new-price">{product.price} ₽</span>
-                            <span className="old-price">{product.oldPrice} ₽</span>
+                            <span className="old-price">{product.oldPrice}</span>
                         </div>
                         <div className="product-colors">
                             <p>Цвет:</p>
@@ -151,11 +151,7 @@ const ShopDetails = () => {
                                 ))}
                             </div>
                         </div>
-                        <p>Артикул: {product.article}</p>
-                        <p>Материал: {product.material}</p>
-                        <p>Страна производства: {product.country}</p>
-                        <p>Особенности модели: {product.description}</p>
-                        <p>Декоративные элементы: {product.features}</p>
+                        <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
                             <button className="add-to-cart">Добавить в корзину</button>
                             <button className="buy-now">Купить сейчас</button>

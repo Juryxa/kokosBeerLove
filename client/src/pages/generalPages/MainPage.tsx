@@ -43,7 +43,7 @@ const MainPage: React.FC = () => {
             </div>
             <Suspense fallback={<div className="loading-spinner"></div>}>
                 <ClubPreview/>
-                
+
                 <ShopPreview/>
             </Suspense>
             <Footer/>

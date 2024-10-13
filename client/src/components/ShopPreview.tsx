@@ -44,6 +44,9 @@ const ShopPreview = () => {
                             description={item.description}
                             price={item.price}
                             url_images={item.url_images}
+                            discount={item.discount}
+                            category={item.category}
+                            sizes={item.sizes}
                         />
                     ))}
                 </div>

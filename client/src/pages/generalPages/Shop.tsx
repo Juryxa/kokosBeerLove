@@ -35,7 +35,7 @@ const Shop = () => {
   const filteredShopData = shopData.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
+
   // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -82,6 +82,9 @@ const Shop = () => {
                     description={item.description}
                     price={item.price}
                     url_images={item.url_images}
+                    discount={item.discount}
+                    category={item.category}
+                    sizes={item.sizes}
                 />
             ))}
           </div>

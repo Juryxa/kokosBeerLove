@@ -31,7 +31,7 @@ const MatchCard: FC<{ match: MatchResponse, label: string }> = ({match, label}) 
             <h5 className='divisionPreview'>{match.division}</h5>
             <h6>{match.team_home} - {match.team_away_name}</h6>
             <p>{formatDate(match.match_date)} - {getWeekDay(new Date(match.match_date))} - {match.match_time.slice(0, 5)}</p> {/* Убираем секунды */}
-            <div style={{display: "flex", flexDirection: 'row', width:'100%', justifyContent:'center'}}>
+            <div style={{display: "flex", flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
                 <img src={logoTeam1} className='logosTeamPreview' alt="Team 1" style={{marginRight: '10px'}}/>
                 <h4>{match.score_home} - {match.score_away}</h4>
                 <img src={match.team_away_logo_url} className='logosTeamPreview' alt="Team 2"
@@ -46,10 +46,10 @@ const StatsCard: FC<{ stats: AboutResponse }> = ({stats}) => (
     <div className="stats-card">
         <h5 className='statsMatchPreview'>Статистика</h5>
         <div className='stats-card-content'>
-            <p>Игры: {stats.games_played}</p>
-            <p>Победы: {stats.wins}</p>
-            <p>Голы: {stats.goals_scored}</p>
-            <p>Турниры: {stats.tournaments}</p>
+            <div className='stats-card-info'><p>Игры:</p> <span>{stats.games_played}</span></div>
+            <div className='stats-card-info'><p>Победы:</p> <span>{stats.wins}</span></div>
+            <div className='stats-card-info'><p>Голы:</p> <span>{stats.goals_scored}</span></div>
+            <div className='stats-card-info'><p>Турниры:</p> <span>{stats.tournaments}</span></div>
         </div>
     </div>
 );
