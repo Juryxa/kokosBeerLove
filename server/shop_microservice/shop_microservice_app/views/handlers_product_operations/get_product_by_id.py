@@ -7,14 +7,14 @@ from drf_yasg import openapi
 
 
 from ...models import Product
-from ...serializers import ProductDetailSerializer
+from ...serializers import ProductSerializer
 
 @swagger_auto_schema(
     method='get',
     operation_description="Получение конкретного товара по ID",
     tags=['productHandlers'],
     responses={
-        200: openapi.Response(description="Успешный ответ с данными товара", schema=ProductDetailSerializer),
+        200: openapi.Response(description="Успешный ответ с данными товара", schema=ProductSerializer),
         404: openapi.Response(description="Товар не найден")
     }
 )
@@ -25,7 +25,7 @@ def get_product_by_id(request, product_id):
         product = Product.objects.get(id=product_id)
 
         # Сериализуем данные с полями material, color, size
-        serializer = ProductDetailSerializer(product)
+        serializer = ProductSerializer(product)
 
         # Возвращаем успешный ответ с данными товара
         return Response(serializer.data, status=status.HTTP_200_OK)
