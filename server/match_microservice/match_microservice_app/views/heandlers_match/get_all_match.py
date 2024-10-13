@@ -9,6 +9,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='get',
     operation_description="Получение списка всех матчей, отсортированных по дате и времени (от ближайшего к прошедшему).",
+    tags=["getHandlers"],
     responses={200: openapi.Response(
         description="Успешный ответ с данными всех матчей",
         examples={

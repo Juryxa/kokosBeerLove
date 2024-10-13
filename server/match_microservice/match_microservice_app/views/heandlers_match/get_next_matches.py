@@ -11,6 +11,7 @@ from datetime import datetime
 @swagger_auto_schema(
     method='get',
     operation_description="Получение следующих 4 матчей, начиная с указанного количества открытых видео.",
+    tags=["getHandlers"],
     manual_parameters=[
         openapi.Parameter('cur_cnt_video', openapi.IN_QUERY, description="Текущее количество открытых видео",
                           type=openapi.TYPE_INTEGER)

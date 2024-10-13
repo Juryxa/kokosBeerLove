@@ -13,6 +13,7 @@ from ...custom_tokens import CustomRefreshToken  # Используем каст
 @swagger_auto_schema(
     method='post',
     operation_description="Логин пользователя",
+    tags=["authHandlers"],
     request_body=LoginSerializer,
     responses={
         200: openapi.Response('Успешная аутентификация'),

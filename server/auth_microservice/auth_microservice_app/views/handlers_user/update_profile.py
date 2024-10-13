@@ -9,6 +9,7 @@ from ...serializers import UserProfileSerializer
 @swagger_auto_schema(
     method='put',
     operation_description="Обновление профиля пользователя. Можно обновить имя, фамилию, номер телефона, Telegram, и URL аватара.",
+    tags=["userHandlers"],
     request_body=UserProfileSerializer,
     responses={
         200: openapi.Response(

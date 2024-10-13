@@ -201,3 +201,5 @@ CACHES = {
         }
     }
 }
+
+AUTH_MICROSERVICE_URL = "http://localhost:8000"

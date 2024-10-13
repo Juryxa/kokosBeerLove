@@ -10,6 +10,7 @@ from ...serializers import LogoutSerializer
 @swagger_auto_schema(
     method='post',
     operation_description="Выход пользователя. Refresh токен передаётся в cookie.",
+    tags=["authHandlers"],
     request_body=LogoutSerializer,
     responses={
         204: openapi.Response('Успешный выход'),

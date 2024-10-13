@@ -13,6 +13,7 @@ from ...models import RefreshToken as RefreshTokenModel
     method='post',
     operation_description="Обновление access токена с использованием refresh токена, который передается в Cookie. "
                           "Refresh токен должен быть передан в cookie с именем 'refresh_token'.",
+    tags=["tokenHandlers"],
     responses={
         200: openapi.Response(description="Новый access токен", examples={
             "application/json": {

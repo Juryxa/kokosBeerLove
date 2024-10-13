@@ -13,6 +13,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='put',
     operation_description="Полное обновление информации о клубе. Доступно только администраторам (is_superuser == true).",
+    tags=["aboutKokocHandlers"],
     request_body=AboutFcKokocSerializer,
     responses={
         200: openapi.Response(description="Информация о клубе успешно обновлена"),
@@ -25,6 +26,7 @@ from drf_yasg import openapi
 @swagger_auto_schema(
     method='patch',
     operation_description="Частичное обновление информации о клубе. Доступно только администраторам (is_superuser == true).",
+    tags=["aboutKokocHandlers"],
     request_body=AboutFcKokocSerializer,
     responses={
         200: openapi.Response(description="Информация о клубе успешно частично обновлена"),
