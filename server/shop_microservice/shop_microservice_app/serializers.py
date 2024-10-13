@@ -28,19 +28,22 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
 
+    def validate_url_images(self, value):
+        # Разрешаем пустые строки, но удаляем их перед сохранением
+        return [url for url in value if url.strip() != '']
+
     def create(self, validated_data):
         sizes_data = validated_data.pop('sizes', [])
         product = Product.objects.create(**validated_data)
 
-        # Save the sizes with the related product
+        # Сохраняем размеры с продуктом
         for size_data in sizes_data:
-            size_data['size'] = size_data['size'].upper()  # Convert size to uppercase
+            size_data['size'] = size_data['size'].upper()  # Преобразуем размер в верхний регистр
             ProductSize.objects.create(product=product, **size_data)
 
         return product
 
     def update(self, instance, validated_data):
-        # Update the product fields
         sizes_data = validated_data.pop('sizes', None)
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
@@ -50,17 +53,15 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         instance.url_images = validated_data.get('url_images', instance.url_images)
         instance.save()
 
-        # Handle sizes update if provided
         if sizes_data is not None:
-            # Clear the existing sizes
             ProductSize.objects.filter(product=instance).delete()
-
-            # Create new sizes
             for size_data in sizes_data:
-                size_data['size'] = size_data['size'].upper()  # Convert size to uppercase
+                size_data['size'] = size_data['size'].upper()  # Преобразуем размер в верхний регистр
                 ProductSize.objects.create(product=instance, **size_data)
 
         return instance
+
+
 
 class AddToCartSerializer(serializers.ModelSerializer):
     class Meta:
