@@ -10,7 +10,6 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
 
     def get_sizes(self, obj):
-        # Получаем размеры и количество для каждого размера
         sizes = ProductSize.objects.filter(product=obj)
         return ProductSizeSerializer(sizes, many=True).data
 
@@ -29,7 +28,6 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
 
     def validate_url_images(self, value):
-        # Разрешаем пустые строки, но удаляем их перед сохранением
         return [url for url in value if url.strip() != '']
 
     def create(self, validated_data):
@@ -62,8 +60,19 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class AddToCartSerializer(serializers.ModelSerializer):
+    size_id = serializers.IntegerField(write_only=True)
+
     class Meta:
         model = CartItem
-        fields = ['product', 'quantity']
+        fields = ['product', 'quantity', 'size_id']
+
+    def validate(self, attrs):
+        # Проверяем, существует ли размер для данного товара
+        try:
+            size = ProductSize.objects.get(id=attrs['size_id'], product=attrs['product'])
+        except ProductSize.DoesNotExist:
+            raise serializers.ValidationError("Указанный размер не существует для этого товара.")
+
+        attrs['size'] = size
+        return attrs

@@ -8,6 +8,7 @@ import {ProductSize} from "../../api/models/ProductSize";
 import './ShopDetails.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BasketService from '../../api/services/BasketService';
 
 interface Product {
     name: string;
@@ -36,7 +37,7 @@ const ShopDetails = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
-    const [selectedSize, setSelectedSize] = useState<string>("");
+    const [selectedSize, setSelectedSize] = useState<number |undefined>();
 
     const productImages = [img1, img2]; // Массив изображений
 
@@ -80,8 +81,9 @@ const ShopDetails = () => {
     };
 
 
-    const handleSizeSelect = (size: string) => {
-        setSelectedSize(size);
+    const handleSizeSelect = (size_id: number|undefined) => {
+        setSelectedSize(size_id);
+        console.log(selectedSize)
     };
 
     const handleNextImage = () => {
@@ -95,6 +97,23 @@ const ShopDetails = () => {
             prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
         );
     };
+
+
+    const addToBasket = async () => {
+        try{
+        if(selectedSize !== undefined){
+            await BasketService.addToBasket(productId, selectedSize, 1)
+            
+        } else {
+            alert('Пожалуйста, выберите размер перед добавлением в корзину');
+        }
+    } catch (error) {
+        setErrorMessage('Ошибка при сохранении игрока.');
+    }
+};
+    
+
+
 
     return (
         <>
@@ -125,13 +144,14 @@ const ShopDetails = () => {
                             <div>
                             {productItem?.sizes.map((item, index) => (
                                 <button
-                                    key={index}
+                                    key={index}  
                                     className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
-                                    onClick={() => handleSizeSelect(item.size)}
+                                    onClick={() => handleSizeSelect(item.id)}
                                     disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
                                     style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
+                                    
                                      // Задаем серый цвет для недоступных кнопок
-                                >
+                                > 
                                     {item.size}
                                 </button>
                             ))}
@@ -139,7 +159,7 @@ const ShopDetails = () => {
                         </div>
                         <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
-                            <button className="add-to-cart">Добавить в корзину</button>
+                            <button className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
                             
                         </div>
                     </div>
