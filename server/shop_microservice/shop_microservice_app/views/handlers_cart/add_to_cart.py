@@ -26,13 +26,12 @@ from ...models import CartItem, Product
 @permission_classes([IsAuthenticated])
 def add_to_cart(request):
     user_id = request.user.id
-
     serializer = AddToCartSerializer(data=request.data)
 
     if serializer.is_valid():
         product = serializer.validated_data['product']
         quantity = serializer.validated_data['quantity']
-        size = serializer.validated_data['size']
+        size = serializer.validated_data['size_instance']  # Это объект ProductSize
 
         # Проверяем наличие товара с указанным размером в корзине
         cart_item, created = CartItem.objects.get_or_create(user_id=user_id, product=product, size=size)

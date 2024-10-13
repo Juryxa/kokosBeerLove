@@ -61,18 +61,18 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 
 
 class AddToCartSerializer(serializers.ModelSerializer):
-    size_id = serializers.IntegerField(write_only=True)
+    size = serializers.CharField(write_only=True)  # Передаем размер как строку
 
     class Meta:
         model = CartItem
-        fields = ['product', 'quantity', 'size_id']
+        fields = ['product', 'quantity', 'size']
 
     def validate(self, attrs):
-        # Проверяем, существует ли размер для данного товара
+        # Проверяем, существует ли указанный размер для данного товара
         try:
-            size = ProductSize.objects.get(id=attrs['size_id'], product=attrs['product'])
+            size = ProductSize.objects.get(size=attrs['size'].upper(), product=attrs['product'])
         except ProductSize.DoesNotExist:
             raise serializers.ValidationError("Указанный размер не существует для этого товара.")
 
-        attrs['size'] = size
+        attrs['size_instance'] = size  # Передаем объект ProductSize в attrs для дальнейшего использования
         return attrs
