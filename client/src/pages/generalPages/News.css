@@ -1,6 +1,6 @@
 .container-news {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,22 +18,12 @@
     background-color: #ffffff;
     flex: 1;
     flex-wrap: wrap;
-    width: 80vw;
+    max-width: 80%;
 }
 
 .news-section h1 {
     margin-left: 20px;
-}
 
-.news-title {
-    font-size: 20px;
-    color: #E62526;
-
-}
-
-.news-text {
-    font-size: 14px;
-    color: #333;
 }
 
 .news-cards-container {
@@ -41,84 +31,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px; /* Уменьшите зазор между карточками */
-}
-
-.news-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s;
-    display: flex;
-    flex-direction: row;
-    width: calc(33.33% - 20px); /* Занимает 33.33% ширины с учётом отступов */
-}
-
-.news-card:hover {
-    transform: scale(1.05);
-}
-
-.news-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.news-content-text {
-    padding: 15px;
-    flex-grow: 1;
-    flex-direction: column; /* Вертикальная ориентация для текста */
-    max-width: calc(100% - 165px); /* Ограничиваем ширину, оставляя место для изображения (150px + 15px отступ) */
-    overflow: hidden;
-}
-
-.news-content-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    border-radius: 15px;
-}
-
-@media screen and (max-width: 800px) {
-    .news-cards-container {
-        flex-direction: column;
-    }
-
-    .news-card {
-        width: 100%; /* Занимает 100% ширины на узких экранах */
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .news-image {
-        width: 80px;
-        height: 80px;
-    }
-
-    .news-title {
-        font-size: 15px;
-    }
-
-    .news-text {
-        font-size: 12px;
-    }
-}
-
-.news-card a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.news-card {
-    text-decoration: none; /* Убирает подчеркивание */
-    color: inherit; /* Наследует цвет от родительского элемента */
-}
-
-.news-card:hover {
-    color: #E62526; /* Меняет цвет при наведении, можно настроить по вашему желанию */
-    transform: scale(1.05); /* Эффект увеличения при наведении */
+    gap: 30px; /* Уменьшите зазор между карточками */
 }
 
 .loading-spinner {
