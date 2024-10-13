@@ -1,18 +1,30 @@
 
 import React, {useState} from 'react';
-import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu} from '@mui/material';
+import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu, Button} from '@mui/material';
 import {YouTube, Telegram, WhatsApp,Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
 import {Link, useNavigate} from 'react-router-dom';
 import RegistrationModal from './RegistrationModal';
 import { store } from '../index';
 import logo from '../images/logo.jpg';
+import Basket from './Basket';
+import {  Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Header = () => {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // Для меню профиля
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
+    const handleOpenCart = () => {
+        setIsCartOpen(true);
+    };
+
+    const handleCloseCart = () => {
+        setIsCartOpen(false);
+    };
+    
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -130,18 +142,24 @@ const Header = () => {
 
                         {/* Поиск и Логин / Профиль */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto', color: 'white' }}>
-
+                        
 
                             {store.isAuth ? (
                                 <>
+                                <IconButton onClick={handleOpenCart} color="primary" aria-label="Корзина">
+                <Badge badgeContent={8} color="error">
+                    <ShoppingCartIcon style={{color:"red"}}/>
+                </Badge>
+            </IconButton>
                                     <IconButton onClick={handleProfileClick}>
                                         <AccountCircle style={{color: '#E62526'}}/>
                                     </IconButton>
+                                    
                                     <Menu
                                         anchorEl={anchorEl}
                                         open={Boolean(anchorEl)}
                                         onClose={handleMenuClose}
-                                    >
+                                    >   
                                         <MenuItem onClick={handleProfileNavigate}>Профиль</MenuItem>
                                         <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                                     </Menu>
@@ -217,6 +235,7 @@ const Header = () => {
                         </div>
                     </Box>
                 </Drawer>
+                <Basket open={isCartOpen} handleClose={handleCloseCart} />
                 <RegistrationModal open={open} handleClose={handleClose}/>
             </Toolbar>
         </AppBar>
