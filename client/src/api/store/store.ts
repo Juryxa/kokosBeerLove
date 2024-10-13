@@ -76,9 +76,10 @@ export default class Store {
         try {
             const response = await AuthService.verify(email);
             this.setCode(response.data.code);
+            return Promise.resolve();
         } catch (e) {
             // @ts-ignore
-            console.log(e.response?.data?.message);
+            return Promise.reject(e);
         }
     }
 
@@ -119,9 +120,16 @@ export default class Store {
             this.setAuth(true);
             this.setSuperUser(isUserSuperuser());
             this.setUser(response.data.user);
-        } catch (e) {
-            // @ts-ignore
-            console.log('Ошибка авторизации:', e.response?.data?.message);
+            return Promise.resolve();
+        } catch (e: any) {
+            if (e.response?.status === 401) {
+                this.setAuth(false);
+                localStorage.removeItem('token');
+                console.log('Не удалось обновить токен: пользователь не авторизован.');
+            } else {
+                console.log('Ошибка авторизации:', e.response?.data?.message);
+            }
+            return Promise.reject(e);
         } finally {
             this.setLoading(false);
         }
