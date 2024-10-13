@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AuthResponse } from "../../models/response/AuthResponse";
-import { AUTH_API_URL } from "../url/urls";
+import {AuthResponse} from "../../models/response/AuthResponse";
+import {AUTH_API_URL} from "../url/urls";
 
 export const createApiInstance = (
     baseURL: string,
@@ -17,7 +17,11 @@ export const createApiInstance = (
         const token = localStorage.getItem('token');
 
         if (baseURL === AUTH_API_URL) {
-            if ((token && config.url !== '/signup/' && config.url !== '/login/' && config.url !== '/verify-email/') || (token && config.url==='/profile/update/')) {
+            if ((token && config.url !== '/signup/'
+                && config.url !== '/login/'
+                && config.url !== '/verify-email/') ||
+                (token && config.url === '/profile/update/') ||
+                (token && config.url === '/profile/get_user_data/')) {
                 // @ts-ignore
                 config.headers.Authorization = `Bearer ${token}`;
             }
