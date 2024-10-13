@@ -93,12 +93,12 @@ const Header = () => {
 
                         {/* Навигация */}
                         <Box className="links" sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', flexWrap: 'wrap' }}>
-                            <MenuItem component={Link} to="/news">Новости</MenuItem>
-                            <MenuItem component={Link} to="/matches">Матчи</MenuItem>
-                            <MenuItem component={Link} to="/team">Команда</MenuItem>
-                            <MenuItem component={Link} to="/about">О клубе</MenuItem>
-                            <MenuItem component={Link} to="/shop">Магазин</MenuItem>
-                            <MenuItem  component="div"
+                            <MenuItem style={{fontWeight: 'bold'}} component={Link} to="/news">Новости</MenuItem>
+                            <MenuItem style={{fontWeight: 'bold'}} component={Link} to="/matches">Матчи</MenuItem>
+                            <MenuItem style={{fontWeight: 'bold'}} component={Link} to="/team">Команда</MenuItem>
+                            <MenuItem style={{fontWeight: 'bold'}} component={Link} to="/about">О клубе</MenuItem>
+                            <MenuItem style={{fontWeight: 'bold'}} component={Link} to="/shop">Магазин</MenuItem>
+                            <MenuItem style={{fontWeight: 'bold'}} component="div"
                                        onClick={() => {
                                            const footerElement = document.getElementById('footer');
                                            if (footerElement) {
