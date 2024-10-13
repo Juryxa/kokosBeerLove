@@ -15,6 +15,7 @@ from ...serializers import AboutFcKokocSerializer
 @swagger_auto_schema(
     method="put",
     operation_description="Полное обновление информации о клубе. Доступно только администраторам (is_superuser == true).",
+    tags=["aboutKokocHandlers"],
     request_body=AboutFcKokocSerializer,
     responses={
         200: openapi.Response(
@@ -32,6 +33,7 @@ from ...serializers import AboutFcKokocSerializer
 @swagger_auto_schema(
     method="patch",
     operation_description="Частичное обновление информации о клубе. Доступно только администраторам (is_superuser == true).",
+    tags=["aboutKokocHandlers"],
     request_body=AboutFcKokocSerializer,
     responses={
         200: openapi.Response(

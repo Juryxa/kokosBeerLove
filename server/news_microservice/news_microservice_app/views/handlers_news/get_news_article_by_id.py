@@ -11,6 +11,7 @@ from ...serializers import NewsArticleSerializer
 @swagger_auto_schema(
     method="get",
     operation_description="Получить новостную статью по идентификатору",
+    tags=['NewsArticle'],
     manual_parameters=[
         openapi.Parameter(
             "article_id",

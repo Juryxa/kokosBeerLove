@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
+import {TextField, List, ListItem, Box} from '@mui/material';
 
-import { TextField, List, ListItem, Box } from '@mui/material';
-
-import { ListItemButton, ListItemText } from '@mui/material';
+import {ListItemButton, ListItemText} from '@mui/material';
 import './News.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { NewsResponse } from "../../api/models/response/NewsResponse";
+import {NewsResponse} from "../../api/models/response/NewsResponse";
 import NewsService from "../../api/services/NewsService";
 import NewsCard from "../../components/NewsCard";
 
@@ -56,50 +55,49 @@ const News = () => {
 
     return (
         <div className="container-news">
-            <Header />
+            <Header/>
             <div className="news-section">
                 <h1>НОВОСТИ</h1>
 
                 {/* Поле поиска */}
-                <Box mb={3} style={ {color: 'red'} }>
-    <TextField
-        label="Поиск новостей"
-        variant="outlined"
-        value={searchQuery}
-        onChange={handleSearchChange}
-        sx={{
-            maxWidth: '300px', // Уменьшаем ширину строки поиска
-            '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                    borderColor: 'red', // Красная рамка
-                },
-                '&:hover fieldset': {
-                    borderColor: 'darkred', // Более темная красная рамка при наведении
-                },
-                '&.Mui-focused fieldset': {
-                    borderColor: 'red', // Красная рамка при фокусе
-                },
-            },
-        }}
-        InputLabelProps={{
-            sx: { color: 'red' }, // Красный цвет для надписи
-        }}
-    />
-    {suggestions.length > 0 && (
-        <List>
-            {suggestions.map((news) => (
-                <ListItemButton
-                    key={news.id}
-                    onClick={() => handleSuggestionClick(news.id)}
-                    sx={{ width: '200px' }}
-                >
-                    <ListItemText primary={news.title} />
-                </ListItemButton>
-            ))}
-        </List>
-    )}
-</Box>
-
+                <Box mb={3} style={{color: 'red'}}>
+                    <TextField
+                        label="Поиск новостей"
+                        variant="outlined"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        sx={{
+                            maxWidth: '300px', // Уменьшаем ширину строки поиска
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: 'red', // Красная рамка
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: 'darkred', // Более темная красная рамка при наведении
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: 'red', // Красная рамка при фокусе
+                                },
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: {color: 'red'}, // Красный цвет для надписи
+                        }}
+                    />
+                    {suggestions.length > 0 && (
+                        <List>
+                            {suggestions.map((news) => (
+                                <ListItemButton
+                                    key={news.id}
+                                    onClick={() => handleSuggestionClick(news.id)}
+                                    sx={{width: '200px'}}
+                                >
+                                    <ListItemText primary={news.title}/>
+                                </ListItemButton>
+                            ))}
+                        </List>
+                    )}
+                </Box>
 
 
                 <div className="news-cards-container">
@@ -117,7 +115,7 @@ const News = () => {
                     ))}
                 </div>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 };

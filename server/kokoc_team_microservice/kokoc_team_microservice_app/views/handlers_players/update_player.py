@@ -16,6 +16,7 @@ from ...serializers import PlayerSerializer
 @swagger_auto_schema(
     method="put",
     operation_description="Полное обновление информации об игроке. Доступно только администраторам (is_superuser == true).",
+    tags=["playerHandlers"],
     request_body=PlayerSerializer,
     responses={
         200: openapi.Response(
@@ -33,6 +34,7 @@ from ...serializers import PlayerSerializer
 @swagger_auto_schema(
     method="patch",
     operation_description="Частичное обновление информации об игроке. Доступно только администраторам (is_superuser == true).",
+    tags=["playerHandlers"],
     request_body=PlayerSerializer,
     responses={
         200: openapi.Response(

@@ -13,6 +13,7 @@ from ...models import Product
 @swagger_auto_schema(
     method="delete",
     operation_description="Удаление товара по ID. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['productHandlers'],
     manual_parameters=[
         openapi.Parameter(
             "product_id",

@@ -3,6 +3,7 @@ import {NewsResponse} from "../api/models/response/NewsResponse";
 import {Link} from "react-router-dom";
 import {truncateText} from "../pages/generalPages/functions/truncateText";
 import {parseAndFormatDate} from "../pages/generalPages/functions/dateParser";
+import './NewsCard.css';
 
 const NewsCard: React.FC<NewsResponse> = ({ id, title, text, image_url, created_at }) => {
     return (

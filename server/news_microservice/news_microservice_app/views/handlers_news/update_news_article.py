@@ -14,6 +14,7 @@ from ...serializers import NewsArticleSerializer
 @swagger_auto_schema(
     method="put",
     operation_description="Полное обновление существующей новости. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['NewsArticle'],
     request_body=NewsArticleSerializer,
     responses={
         200: openapi.Response(
@@ -31,6 +32,7 @@ from ...serializers import NewsArticleSerializer
 @swagger_auto_schema(
     method="patch",
     operation_description="Частичное обновление существующей новости. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
+    tags=['NewsArticle'],
     request_body=NewsArticleSerializer,
     responses={
         200: openapi.Response(

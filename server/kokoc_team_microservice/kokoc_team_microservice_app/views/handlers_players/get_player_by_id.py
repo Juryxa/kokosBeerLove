@@ -11,6 +11,7 @@ from ...serializers import PlayerSerializer
 @swagger_auto_schema(
     method="get",
     operation_description="Получение информации об игроке по ID.",
+    tags=["playerHandlers"],
     manual_parameters=[
         openapi.Parameter(
             "player_id",

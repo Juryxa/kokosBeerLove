@@ -13,6 +13,7 @@ from ...models import Player
 @swagger_auto_schema(
     method="delete",
     operation_description="Удаление игрока по его ID. Доступно только администраторам (is_superuser == true).",
+    tags=["playerHandlers"],
     manual_parameters=[
         openapi.Parameter(
             "id",

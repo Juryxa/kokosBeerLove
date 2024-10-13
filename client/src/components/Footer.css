@@ -9,6 +9,7 @@
     width: 100%;
     position: static;
     margin-top: auto;
+    z-index: 1;
   }
 
   .footer-content {
@@ -17,9 +18,8 @@
     align-items: center;
     max-width:  1291px;
     width: 100%;
-    padding: 0 40px 0 40px;
   }
-  
+
 
   .social-icons i {
     /* margin: 0 10px; */
@@ -32,9 +32,9 @@
   }
 
 
- 
+
 .contacts_koks-img {
-  
+
   transition: transform 0.3s ease; /* Анимация при масштабировании */
 }
 

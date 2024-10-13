@@ -106,7 +106,7 @@ const ShopDetails = () => {
             
             <div className='content-shop-details'>
                 <div className="product-image">
-                    <img src={productImages[currentImageIndex]} alt={product.name} />
+                    <img src={productItem?.url_images[currentImageIndex]} alt={product.name} />
                     <div className="image-navigation-buttons">
                         <button onClick={handlePrevImage} className="prev-image-button">Назад</button>
                         <button onClick={handleNextImage} className="next-image-button">Вперед</button>
@@ -114,7 +114,7 @@ const ShopDetails = () => {
                 </div>
                 <div className="product-card">
                     <div className="product-info">
-                        <h1 className="product-name">{product.name}</h1>
+                        <h1 className="product-name">{productItem?.name}</h1>
                         <div className="product-rating">
                             <span>⭐️ {product.rating}</span>
                             <span>({product.reviewsCount} отзывов)</span>
@@ -156,7 +156,6 @@ const ShopDetails = () => {
                         <p>Страна производства: {product.country}</p>
                         <p>Особенности модели: {product.description}</p>
                         <p>Декоративные элементы: {product.features}</p>
-                        <p>Наличие: {product.availability}</p>
                         <div className="product-buttons">
                             <button className="add-to-cart">Добавить в корзину</button>
                             <button className="buy-now">Купить сейчас</button>

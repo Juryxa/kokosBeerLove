@@ -10,6 +10,14 @@ export default class MatchService{
         // @ts-ignore
         return matchApi.get<MatchResponse[]>('/get_last_two/');
     }
+    static async getLastOne(){
+        // @ts-ignore
+        return matchApi.get<MatchService>('/get_last/')
+    }
+    static async getNext(cur_cnt_video: number){
+        // @ts-ignore
+        return matchApi.get<MatchService[]>(`get_next/?cur_cnt_video=${cur_cnt_video}`)
+    }
     static async getUpComing(){
         // @ts-ignore
         return matchApi.get<MatchResponse[]>('/get_upcoming/');

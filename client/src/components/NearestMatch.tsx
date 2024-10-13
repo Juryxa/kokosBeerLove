@@ -36,8 +36,8 @@ const NearestMatch: React.FC = () => {
     const fetchNearestMatch = async () => {
         setIsLoading(true);
         try {
-            const response = await MatchService.getLastTwo();
-            setMatchData(response.data[0]);
+            const response = await MatchService.getLastOne();
+            setMatchData(response.data);
         } catch (error) {
             setErrorMessage('Ошибка загрузки данных о ближайшем матче.');
         } finally {
@@ -58,15 +58,8 @@ const NearestMatch: React.FC = () => {
     }
 
     return (
-        <div style={{
-            borderTopLeftRadius: '10px',
-            borderTopRightRadius: '10px',
+        <div className='nearestMatchWrapper' style={{
             backgroundImage: `url(${img1})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '60vh',
-            width: '80%',
         }}>
             <div className='matchBlock' style={{
                 display: 'flex', height: "80%",
@@ -89,10 +82,10 @@ const NearestMatch: React.FC = () => {
                     }}/> {/* Логотип домашней команды */}
                     <h1 className='count'>{matchData.score_home} - {matchData.score_away}</h1> {/* Счет */}
                     <img src={matchData.team_away_logo_url} alt="Team 2" style={{
-                        marginRight: '10px'
+                        marginLeft: '10px'
                     }}/>
                 </div>
-                <Link to="/matches">
+                <Link to={`/match/${matchData.id}`}>
                     <button className="styled-button">
                         О матче
                     </button>

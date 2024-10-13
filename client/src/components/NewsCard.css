@@ -1,0 +1,107 @@
+.news-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    display: flex;
+    flex-basis: 45%;
+    max-width: 100%;
+    flex-direction: row;
+
+}
+.news-title {
+    font-size: 18px;
+    color: #E62526; /* Цвет заголовка */
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    overflow: hidden; /* Скрывает переполнение */
+    white-space: nowrap; /* Запретить перенос строк для заголовка */
+    text-overflow: ellipsis; /* Добавляет многоточие для длинного текста */
+
+}
+.news-text {
+    font-size: 14px;
+    color: #000000;
+    font-weight: bold;
+    word-wrap: break-word;
+    overflow: hidden; /* Скрывает переполнение */
+    text-overflow: ellipsis; /* Добавляет многоточие для длинного текста */
+}
+.news-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+
+}
+
+.news-card:hover {
+    transform: scale(1.05);
+}
+.news-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.news-content-text {
+    padding: 15px;
+    flex-grow: 1;
+    flex-direction: column; /* Вертикальная ориентация для текста */
+    overflow: hidden;
+}
+.news-content-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 15px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    flex-shrink: 0; /* Изображение остается фиксированного размера */
+}
+@media screen and (max-width: 800px) {
+    .news-cards-container {
+        flex-direction: column;
+    }
+
+    .news-card {
+        width: 100%; /* Занимает 100% ширины на узких экранах */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .news-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .news-title {
+        font-size: 15px;
+    }
+
+    .news-text {
+        font-size: 12px;
+    }
+}
+
+.news-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.news-card {
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Наследует цвет от родительского элемента */
+}
+
+.news-card:hover {
+    color: #E62526; /* Меняет цвет при наведении, можно настроить по вашему желанию */
+    transform: scale(1.05); /* Эффект увеличения при наведении */
+}

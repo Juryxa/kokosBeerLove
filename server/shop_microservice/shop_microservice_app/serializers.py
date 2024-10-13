@@ -1,48 +1,48 @@
 from rest_framework import serializers
-
-from .models import Product
-
+from .models import Product, ProductSize, CartItem
 
 class ProductSerializer(serializers.ModelSerializer):
     # Сериализатор для отображения продукта
     class Meta:
         model = Product
-        fields = ["id", "name", "description", "price", "url_images"]
-
+        fields = ['id', 'name', 'description', 'price', 'url_images']
 
 class ProductDetailSerializer(serializers.ModelSerializer):
+    sizes = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = [
-            "id",
-            "name",
-            "description",
-            "price",
-            "url_images",
-            "material",
-            "color",
-            "size",
-        ]
+        fields = ['id', 'name', 'description', 'price', 'url_images', 'sizes']
 
+    def get_sizes(self, obj):
+        # Возвращаем размеры и количество товара для каждого размера
+        sizes = ProductSize.objects.filter(product=obj)
+        return ProductSizeSerializer(sizes, many=True).data
+
+class ProductSizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSize
+        fields = ['size', 'quantity']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
-    url_images = serializers.ListField(
-        child=serializers.CharField(), write_only=True, required=False
-    )
+    sizes = ProductSizeSerializer(many=True)
 
     class Meta:
         model = Product
-        fields = ["name", "description", "price", "url_images"]
+        fields = ['name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
 
     def create(self, validated_data):
-        # Извлекаем данные из validated_data
-        url_images = validated_data.pop("url_images", [])
-
-        # Создаем продукт
+        sizes_data = validated_data.pop('sizes', [])
         product = Product.objects.create(**validated_data)
 
-        # Если есть изображения, добавляем их в продукт
-        product.url_images = url_images
-        product.save()
+        # Преобразуем размер в верхний регистр перед сохранением
+        for size_data in sizes_data:
+            size_data['size'] = size_data['size'].upper()  # Преобразование регистра
+            ProductSize.objects.create(product=product, **size_data)
 
         return product
+
+class AddToCartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = ['product', 'quantity']

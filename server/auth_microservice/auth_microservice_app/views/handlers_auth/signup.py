@@ -16,6 +16,7 @@ from ...serializers import SignupSerializer
 @swagger_auto_schema(
     method="post",
     operation_description="Регистрация нового пользователя",
+    tags=["authHandlers"],
     request_body=SignupSerializer,
     responses={
         201: openapi.Response(

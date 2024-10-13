@@ -12,6 +12,7 @@ from ...serializers import MatchSerializer
 @swagger_auto_schema(
     method="get",
     operation_description="Получение информации о конкретном матче по ID",
+    tags=["getHandlers"],
     manual_parameters=[
         openapi.Parameter(
             "id",

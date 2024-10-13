@@ -13,6 +13,7 @@ from ...serializers import MatchCreateSerializer
 @swagger_auto_schema(
     method="post",
     operation_description="Создание нового матча с указанием названия и логотипа гостевой команды в формате JSON (name и logo_url). ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true (то пользователь-администратор).",
+    tags=["Create Update Delete "],
     request_body=MatchCreateSerializer,
     responses={
         201: openapi.Response(
