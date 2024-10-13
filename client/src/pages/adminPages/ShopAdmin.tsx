@@ -9,7 +9,7 @@ const ShopAdmin = () => {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState<string>('');
-    const [discount, setDiscount] = useState<string>(''); // Поле для скидки как строка
+    const [discount, setDiscount] = useState<string>('0'); // Поле для скидки как строка
     const [category, setCategory] = useState<'Одежда' | 'Аксессуары' | ''>(''); // Поле для выбора категории
     const [sizes, setSizes] = useState<{ size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL', quantity: number }[]>([]); // Размеры и количество
     const [images, setImages] = useState<File[]>([]);
