@@ -1,13 +1,13 @@
  
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from ...models import Product
 from ...serializers import ProductDetailSerializer
+
 
 @swagger_auto_schema(
     method='get',

@@ -1,10 +1,10 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from django.utils import timezone
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 
 from ...models import RefreshToken as RefreshTokenModel
 

@@ -1,11 +1,13 @@
+from datetime import datetime
+
 from django.views.decorators.cache import cache_page
-from rest_framework.response import Response
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from ...models import Match
 from ...serializers import MatchSerializer
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from datetime import datetime
 
 
 @swagger_auto_schema(
