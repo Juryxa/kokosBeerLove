@@ -110,14 +110,14 @@ export default class Store {
         try {
             const response = await axios.post<AuthResponse>(
                 `${AUTH_API_URL}/refresh/`,
-                {},  // Передаем пустой объект, так как refresh_token находится в куки
+                {},
                 {
                     withCredentials: true
                 }
             );
             localStorage.setItem('token', response.data.access);
             this.setAuth(true);
-            this.setSuperUser(isUserSuperuser()); // Обновляем статус суперпользователя после получения токена
+            this.setSuperUser(isUserSuperuser());
             this.setUser(response.data.user);
         } catch (e) {
             // @ts-ignore

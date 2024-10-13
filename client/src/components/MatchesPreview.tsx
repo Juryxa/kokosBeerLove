@@ -68,7 +68,7 @@ const MatchesPreview: FC = () => {
         setIsLoading(true);
         try {
             const upComingResponse = await MatchService.getUpComing();
-            const lastTwoResponse = await MatchService.getLastTwo();
+            const lastTwoResponse = await MatchService.getLastThree();
 
             let combinedMatches: MatchResponse[] = [];
 
