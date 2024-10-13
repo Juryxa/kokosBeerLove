@@ -48,9 +48,11 @@
 .logoAndName span{
     color: white;
     margin-top: 15px;
+    font-size: 20px;
     width: 100%;
     text-align: center;
     overflow-wrap: break-word;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 1200px) and (min-width: 601px){
@@ -79,7 +81,7 @@
     }
     .logosTeams span{
         white-space: normal;
-        font-size: 11px;
+        font-size: 13px;
     }
 }
 
