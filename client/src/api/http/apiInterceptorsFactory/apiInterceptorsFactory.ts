@@ -17,7 +17,7 @@ export const createApiInstance = (
         const token = localStorage.getItem('token');
 
         if (baseURL === AUTH_API_URL) {
-            if (token && config.url !== '/signup/' && config.url !== '/login/' && config.url !== '/verify-email/') {
+            if ((token && config.url !== '/signup/' && config.url !== '/login/' && config.url !== '/verify-email/') || (token && config.url==='/profile/update/')) {
                 // @ts-ignore
                 config.headers.Authorization = `Bearer ${token}`;
             }
