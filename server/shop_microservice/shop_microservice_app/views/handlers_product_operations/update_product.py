@@ -46,34 +46,25 @@ from ...serializers import ProductCreateSerializer, ProductSerializer
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
 def update_product(request, product_id):
-    # Проверка наличия is_superuser в токене
+    # Ensure the user is an admin
     if not request.user.is_superuser:
         return Response({'error': 'У вас нет прав доступа для обновления товаров'}, status=status.HTTP_403_FORBIDDEN)
 
     try:
-        # Ищем товар по id
+        # Find the product by ID
         product = Product.objects.get(id=product_id)
     except Product.DoesNotExist:
         return Response({'error': 'Товар не найден'}, status=status.HTTP_404_NOT_FOUND)
 
-    # Определяем метод (PUT для полного обновления, PATCH для частичного)
+    # Handle full or partial update
     if request.method == 'PUT':
         serializer = ProductCreateSerializer(product, data=request.data)
     else:  # PATCH
         serializer = ProductCreateSerializer(product, data=request.data, partial=True)
 
     if serializer.is_valid():
-        # Обновляем поля товара
-        product = serializer.save()
-
-        # Обновляем URL изображений, если они были переданы
-        image_urls = request.data.get('image_urls', [])
-        if image_urls:
-            product.url_images = image_urls
-            product.save()
-
-        # Возвращаем обновленные данные товара с использованием сериализатора
-        response_serializer = ProductSerializer(product)
+        product = serializer.save()  # Save the updated product
+        response_serializer = ProductSerializer(product)  # Serialize the updated product
         return Response(status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

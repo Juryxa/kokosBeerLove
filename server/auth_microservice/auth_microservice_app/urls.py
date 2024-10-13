@@ -6,6 +6,8 @@ from .views.handlers_auth.signup import signup
 from .views.handlers_token.refresh_token import refresh_token
 
 from .views.handlers_user.update_profile import update_profile
+from .views.handlers_user.get_user_data import get_user_data
+
 
 urlpatterns = [
     path('signup/', signup, name='signup'),
@@ -15,4 +17,5 @@ urlpatterns = [
     path('refresh/', refresh_token, name='refresh_token'),
 
     path('profile/update/', update_profile, name='update_profile'),
+    path('profile/get_user_data/', get_user_data, name='get_user_data'),
 ]
