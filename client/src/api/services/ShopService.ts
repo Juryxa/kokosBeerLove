@@ -1,5 +1,6 @@
 import {shopApi} from "../http/shop";
 import {ShopResponse} from "../models/response/ShopResponse";
+import {ProductSize} from "../models/ProductSize";
 
 export default class ShopService {
 
@@ -15,9 +16,9 @@ export default class ShopService {
     }
 
 
-    static async createProduct(name: string, description: string, price: number, url_images: string[]) {
+    static async createProduct(name: string, description: string, price: number, discount:number, category: string, url_images: string[], sizes: ProductSize[]) {
         // @ts-ignore
-        return shopApi.post<ShopResponse>('/create_product/', {name, description, price, url_images});
+        return shopApi.post<ShopResponse>('/create_product/', {name, description, price, discount, category, url_images, sizes});
     }
 
 
@@ -26,14 +27,14 @@ export default class ShopService {
     }
 
 
-    static async updateFullProduct(productId: number, name: string, description: string, price: number, url_images: string[]) {
+    static async updateFullProduct(productId: number, name: string, description: string, price: number, discount:number, category: string, url_images: string[], sizes: ProductSize[]) {
         // @ts-ignore
-        return shopApi.put<ShopResponse>(`/update_product/${productId}/`, {name, description, price, url_images});
+        return shopApi.put<ShopResponse>(`/update_product/${productId}/`, {name, description, price, discount, category, url_images, sizes});
     }
 
 
-    static async updatePartProduct(productId: number, name: string, description: string, price: number, url_images: string[]) {
+    static async updatePartProduct(productId: number, name: string, description: string, price: number, discount:number, category: string, url_images: string[], sizes: ProductSize[]) {
         // @ts-ignore
-        return shopApi.patch<ShopResponse>(`/update_product/${productId}/`, {name, description, price, url_images});
+        return shopApi.patch<ShopResponse>(`/update_product/${productId}/`, {name, description, price, discount, category, url_images, sizes});
     }
 }

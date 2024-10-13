@@ -24,6 +24,11 @@ export default class AuthService {
         return authApi.post<CodeResponse>('/verify-email/', {email})
     }
 
+    static async getUserData(){
+        // @ts-ignore
+        return authApi.get<ProfileEdit>('/profile/get_user_data/')
+    }
+
     static async profileEdit(first_name: string, last_name: string, phone_number: string, telegram: string, avatar_url: string){
         // @ts-ignore
         return authApi.put<ProfileEdit>('/profile/update/', {first_name, last_name, phone_number, telegram, avatar_url})
