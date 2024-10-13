@@ -35,7 +35,7 @@ from ...serializers import MatchSerializer
     )}
 )
 @api_view(['GET'])
-def get_last_two_matches(request):
+def get_last_three_matches(request):
     now = datetime.now()
 
     # Фильтруем завершённые матчи (включаем матчи сегодняшнего дня, время которых уже прошло)
@@ -43,7 +43,7 @@ def get_last_two_matches(request):
         match_date__lt=now.date()
     ).union(
         Match.objects.filter(match_date=now.date(), match_time__lte=now.time())
-    ).order_by('-match_date', '-match_time')[:2]
+    ).order_by('-match_date', '-match_time')[:3]
 
     # Сериализуем данные
     serializer = MatchSerializer(last_matches, many=True)

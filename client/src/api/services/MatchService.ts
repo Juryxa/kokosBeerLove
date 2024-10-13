@@ -6,9 +6,9 @@ export default class MatchService{
         // @ts-ignore
         return matchApi.get<MatchResponse[]>('/get_all/');
     }
-    static async getLastTwo(){
+    static async getLastThree(){
         // @ts-ignore
-        return matchApi.get<MatchResponse[]>('/get_last_two/');
+        return matchApi.get<MatchResponse[]>('/get_last_three/');
     }
     static async getLastOne(){
         // @ts-ignore

@@ -9,7 +9,7 @@ from ...serializers import UserProfileSerializer
 
 
 @swagger_auto_schema(
-    method='put',
+    method='patch',
     operation_description="Обновление профиля пользователя. Можно обновить имя, фамилию, номер телефона, Telegram, и URL аватара.",
     tags=["userHandlers"],
     request_body=UserProfileSerializer,
@@ -29,7 +29,7 @@ from ...serializers import UserProfileSerializer
         400: openapi.Response(description="Некорректные данные"),
     }
 )
-@api_view(['PUT'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def update_profile(request):
     user = request.user

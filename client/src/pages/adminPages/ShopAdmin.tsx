@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import React, {useState, useEffect} from 'react';
+import {Edit as EditIcon, Delete as DeleteIcon} from '@mui/icons-material';
 import ShopService from '../../api/services/ShopService';
-import { uploadImage } from './functions/uploadImage';
-import { ShopResponse } from '../../api/models/response/ShopResponse';
+import {uploadImage} from './functions/uploadImage';
+import {ShopResponse} from '../../api/models/response/ShopResponse';
 import './ShopAdmin.css';
 
 const ShopAdmin = () => {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState<string>('');  // Поле для цены как строка
-    const [images, setImages] = useState<File[]>([]);  // Массив новых изображений для загрузки
-    const [existingImages, setExistingImages] = useState<string[]>([]);  // Массив URL существующих изображений
+    const [price, setPrice] = useState<string>('');
+    const [discount, setDiscount] = useState<string>(''); // Поле для скидки как строка
+    const [category, setCategory] = useState<'Одежда' | 'Аксессуары' | ''>(''); // Поле для выбора категории
+    const [sizes, setSizes] = useState<{ size: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL', quantity: number }[]>([]); // Размеры и количество
+    const [images, setImages] = useState<File[]>([]);
+    const [existingImages, setExistingImages] = useState<string[]>([]);
     const [productList, setProductList] = useState<ShopResponse[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editProductId, setEditProductId] = useState<number | null>(null);
@@ -33,47 +36,69 @@ const ShopAdmin = () => {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            const selectedFiles = Array.from(e.target.files);  // Преобразуем FileList в массив
-            setImages((prevImages) => [...prevImages, ...selectedFiles]);  // Добавляем файлы в массив
+            const selectedFiles = Array.from(e.target.files);
+            setImages((prevImages) => [...prevImages, ...selectedFiles]);
         }
     };
 
     const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value, selectionStart } = e.target;
-
-        // Проверка на то, что введенное значение является числом с не более чем двумя знаками после запятой
+        const {value, selectionStart} = e.target;
         const regex = /^\d+(\.\d{0,2})?$/;
 
         if (value === '' || regex.test(value)) {
             setPrice(value);
-
-            // Перемещаем курсор на правильную позицию
             setTimeout(() => {
                 e.target.setSelectionRange(selectionStart, selectionStart);
             }, 0);
         }
     };
 
+    const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value, selectionStart} = e.target;
+        const regex = /^\d{1,2}$/;
+
+        if (value === '' || regex.test(value)) {
+            setDiscount(value);
+            setTimeout(() => {
+                e.target.setSelectionRange(selectionStart, selectionStart);
+            }, 0);
+        }
+    };
+
+    const handleSizeChange = (index: number, field: 'size' | 'quantity', value: string | number) => {
+        const updatedSizes = [...sizes];
+        updatedSizes[index] = {...updatedSizes[index], [field]: value};
+        setSizes(updatedSizes);
+    };
+
+    const addSize = () => {
+        setSizes((prevSizes) => [...prevSizes, {size: 'S', quantity: 0}]);
+    };
+
+    const removeSize = (index: number) => {
+        setSizes((prevSizes) => prevSizes.filter((_, i) => i !== index));
+    };
+
     const handleAddOrUpdateProduct = async () => {
-        if (!productName || !description || price === '') {
+        if (!productName || !description || price === '' || category === '' || sizes.length === 0) {
             setErrorMessage('Заполните все поля!');
             return;
         }
 
         try {
-            let imageUrls: string[] = [...existingImages];  // Начнем с существующих изображений
+            let imageUrls: string[] = [...existingImages];
 
-            // Загружаем новые изображения
             if (images.length > 0) {
                 const uploadedImageUrls = await Promise.all(
                     images.map((image) => uploadImage(image, setSuccessMessage, setErrorMessage, 'shop_images'))
                 );
-                imageUrls = [...imageUrls, ...uploadedImageUrls];  // Добавляем новые URL к существующим
+                imageUrls = [...imageUrls, ...uploadedImageUrls];
             }
 
-            const parsedPrice = parseFloat(price);  // Преобразуем строку в число перед отправкой на сервер
-            if (isNaN(parsedPrice)) {
-                setErrorMessage('Цена должна быть числом.');
+            const parsedPrice = parseFloat(price);
+            const parsedDiscount = discount ? parseInt(discount) : 0;
+            if (isNaN(parsedPrice) || isNaN(parsedDiscount)) {
+                setErrorMessage('Цена и скидка должны быть числами.');
                 return;
             }
 
@@ -83,14 +108,19 @@ const ShopAdmin = () => {
                     const isDescriptionChanged = originalProduct.description !== description;
                     const isPriceChanged = originalProduct.price !== parsedPrice;
                     const isImageChanged = images.length > 0 || existingImages.length !== originalProduct.url_images.length;
+                    const isCategoryChanged = originalProduct.category !== category;
+                    const isSizesChanged = JSON.stringify(originalProduct.sizes) !== JSON.stringify(sizes);
 
-                    if (isNameChanged || isDescriptionChanged || isPriceChanged || isImageChanged) {
+                    if (isNameChanged || isDescriptionChanged || isPriceChanged || isImageChanged || isCategoryChanged || isSizesChanged) {
                         await ShopService.updatePartProduct(
                             editProductId,
                             productName,
                             description,
                             parsedPrice,
-                            imageUrls.length > 0 ? imageUrls : originalProduct.url_images
+                            parsedDiscount,
+                            category,
+                            imageUrls.length > 0 ? imageUrls : originalProduct.url_images,
+                            sizes
                         );
                         setSuccessMessage('Товар обновлен.');
                     } else {
@@ -98,16 +128,18 @@ const ShopAdmin = () => {
                     }
                 }
             } else {
-                await ShopService.createProduct(productName, description, parsedPrice, imageUrls);
+                await ShopService.createProduct(productName, description, parsedPrice, parsedDiscount, category, imageUrls, sizes);
                 setSuccessMessage('Товар добавлен.');
             }
 
-            // Очистка формы
             setProductName('');
             setDescription('');
             setPrice('');
-            setImages([]);  // Очищаем массив изображений
-            setExistingImages([]);  // Очищаем существующие изображения
+            setDiscount('');
+            setCategory('');
+            setSizes([]);
+            setImages([]);
+            setExistingImages([]);
             setIsEditing(false);
             setEditProductId(null);
             setOriginalProduct(null);
@@ -115,37 +147,6 @@ const ShopAdmin = () => {
             await fetchProducts();
         } catch (error) {
             setErrorMessage('Ошибка при сохранении товара.');
-        }
-    };
-
-    const handleEditProduct = async (productId: number) => {
-        try {
-            const response = await ShopService.getProductId(productId);
-            const product = response.data;
-
-            setProductName(product.name);
-            setDescription(product.description);
-            setPrice(product.price);
-            setExistingImages(product.url_images || []);  // Загружаем существующие изображения
-            setIsEditing(true);
-            setEditProductId(product.id);
-            setOriginalProduct(product);
-        } catch (error) {
-            setErrorMessage('Ошибка при загрузке товара для редактирования.');
-        }
-    };
-
-    const handleDeleteImage = (index: number) => {
-        setExistingImages((prevImages) => prevImages.filter((_, i) => i !== index));  // Удаляем изображение по индексу
-    };
-
-    const handleDeleteProduct = async (id: number) => {
-        try {
-            await ShopService.deleteProduct(id);
-            setSuccessMessage('Товар удалён.');
-            await fetchProducts();
-        } catch (error) {
-            setErrorMessage('Ошибка при удалении товара.');
         }
     };
 
@@ -176,37 +177,62 @@ const ShopAdmin = () => {
                 value={price}
                 onChange={handlePriceChange}
             />
+            <input
+                type="text"
+                className="shop-admin-input"
+                placeholder="Скидка (%)"
+                value={discount}
+                onChange={handleDiscountChange}
+            />
 
-            {/* Блок для работы с изображениями */}
-            <label className="shop-admin-file-label">
-                Загрузить изображения
-                <input
-                    type="file"
-                    accept="image/png, image/jpeg"
-                    className="shop-admin-file-input"
-                    multiple
-                    onChange={handleFileChange}
-                />
-            </label>
-            {images.length > 0 && (
-                <div className="shop-admin-image-preview">
-                    {images.map((image, index) => (
-                        <p key={index} className="shop-admin-image-name">Новое изображение: {image.name}</p>
-                    ))}
+            <select
+                className="shop-admin-input"
+                value={category}
+                onChange={(e) => setCategory(e.target.value as 'Одежда' | 'Аксессуары')}
+            >
+                <option value="">Выберите категорию</option>
+                <option value="Одежда">Одежда</option>
+                <option value="Аксессуары">Аксессуары</option>
+            </select>
+
+            <h4>Размеры и количество:</h4>
+            {sizes.map((size, index) => (
+                <div key={index} className="shop-admin-size-row">
+                    <select
+                        className="shop-admin-input"
+                        value={size.size}
+                        onChange={(e) => handleSizeChange(index, 'size', e.target.value)}
+                    >
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                    <input
+                        type="number"
+                        className="shop-admin-input"
+                        placeholder="Количество"
+                        value={size.quantity}
+                        onChange={(e) => handleSizeChange(index, 'quantity', parseInt(e.target.value))}
+                    />
+                    <button className="shop-admin-delete-size-button" onClick={() => removeSize(index)}>
+                        Удалить
+                    </button>
                 </div>
-            )}
+            ))}
+            <button className="shop-admin-button" onClick={addSize}>Добавить размер</button>
 
-            {/* Существующие изображения с возможностью удаления */}
+            <label className="shop-admin-file-label">
+                Загрузить изображения:
+                <input type="file" multiple accept="image/*" onChange={handleFileChange}/>
+            </label>
+
             {existingImages.length > 0 && (
-                <div className="shop-admin-existing-images">
-                    <h4>Текущие изображения:</h4>
-                    {existingImages.map((url, index) => (
-                        <div key={index} className="shop-admin-image-wrapper">
-                            <img src={url} alt={`Текущее изображение ${index + 1}`} className="shop-admin-product-image" />
-                            <button className="shop-admin-delete-image-button" onClick={() => handleDeleteImage(index)}>
-                                Удалить
-                            </button>
-                        </div>
+                <div className="shop-admin-images-container">
+                    {existingImages.map((image, index) => (
+                        <img key={index} src={image} alt={`Продукт ${index}`} className="shop-admin-image"/>
                     ))}
                 </div>
             )}
@@ -214,37 +240,6 @@ const ShopAdmin = () => {
             <button className="shop-admin-button" onClick={handleAddOrUpdateProduct}>
                 {isEditing ? 'Сохранить изменения' : 'Добавить товар'}
             </button>
-
-            <div className="product-admin-list">
-                <h3 className="product-admin-list-title">Список товаров</h3>
-                <ul className="product-admin-list-items">
-                    {Array.isArray(productList) && productList.length > 0 ? (
-                        productList.map((product) => (
-                            <li key={product.id} className="product-admin-list-item">
-                                <div className="product-admin-list-item-content">
-                                    <h4>{product.name}</h4>
-                                    <p>{product.description}</p>
-                                    <p>{product.price} ₽</p>
-                                    {product.url_images && product.url_images.length > 0 && (
-                                        <img src={product.url_images[0]} alt={product.name}
-                                             className="shop-admin-product-image"/>
-                                    )}
-                                </div>
-                                <div className="product-admin-list-item-actions">
-                                    <button onClick={() => handleEditProduct(product.id)} className="edit-button">
-                                        <EditIcon/>
-                                    </button>
-                                    <button onClick={() => handleDeleteProduct(product.id)} className="delete-button">
-                                        <DeleteIcon/>
-                                    </button>
-                                </div>
-                            </li>
-                        ))
-                    ) : (
-                        <p>Товаров нет</p>
-                    )}
-                </ul>
-            </div>
         </div>
     );
 };

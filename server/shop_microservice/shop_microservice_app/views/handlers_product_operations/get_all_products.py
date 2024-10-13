@@ -25,7 +25,7 @@ def get_all_products(request):
     # Получаем все товары из базы данных
     products = Product.objects.all()
 
-    # Сериализуем товары
+    # Используем сериализатор с полным набором данных
     serializer = ProductSerializer(products, many=True)
 
     # Возвращаем успешный ответ с данными товаров

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import img1 from "../images/rectangle1.png";
 import logoTeam1 from "../images/logoteam1.png";
 import './NearestMatch.css';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import MatchService from "../api/services/MatchService";
-import { MatchResponse } from '../api/models/response/MatchResponse';
+import {MatchResponse} from '../api/models/response/MatchResponse';
 
 function getWeekDay(date: Date) {
     let days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
@@ -77,13 +77,17 @@ const NearestMatch: React.FC = () => {
                 </div>
                 {/* Логотипы команд */}
                 <div className='logosTeams' style={{display: 'flex', alignItems: 'center', marginBottom: '20px'}}>
-                    <img src={logoTeam1} alt="Team 1" style={{
-                        marginRight: '10px'
-                    }}/> {/* Логотип домашней команды */}
+                    <div className='logoAndName'>
+                        <img src={logoTeam1} alt="Team 1" style={{
+                        }}/>
+                        <span>{matchData.team_home}</span>
+                    </div>
                     <h1 className='count'>{matchData.score_home} - {matchData.score_away}</h1> {/* Счет */}
-                    <img src={matchData.team_away_logo_url} alt="Team 2" style={{
-                        marginLeft: '10px'
-                    }}/>
+                    <div className='logoAndName'>
+                        <img src={matchData.team_away_logo_url} alt="Team 2" style={{
+                        }}/>
+                        <span>{matchData.team_away_name}</span>
+                    </div>
                 </div>
                 <Link to={`/match/${matchData.id}`}>
                     <button className="styled-button">
