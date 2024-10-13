@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography, Button, Avatar, Grid, TextField, Alert } from '@mui/material';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -28,22 +28,44 @@ const fieldNames: Record<keyof User, string> = {
 };
 
 const UserProfile: React.FC = () => {
-  const [user, setUser] = useState<User>(userData.user[0]);
+  const [user, setUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [image, setImage] = useState<string>('');
   const [showInput, setShowInput] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (field: keyof User, value: string) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [field]: value,
-    }));
-  };
+  
+
+  useEffect(() => {
+    fetchUser();
+}, []);
+
+const fetchUser = async () => {
+    setIsLoading(true);
+    try {
+        const response = await AuthService.getUserData();
+        setUser(response.data);
+    } catch (error: any) {
+        if (error.response && error.response.status === 404) {
+            setErrorMessage('Пользователь не найден.');
+        } else {
+            setErrorMessage('Ошибка загрузки пользователя.');
+        }
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+const handleInputChange = (field: keyof User, value: string) => {
+  if (user) {
+    setUser((prevUser) => prevUser ? { ...prevUser, [field]: value } : null);
+  }
+};
 
 const handleImageEditing = async ()=>{
-  if(showInput){
+  if(showInput && user){
    try {
         await AuthService.profileEdit(
           user.name,
@@ -70,7 +92,7 @@ const handleImageEditing = async ()=>{
 
 
   const handleEditToggle = async () => {
-    if (isEditing) {
+    if (isEditing && user) {
       // При завершении редактирования отправляем запрос на обновление данных профиля
       try {
         await AuthService.profileEdit(
@@ -122,7 +144,7 @@ const handleImageEditing = async ()=>{
               <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff' }}>
                 <Avatar
                   sx={{ width: 120, height: 120, margin: '0 auto 16px auto' }}
-                  src={image || user.img}
+                  src={image || user?.img}
                   alt="Profile Image"
                 />
 
@@ -158,12 +180,12 @@ const handleImageEditing = async ()=>{
                         <TextField
                           fullWidth
                           variant="outlined"
-                          value={user[field]}
+                          value={user ? user[field] : ''}
                           onChange={(e) => handleInputChange(field, e.target.value)}
                         />
                       ) : (
                         <Typography variant="body2" color="textSecondary">
-                          {user[field]}
+                          {user ? user[field] : ''}
                         </Typography>
                       )}
                     </Box>
