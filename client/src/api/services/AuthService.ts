@@ -19,9 +19,9 @@ export default class AuthService {
         return authApi.post('/logout/')
     }
 
-    static async verify(email: string) {
+    static async verify(email: string, username: string) {
         // @ts-ignore
-        return authApi.post<CodeResponse>('/verify-email/', {email})
+        return authApi.post<CodeResponse>('/verify-email/', {email, username})
     }
 
     static async getUserData() {
