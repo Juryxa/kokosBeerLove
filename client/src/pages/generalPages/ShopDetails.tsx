@@ -90,17 +90,17 @@ const ShopDetails = () => {
     };
 
     const handleNextImage = () => {
-        if (productItem?.url_images && imgarr.length > 0) {
+        if (productItem?.url_images && productItem?.url_images.length > 0) {
             setCurrentImageIndex((prevIndex) =>
-                prevIndex === imgarr.length - 1 ? 0 : prevIndex + 1
+                prevIndex === productItem?.url_images.length - 1 ? 0 : prevIndex + 1
             );
         }
     };
     
     const handlePrevImage = () => {
-        if (productItem?.url_images && imgarr.length > 0) {
+        if (productItem?.url_images && productItem?.url_images.length > 0) {
             setCurrentImageIndex((prevIndex) =>
-                prevIndex === 0 ? imgarr.length - 1 : prevIndex - 1
+                prevIndex === 0 ? productItem?.url_images.length - 1 : prevIndex - 1
             );
         }
     };

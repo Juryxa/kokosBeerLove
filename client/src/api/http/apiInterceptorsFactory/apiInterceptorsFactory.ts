@@ -54,7 +54,7 @@ export const createApiInstance = (
                 originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
                 return api.request(originalRequest);
             } catch (e) {
-                console.log('Ошибка авторизации при обновлении токена');
+                console.log('Ошибка авторизации');
             }
         }
         return Promise.reject(error);

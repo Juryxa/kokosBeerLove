@@ -48,9 +48,7 @@ const UserProfile: React.FC = () => {
 
     const handleImageEditing = async () => {
         if (showInput && user) {
-            // Проверка, изменил ли пользователь фотографию
             const hasImageChanged = image && image !== user.avatar_url;
-
             if (hasImageChanged) {
                 try {
                     await AuthService.profileEdit(
@@ -92,6 +90,26 @@ const UserProfile: React.FC = () => {
         }
     };
 
+    const handleSave = async () => {
+        if (user) {
+            try {
+                await AuthService.profileEdit(
+                    user.first_name,
+                    user.last_name,
+                    user.phone_number,
+                    user.telegram,
+                    image || user.avatar_url,
+                );
+                setSuccessMessage('Профиль успешно обновлен!');
+                setErrorMessage(null);
+                setIsEditing(false);  // Отключаем режим редактирования
+            } catch (error) {
+                setErrorMessage('Произошла ошибка при сохранении данных.');
+                setSuccessMessage(null);
+            }
+        }
+    };
+
     return (
         <>
             <Box display="flex" flexDirection="column" minHeight="100vh">
@@ -118,42 +136,39 @@ const UserProfile: React.FC = () => {
                                 {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                                 {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
-
-                <Typography variant="h5" gutterBottom>
-                  {user?.first_name} {user?.last_name}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  Kokos fan
-                </Typography>
-              </Card>
-            </Box>
-
+                                <Typography variant="h5" gutterBottom>
+                                    {user?.first_name} {user?.last_name}
+                                </Typography>
+                                <Typography variant="subtitle1" color="textSecondary">
+                                    Болельщик
+                                </Typography>
+                            </Card>
+                        </Box>
 
                         <Box flex="2" display="flex" justifyContent="center">
                             <Card sx={{padding: 2, backgroundColor: '#ffffff', width: '100%'}}>
                                 <CardContent>
-                                    {(['first_name', 'last_name', 'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map(
-                                        (field) => (
-                                            <Box key={field} mb={2}>
-                                                <Typography variant="h6" gutterBottom>
-                                                    {fieldNames[field]}
+                                    {(['first_name', 'last_name', 'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
+                                        <Box key={field} mb={2}>
+                                            <Typography variant="h6" gutterBottom>
+                                                {fieldNames[field]}
+                                            </Typography>
+                                            {isEditing ? (
+                                                <TextField
+                                                    fullWidth
+                                                    variant="outlined"
+                                                    value={user ? user[field] : ''}
+                                                    onChange={(e) => handleInputChange(field, e.target.value)}
+                                                />
+                                            ) : (
+                                                <Typography variant="body2" color="textSecondary">
+                                                    {user ? user[field] : ''}
                                                 </Typography>
-                                                {isEditing ? (
-                                                    <TextField
-                                                        fullWidth
-                                                        variant="outlined"
-                                                        value={user ? user[field] : ''}
-                                                        onChange={(e) => handleInputChange(field, e.target.value)}
-                                                    />
-                                                ) : (
-                                                    <Typography variant="body2" color="textSecondary">
-                                                        {user ? user[field] : ''}
-                                                    </Typography>
-                                                )}
-                                            </Box>
-                                        )
-                                    )}
-                                    <Button variant="contained" color="error" onClick={() => setIsEditing(!isEditing)}>
+                                            )}
+                                        </Box>
+                                    ))}
+                                    <Button variant="contained" color="error"
+                                            onClick={isEditing ? handleSave : () => setIsEditing(true)}>
                                         {isEditing ? 'Сохранить' : 'Редактировать'}
                                     </Button>
                                 </CardContent>
