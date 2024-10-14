@@ -55,6 +55,29 @@ const Matches: FC = () => {
         }
     };
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('your-api-endpoint');
+                const data = await response.json();
+                
+                // Ensure the data is an array
+                if (Array.isArray(data)) {
+                    setTranslationData(data);
+                } else {
+                    console.error('Data is not an array:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+    
+
+
+
     const handleShowMore = () => {
         const newLimit = videosToShow + 4; // Увеличиваем количество видео для показа
         setVideosToShow(newLimit); // Обновляем состояние для отображаемого количества видео
@@ -206,14 +229,14 @@ const filterMatchesByDate = () => {
                     {isLoading && <div className="loading-spinner"></div>}
                     {translationData.map((video) => (
                         <div className={`TraslateVk ${isLoading ? 'hidden' : ''}`} key={video.id}>
-                            <Link to={`/match/${video.id}`}>
+                            
                             <CreateVideoFrame
                                 video_url={video.video_url}
                                 hd={video.hd}
                                 width={video.width}
                                 height={video.height}
                                 autoplay={1}
-                            /></Link>
+                            />
                         </div>
                     ))}
                     <div className='low-content-matches'>
