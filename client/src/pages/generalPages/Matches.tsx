@@ -16,7 +16,7 @@ const Matches: FC = () => {
 
     const [mathesData, setMatchesData] = useState<IVideo[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [translationData, setTranslationData] = useState<IVideo[]>([]);
+    const [translationData, setTranslationData] = useState<IVideo>();
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState<IVideo[]>([]);
 
@@ -57,24 +57,20 @@ const Matches: FC = () => {
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('your-api-endpoint');
-                const data = await response.json();
-                
-                // Ensure the data is an array
-                if (Array.isArray(data)) {
-                    setTranslationData(data);
-                } else {
-                    console.error('Data is not an array:', data);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
+        fetchTranslation();
     }, []);
-    
+
+    const fetchTranslation = async () => {
+        setIsLoading(true);
+        try {
+            const response = await MatchService.getLastOne();
+            setTranslationData(response)
+        } catch (error) {
+            setErrorMessage('Ошибка загрузки товаров.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
 
 
@@ -227,18 +223,18 @@ const filterMatchesByDate = () => {
 
                 <div className="content">
                     {isLoading && <div className="loading-spinner"></div>}
-                    {translationData.map((video) => (
-                        <div className={`TraslateVk ${isLoading ? 'hidden' : ''}`} key={video.id}>
+                    
+                        <div className={`TraslateVk ${isLoading ? 'hidden' : ''}`} >
                             
                             <CreateVideoFrame
-                                video_url={video.video_url}
-                                hd={video.hd}
-                                width={video.width}
-                                height={video.height}
+                                video_url={translationData?.video_url || ''}
+                                hd={translationData?.hd}
+                                width={translationData?.width}
+                                height={translationData?.height}
                                 autoplay={1}
                             />
                         </div>
-                    ))}
+                    
                     <div className='low-content-matches'>
                         <div className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
