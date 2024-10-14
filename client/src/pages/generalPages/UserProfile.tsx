@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography, Button, Avatar, TextField, Alert } from '@mui/material';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { uploadImage } from '../../pages/adminPages/functions/uploadImage';
+import { uploadImage } from '../adminPages/functions/uploadImage';
 import AuthService from '../../api/services/AuthService';
 import { ProfileEdit } from '../../api/models/ProfileEdit';
 
@@ -14,7 +14,7 @@ const fieldNames: Record<keyof ProfileEdit, string> = {
   phone_number: 'Номер телефона',
   telegram: 'Телеграм',
   avatar_url: 'Аватар',
-  
+
 };
 
 const UserProfile: React.FC = () => {
@@ -53,7 +53,7 @@ const UserProfile: React.FC = () => {
     if (showInput && user) {
       // Проверка, изменил ли пользователь фотографию
       const hasImageChanged = image && image !== user.avatar_url;
-  
+
       if (hasImageChanged) {
         try {
           await AuthService.profileEdit(
@@ -75,7 +75,7 @@ const UserProfile: React.FC = () => {
     }
     setShowInput(!showInput);
   };
-  
+
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

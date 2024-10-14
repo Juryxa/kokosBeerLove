@@ -12,7 +12,7 @@ export default class AuthService {
 
     static async registration(username: string, email: string, password: string) {
         // @ts-ignore
-        return authApi.post<AuthResponse>('/signup/', {username, email, password})
+        return authApi.post<AuthResponse>('/signup/', {username, email, password, first_name: username})
     }
 
     static async logout(): Promise<unknown> {
