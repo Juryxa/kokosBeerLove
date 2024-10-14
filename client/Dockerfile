@@ -20,7 +20,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Создаем директории для загрузки файлов
-RUN mkdir -p /uploads/news_images /uploads/shop_images /uploads/player_photos /uploads/team_logos
+RUN mkdir -p /uploads/news_images /uploads/shop_images /uploads/player_photos /uploads/team_logos /uploads/user_avatar
 
 # **Копируем SSL-сертификаты в контейнер**
 COPY certificates/ /etc/nginx/ssl/
