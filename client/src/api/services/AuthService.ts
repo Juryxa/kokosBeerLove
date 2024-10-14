@@ -29,9 +29,9 @@ export default class AuthService {
         return authApi.get<ProfileEdit>('/profile/get_user_data/')
     }
 
-    static async profileEdit(username:string,first_name: string, last_name: string, phone_number: string, telegram: string, avatar_url: string){
+    static async profileEdit(name:string,last_name: string, phone_number: string, telegram: string, avatar_url: string){
         // @ts-ignore
-        return authApi.patch<ProfileEdit>('/profile/update/', {username,first_name, last_name, phone_number, telegram, avatar_url})
+        return authApi.patch<ProfileEdit>('/profile/update/', {name, last_name, phone_number, telegram, avatar_url})
     }
 
 }
