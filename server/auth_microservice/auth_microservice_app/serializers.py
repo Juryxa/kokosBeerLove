@@ -47,7 +47,7 @@ class AvatarUploadSerializer(serializers.Serializer):
 
 class EmailVerificationSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    username = serializers.CharField(required=True)
+    username = serializers.CharField(required=True) 
 
 
 class LoginSerializer(serializers.Serializer):

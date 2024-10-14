@@ -38,6 +38,7 @@ from ...serializers import MatchSerializer
         }
     )}
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_next_matches(request):
     # Получаем текущее количество открытых видео

@@ -1,4 +1,12 @@
+<<<<<<< HEAD
  
+=======
+from django.views.decorators.cache import cache_page
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from drf_yasg.utils import swagger_auto_schema
+>>>>>>> b12af1f995f6b144372af8a8e816486f4c1911a7
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
@@ -18,6 +26,7 @@ from ...serializers import ProductSerializer
         404: openapi.Response(description="Товар не найден")
     }
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_product_by_id(request, product_id):
     try:
