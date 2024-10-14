@@ -9,6 +9,7 @@ import { ProfileEdit } from '../../api/models/ProfileEdit';
 
 
 const fieldNames: Record<keyof ProfileEdit, string> = {
+  username:"Username",
   first_name: 'Имя',
   last_name: 'Фамилия',
   phone_number: 'Номер телефона',
@@ -57,11 +58,12 @@ const UserProfile: React.FC = () => {
       if (hasImageChanged) {
         try {
           await AuthService.profileEdit(
+            user.username,
             user.first_name,
             user.last_name,
             user.phone_number,
             user.telegram,
-            image || user.avatar_url
+            image || user.avatar_url,
           );
           setSuccessMessage('Фотография успешно обновлена!');
           setErrorMessage(null);
@@ -100,7 +102,7 @@ const UserProfile: React.FC = () => {
     <>
       <div style={{ height: '100%' }}>
         <Header />
-        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ height: '120vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={2} width="90%" maxWidth="1200px">
             <Box flex="1" display="flex" justifyContent="center">
               <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
@@ -132,7 +134,7 @@ const UserProfile: React.FC = () => {
             <Box flex="2" display="flex" justifyContent="center">
               <Card sx={{ padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <CardContent>
-                  {(['first_name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
+                  {(['username','first_name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
                     <Box key={field} mb={2}>
                       <Typography variant="h6" gutterBottom>
                         {fieldNames[field]}
