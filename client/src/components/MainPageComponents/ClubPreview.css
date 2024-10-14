@@ -92,10 +92,6 @@
 
 /* Адаптация для совсем маленьких экранов */
 @media (max-width: 600px) {
-    .about-club-container {
-        padding: 10px;
-    }
-
     .text-overlay {
         padding: 15px;
         font-size: 14px; /* Уменьшаем шрифт для мобильных */

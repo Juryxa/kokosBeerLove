@@ -13,98 +13,70 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../index';
-import axios from 'axios';
 import BasketService from '../../api/services/BasketService';
-import { ShopResponse } from "../../api/models/response/ShopResponse"
-import img from '../../images/T-shirt Mockup.png'
+import img from '../../images/T-shirt Mockup.png';
 
 interface BasketType  {
-    id:number;
-    product_name: number,
-    description: string,
-    url_images: string[],
-    size: string,
-    quantity: number
+    id: number;
+    product_name: number;
+    description: string;
+    url_images: string[];
+    size: string;
+    quantity: number;
 }
 
-
-
 const Basket: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
-
-    const[isBuying,setBuying]=useState<BasketType[]>([])
+    const [isBuying, setBuying] = useState<BasketType[]>([]);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-useEffect(()=>{
-    fetchBacket()
-},[])
+    useEffect(() => {
+        fetchBacket();
+    }, []);
 
-
-const fetchBacket = async () => {
-    setIsLoading(true);
-    try {
-        const response = await BasketService.getAllBasket();
-        setBuying(response.data);
-    } catch (error: any) {
-        if (error.response && error.response.status === 404) {
-            setErrorMessage('Товары не найдены.');
-        } else {
-            setErrorMessage('Ошибка загрузки товаров.');
-        }
-    } finally {
-        setIsLoading(false);
-    }
-};
-
-
-
-
-
-
-
-
-const handleRemoveItem = async (productId: number, size: string) => {
-    try {
+    const fetchBacket = async () => {
         setIsLoading(true);
+        try {
+            const response = await BasketService.getAllBasket();
+            setBuying(response.data);
+        } catch (error: any) {
+            if (error.response && error.response.status === 404) {
+                setErrorMessage('Товары не найдены.');
+            } else {
+                setErrorMessage('Ошибка загрузки товаров.');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-        // Вызываем API для удаления одного товара с переданным productId и size
-        await BasketService.removeItemFromBasket(productId, size);
+    const handleRemoveItem = async (productId: number, size: string) => {
+        try {
+            setIsLoading(true);
+            await BasketService.removeItemFromBasket(productId, size);
 
-        // Обновляем состояние корзины, уменьшая количество товара
-        setBuying((prevItems) => {
-            return prevItems
-                .map((item) => {
-                    if (item.id === productId && item.size === size) {
-                        // Если количество больше 1, уменьшаем его
-                        if (item.quantity > 1) {
-                            return { ...item, quantity: item.quantity - 1 };
+            setBuying((prevItems) => {
+                return prevItems
+                    .map((item) => {
+                        if (item.id === productId && item.size === size) {
+                            if (item.quantity > 1) {
+                                return { ...item, quantity: item.quantity - 1 };
+                            }
+                            return undefined;
                         }
-                        // Если количество равно 1, возвращаем `undefined`, чтобы удалить элемент
-                        return undefined; // Возвращаем undefined для удаления элемента
-                    }
-                    return item; // Возвращаем неизменённый элемент
-                })
-                .filter((item): item is BasketType => item !== undefined); // Фильтруем undefined
-        });
-    } catch (error) {
-        setErrorMessage('Ошибка при удалении товара из корзины.');
-    } finally {
-        setIsLoading(false);
-    }
-};
+                        return item;
+                    })
+                    .filter((item): item is BasketType => item !== undefined);
+            });
+        } catch (error) {
+            setErrorMessage('Ошибка при удалении товара из корзины.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-
-
-
-
-
-
-
-    // Функция для перехода к оформлению заказа
     const handleCheckout = () => {
         handleClose();
-        // Логика для перехода на страницу оформления заказа
     };
 
     return (
@@ -113,14 +85,16 @@ const handleRemoveItem = async (productId: number, size: string) => {
                 sx={{
                     backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     borderRadius: '12px',
-                    padding: '30px',
-                    width: '500px',
+                    padding: '20px',
+                    width: { xs: '90%', sm: '80%', md: '60%', lg: '500px' },
                     textAlign: 'center',
                     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
+                    maxHeight: '80vh',
+                    overflowY: 'auto', // Для прокрутки на маленьких экранах
                 }}
             >
                 <IconButton
@@ -129,20 +103,20 @@ const handleRemoveItem = async (productId: number, size: string) => {
                         position: 'absolute',
                         top: 8,
                         right: 8,
-                        color: "red"
+                        color: 'red',
                     }}
                 >
                     <CloseIcon />
                 </IconButton>
 
-                <Typography variant="h5" sx={{ mb: 2, color: '#E62526', fontSize: "30px" }}>
+                <Typography variant="h5" sx={{ mb: 2, color: '#E62526', fontSize: { xs: '24px', md: '30px' } }}>
                     Корзина
                 </Typography>
 
                 {isBuying.length > 0 ? (
                     <>
                         <List>
-                            {isBuying.map((item,index) => (
+                            {isBuying.map((item, index) => (
                                 <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                                     <img src={item.url_images[0] || img} alt="error" style={{ width: '50px', marginRight: '15px' }} />
                                     <ListItemText
@@ -159,11 +133,8 @@ const handleRemoveItem = async (productId: number, size: string) => {
                                             </>
                                         }
                                     />
-
-                                    <ListItemSecondaryAction >
-                                        <IconButton edge="end" onClick={() => handleRemoveItem(item.id,item.size)}>
-
-
+                                    <ListItemSecondaryAction>
+                                        <IconButton edge="end" onClick={() => handleRemoveItem(item.id, item.size)}>
                                             <DeleteIcon sx={{ color: '#E62526' }} />
                                         </IconButton>
                                     </ListItemSecondaryAction>
@@ -178,7 +149,7 @@ const handleRemoveItem = async (productId: number, size: string) => {
                                 backgroundColor: '#E62526',
                                 color: 'white',
                                 borderRadius: '12px',
-                                width: "100%"
+                                width: '100%',
                             }}
                             onClick={handleCheckout}
                         >
