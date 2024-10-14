@@ -121,6 +121,7 @@ docker-compose exec auth_microservice python manage.py createsuperuser
 https://localhost
 ```
 API-документация (Swagger) для микросервисов доступна по следующему пути (port от 8000 до 8004) `/swagger/`:  
+
 Либо можно скачать файлы:
 
 [Скачать Swagger файл для auth_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/auth_microservice)  
