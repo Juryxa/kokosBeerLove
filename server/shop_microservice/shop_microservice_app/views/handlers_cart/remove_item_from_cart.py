@@ -9,10 +9,10 @@ from ...models import CartItem
 
 @swagger_auto_schema(
     method='delete',
-    operation_description="Удаление товара из корзины по ID",
+    operation_description="Удаление товара из корзины по ID элемента корзины",
     tags=['cartHandlers'],
     manual_parameters=[
-        openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER),
+        openapi.Parameter('cart_item_id', openapi.IN_PATH, description="ID элемента корзины", type=openapi.TYPE_INTEGER),
         openapi.Parameter('size', openapi.IN_QUERY, description="Размер товара", type=openapi.TYPE_STRING)
     ],
     responses={
@@ -26,7 +26,7 @@ from ...models import CartItem
 @api_view(['DELETE'])
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
-def remove_item_from_cart(request, product_id):
+def remove_item_from_cart(request, cart_item_id):
     user_id = request.user.id
     size = request.query_params.get('size', '').upper()  # Получаем размер товара из запроса
 
@@ -34,8 +34,8 @@ def remove_item_from_cart(request, product_id):
         return Response({"error": "Размер товара должен быть указан"}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        # Пытаемся найти товар в корзине по user_id, product_id и размеру
-        cart_item = CartItem.objects.get(user_id=user_id, product_id=product_id, size__size=size)
+        # Пытаемся найти товар в корзине по user_id и cart_item_id
+        cart_item = CartItem.objects.get(user_id=user_id, id=cart_item_id, size__size=size)
 
         # Если количество товара больше 1, уменьшаем количество
         if cart_item.quantity > 1:
