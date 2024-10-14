@@ -319,8 +319,8 @@ const filterMatchesByDate = () => {
                                     <CreateVideoFrame
                                         video_url={video.video_url}
                                         hd={video.hd}
-                                        width={video.width}
-                                        height={video.height}
+                                        width={720}
+                                        height={1280}
 
                                     />
                                     <div className="video-info">
