@@ -120,7 +120,7 @@ const UserProfile: React.FC = () => {
 
 
                 <Typography variant="h5" gutterBottom>
-                  {user?.name} {user?.last_name}
+                  {user?.first_name} {user?.last_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
