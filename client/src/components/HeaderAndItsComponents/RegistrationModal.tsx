@@ -92,7 +92,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                 setErrorFields(errors);
                 return;
             }
-            store.verify(email)
+            store.verify(email, name)
                 .then(() => {
                     // Если верификация прошла успешно
                     setStep(2); // Переход на шаг подтверждения email
@@ -100,7 +100,11 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
                 .catch((e: any) => {
                     // Обработка ошибки 400 (пользователь уже существует)
                     if (e.response && e.response.status === 400) {
-                        setErrorFields(prev => ({ ...prev, email: 'Пользователь с таким email уже существует' }));
+                        setErrorFields(prev => ({
+                            ...prev,
+                            email: 'Пользователь с таким email или ником уже существует',
+                            name: 'Пользователь с таким email или ником уже существует'
+                        }));
                     } else {
                         // Можно обработать другие ошибки здесь
                         console.error('Ошибка при верификации:', e); // Логируем ошибку для отладки
@@ -140,7 +144,7 @@ const RegistrationModal: React.FC<{ open: boolean, handleClose: () => void }> = 
 
     const handleResendCode = () => {
         setResendTimer(10); // Сбрасываем таймер
-        store.verify(email); // Повторно отправляем код
+        store.verify(email, name); // Повторно отправляем код
     };
 
     return (
