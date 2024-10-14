@@ -4,7 +4,7 @@ import Footer from '../../components/Footer';
 import NearestMatch from "../../components/NearestMatch";
 import './MainPage.css';
 
-// const ShopPreview = React.lazy(() => import('../../components/ShopPreview'));
+const ShopPreview = React.lazy(() => import('../../components/ShopPreview'));
 const NewsPreview = React.lazy(() => import('../../components/NewsPreview'));
 const ClubPreview = React.lazy(() => import('../../components/ClubPreview'));
 const MatchesPreview = React.lazy(() => import('../../components/MatchesPreview'));
@@ -44,7 +44,7 @@ const MainPage: React.FC = () => {
             <Suspense fallback={<div className="loading-spinner"></div>}>
                 <ClubPreview/>
 
-                {/*<ShopPreview/>*/}
+                <ShopPreview/>
             </Suspense>
             <Footer/>
         </div>

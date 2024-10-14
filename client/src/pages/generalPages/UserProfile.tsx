@@ -1,127 +1,167 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Typography, Button, Avatar, Grid, TextField } from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, Avatar, TextField, Alert } from '@mui/material';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import userData from './user.json';
+import { uploadImage } from '../../pages/adminPages/functions/uploadImage';
+import AuthService from '../../api/services/AuthService';
+import { ProfileEdit } from '../../api/models/ProfileEdit';
 
-// Определите интерфейс для пользователя
-interface User {
-  id: number;
-  img: string;
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-  telegram: string;
-}
 
-const fieldNames: Record<keyof User, string> = {
-  name: 'Имя',
-  surname: 'Фамилия',
-  email: 'Электронная почта',
-  phone: 'Номер телефона',
+
+const fieldNames: Record<keyof ProfileEdit, string> = {
+  first_name: 'Имя',
+  last_name: 'Фамилия',
+  phone_number: 'Номер телефона',
   telegram: 'Телеграм',
-  img: 'Аватар',
-  id: 'ID'
+  avatar_url: 'Аватар',
+  
 };
 
-
 const UserProfile: React.FC = () => {
-  const [user, setUser] = useState<User>(userData.user[0]);
+  const [user, setUser] = useState<ProfileEdit | null>();
   const [isEditing, setIsEditing] = useState(false);
-  const [avatar, setAvatar] = useState<string>(''); 
-  const [showInput, setShowInput] = useState(false); // Состояние для показа input
+  const [image, setImage] = useState<string>('');
+  const [showInput, setShowInput] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (field: keyof User, value: string) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [field]: value,
-    }));
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    setIsLoading(true);
+    try {
+      const response = await AuthService.getUserData();
+      setUser(response.data);
+      setErrorMessage(null);
+    } catch (error: any) {
+      setErrorMessage('Ошибка загрузки пользователя.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
+  const handleInputChange = (field: keyof ProfileEdit, value: string) => {
+    if (user) {
+      setUser({ ...user, [field]: value });
+    }
   };
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string); // обновляем аватарку
-      };
-      reader.readAsDataURL(file);
+  const handleImageEditing = async () => {
+    if (showInput && user) {
+      // Проверка, изменил ли пользователь фотографию
+      const hasImageChanged = image && image !== user.avatar_url;
+  
+      if (hasImageChanged) {
+        try {
+          await AuthService.profileEdit(
+            user.first_name,
+            user.last_name,
+            user.phone_number,
+            user.telegram,
+            image || user.avatar_url
+          );
+          setSuccessMessage('Фотография успешно обновлена!');
+          setErrorMessage(null);
+        } catch (error) {
+          setErrorMessage('Произошла ошибка при обновлении фотографии.');
+          setSuccessMessage(null);
+        }
+      } else {
+        setErrorMessage('');
+      }
+    }
+    setShowInput(!showInput);
+  };
+  
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+      try {
+        const imageUrl = await uploadImage(file, setSuccessMessage, setErrorMessage, 'user_avatar');
+        if (imageUrl) {
+          setImage(imageUrl);
+          setSuccessMessage('Изображение успешно загружено!');
+          setErrorMessage(null);
+        }
+      } catch (error) {
+        setErrorMessage('Ошибка при загрузке изображения.');
+        setSuccessMessage(null);
+      }
+    } else {
+      setErrorMessage('Пожалуйста, загрузите изображение в формате PNG или JPEG.');
     }
   };
 
   return (
-    <div style={{ height: '100vh', backgroundColor: '#f0f4f8' }}>
-      <Header />
-      <div style={{ height: '77vh' }}>
-        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" p={3} sx={{ backgroundColor: '#f0f4f8', width: '100%' }}>
-          <Grid container spacing={2} justifyContent="center" maxWidth="lg">
-            <Grid item xs={12} md={4}>
-              <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff' }}>
+    <>
+      <div style={{ height: '100%' }}>
+        <Header />
+        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={2} width="90%" maxWidth="1200px">
+            <Box flex="1" display="flex" justifyContent="center">
+              <Card sx={{ textAlign: 'center', padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <Avatar
                   sx={{ width: 120, height: 120, margin: '0 auto 16px auto' }}
-                  src={avatar || user.img} // Показываем новый аватар или аватар из данных
+                  src={image || user?.avatar_url}
                   alt="Profile Image"
                 />
-                
-                {/* Кнопка для показа input */}
-                <Button  style={{margin:"15px"}} variant="outlined" color="error" onClick={() => setShowInput(!showInput)}>
+                <Button style={{ margin: '15px' }} variant="outlined" color="error" onClick={handleImageEditing}>
                   {showInput ? 'Сохранить' : 'Загрузить аватар'}
                 </Button>
-                
-                {/* Input для загрузки аватарки */}
+
                 {showInput && (
-                  <input style={{margin:"15px"}} type="file" onChange={handleAvatarChange} accept="image/*" />
+                  <input style={{ margin: '15px' }} type="file" onChange={handleFileChange} accept="image/*" />
                 )}
-                
+
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+                {successMessage && <Alert severity="success">{successMessage}</Alert>}
+
                 <Typography variant="h5" gutterBottom>
-                  {user?.name} {user?.surname}
+                  {user?.first_name} {user?.last_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
                 </Typography>
               </Card>
-            </Grid>
+            </Box>
 
-            {/* Правая панель с информацией */}
-            <Grid item xs={12} md={8}>
-              <Card sx={{ padding: 2, backgroundColor: '#ffffff' }}>
+            <Box flex="2" display="flex" justifyContent="center">
+              <Card sx={{ padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <CardContent>
-                {(['name', 'surname', 'email', 'phone', 'telegram'] as Array<keyof User>).map((field) => (
-  <Box key={field} mb={2}>
-    <Typography variant="h6" gutterBottom>
-      {fieldNames[field]} {/* Используем русские названия полей */}
-    </Typography>
-    {isEditing ? (
-      <TextField
-        fullWidth
-        variant="outlined"
-        value={user[field]}
-        onChange={(e) => handleInputChange(field, e.target.value)}
-      />
-    ) : (
-      <Typography variant="body2" color="textSecondary">
-        {user[field]}
-      </Typography>
-    )}
-  </Box>
-))}
-
-                  <Button variant="contained" color="error" onClick={handleEditToggle}> {/* Цвет кнопки изменен на красный */}
+                  {(['first_name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
+                    <Box key={field} mb={2}>
+                      <Typography variant="h6" gutterBottom>
+                        {fieldNames[field]}
+                      </Typography>
+                      {isEditing ? (
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          value={user ? user[field] : ''}
+                          onChange={(e) => handleInputChange(field, e.target.value)}
+                        />
+                      ) : (
+                        <Typography variant="body2" color="textSecondary">
+                          {user ? user[field] : ''}
+                        </Typography>
+                      )}
+                    </Box>
+                  ))}
+                  <Button variant="contained" color="error" onClick={() => setIsEditing(!isEditing)}>
                     {isEditing ? 'Сохранить' : 'Редактировать'}
                   </Button>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </Box>
+            </Box>
+          </Box>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IVideo } from '../../api/models/IVideo';
 import MatchService from '../../api/services/MatchService';
 import imglogo from '../../images/logoteam1.png'
+import { Box, FormControl, InputLabel, List, ListItemButton, ListItemText, MenuItem, Select, TextField } from '@mui/material';
 
 
 const Matches: FC = () => {
@@ -159,7 +160,7 @@ const filterMatchesByDate = () => {
             <Header />
             <div className="container">
                 <h1 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Матчи</h1>
-                {/* <Box mb={3}>
+                 <Box mb={3}>
                     <TextField
                         label="Поиск матчей"
                         variant="outlined"
@@ -197,7 +198,7 @@ const filterMatchesByDate = () => {
                             ))}
                         </List>
                     )}
-                </Box> */}
+                </Box> 
 
 
 
@@ -220,7 +221,7 @@ const filterMatchesByDate = () => {
                     <h2 className={`hiddenToo ${isLoading ? 'hidden' : ''}`}>Записи матчей</h2>
 
 
-                {/* <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
+                 <Box mb={3} display="flex" gap={2} flexWrap="wrap" flexDirection="row">
 
 
                     <FormControl variant="outlined" sx={{ minWidth: 120 }}>
@@ -287,7 +288,7 @@ const filterMatchesByDate = () => {
                             })}
                         </Select>
                     </FormControl>
-                </Box> */}
+                </Box> 
 
                 </div>
                     <div className="lastephire">

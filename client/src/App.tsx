@@ -14,7 +14,7 @@ import NotFound from "./pages/generalPages/NotFound";
 import RequireAuthAdmin from "./pages/hoc/RequireAuthAdmin";
 import News from "./pages/generalPages/News";
 import AboutClub from "./pages/generalPages/AboutClub";
-// import Shop from "./pages/generalPages/Shop";
+import Shop from "./pages/generalPages/Shop";
 import Team from "./pages/generalPages/Team";
 import NewsDetails from './pages/generalPages/NewsDetails';
 import UserProfile from './pages/generalPages/UserProfile';
@@ -47,7 +47,7 @@ function App() {
                 <Route path='/news' element={<News/>}/>
                 <Route path="/news/:id" element={<NewsDetails />} />
                 <Route path='/about' element={<AboutClub/>}/>
-                {/*<Route path='/shop' element={<Shop/>}/>*/}
+                <Route path='/shop' element={<Shop/>}/>
                 <Route path='/shop/:id' element={<ShopDetails/>}/>
                 <Route path='/team' element={<Team/>}/>
                 <Route path='/admin/' element={<RequireAuthAdmin><AdminPage/></RequireAuthAdmin>}>

@@ -1,18 +1,41 @@
 
-import React, {useState} from 'react';
-import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu, Button} from '@mui/material';
 import {YouTube, Telegram, WhatsApp,Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
 import {Link, useNavigate} from 'react-router-dom';
 import RegistrationModal from './RegistrationModal';
 import { store } from '../index';
 import logo from '../images/logo.jpg';
+import Basket from './Basket';
+import {  Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BasketService from '../api/services/BasketService';
+interface Basket  {
+    id:number;
+    product_name: number,
+    description: string,
+    url_images: string[],
+    size: string,
+    quantity: number
+}
 
 const Header = () => {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // Для меню профиля
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const[isBuying,setBuying]=useState<Basket[]>([])
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const handleOpenCart = () => {
+        setIsCartOpen(true);
+    };
 
+    const handleCloseCart = () => {
+        setIsCartOpen(false);
+    };
+    
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -44,7 +67,26 @@ const Header = () => {
         setDrawerOpen(!drawerOpen);
     };
 
-
+    useEffect(()=>{
+        fetchBacket()
+    },[])
+    
+    
+    const fetchBacket = async () => {
+        setIsLoading(true);
+        try {
+            const response = await BasketService.getAllBasket();
+            setBuying(response.data);
+        } catch (error: any) {
+            if (error.response && error.response.status === 404) {
+                setErrorMessage('Товары не найдены.');
+            } else {
+                setErrorMessage('Ошибка загрузки товаров.');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <AppBar position="static" color="transparent" elevation={0}>
@@ -130,18 +172,24 @@ const Header = () => {
 
                         {/* Поиск и Логин / Профиль */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', marginLeft: 'auto', color: 'white' }}>
-
+                        
 
                             {store.isAuth ? (
                                 <>
+                                <IconButton onClick={handleOpenCart} color="primary" aria-label="Корзина">
+                <Badge badgeContent={isBuying.length} color="error">
+                    <ShoppingCartIcon style={{color:"red"}}/>
+                </Badge>
+            </IconButton>
                                     <IconButton onClick={handleProfileClick}>
                                         <AccountCircle style={{color: '#E62526'}}/>
                                     </IconButton>
+                                    
                                     <Menu
                                         anchorEl={anchorEl}
                                         open={Boolean(anchorEl)}
                                         onClose={handleMenuClose}
-                                    >
+                                    >   
                                         <MenuItem onClick={handleProfileNavigate}>Профиль</MenuItem>
                                         <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                                     </Menu>
@@ -217,6 +265,7 @@ const Header = () => {
                         </div>
                     </Box>
                 </Drawer>
+                <Basket open={isCartOpen} handleClose={handleCloseCart} />
                 <RegistrationModal open={open} handleClose={handleClose}/>
             </Toolbar>
         </AppBar>

@@ -4,10 +4,11 @@ import { ShopResponse } from "../../api/models/response/ShopResponse";
 import ShopService from "../../api/services/ShopService";
 import img1 from '../../images/T-shirt Mockup.png';
 import img2 from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
-import img3 from '../../images/T-shirt Mockup.png';
+import {ProductSize} from "../../api/models/ProductSize";
 import './ShopDetails.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BasketService from '../../api/services/BasketService';
 
 interface Product {
     name: string;
@@ -35,8 +36,8 @@ const ShopDetails = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [selectedColor, setSelectedColor] = useState<string | null>(null);
-    const [selectedSize, setSelectedSize] = useState<string | null>(null);
+    
+    const [selectedSize, setSelectedSize] = useState<string>('');
 
     const productImages = [img1, img2]; // Массив изображений
 
@@ -79,12 +80,10 @@ const ShopDetails = () => {
         }
     };
 
-    const handleColorSelect = (color: string) => {
-        setSelectedColor(color);
-    };
 
     const handleSizeSelect = (size: string) => {
         setSelectedSize(size);
+        console.log(selectedSize)
     };
 
     const handleNextImage = () => {
@@ -98,6 +97,23 @@ const ShopDetails = () => {
             prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
         );
     };
+
+
+    const addToBasket = async () => {
+        try{
+        if(selectedSize){
+            await BasketService.addToBasket(productId,1, selectedSize)
+            
+        } else {
+            alert('Пожалуйста, выберите размер перед добавлением в корзину');
+        }
+    } catch (error) {
+        setErrorMessage('Ошибка при сохранении игрока.');
+    }
+};
+    
+
+
 
     return (
         <>
@@ -121,44 +137,30 @@ const ShopDetails = () => {
                         </div>
                         <div className="product-price">
                             <span className="new-price">{product.price} ₽</span>
-                            <span className="old-price">{product.oldPrice} ₽</span>
-                        </div>
-                        <div className="product-colors">
-                            <p>Цвет:</p>
-                            <div>
-                                {product.colorOptions.map((color, index) => (
-                                    <button
-                                        key={index}
-                                        className={`color-option ${selectedColor === color ? 'selected' : ''}`}
-                                        onClick={() => handleColorSelect(color)}
-                                    >
-                                        {color}
-                                    </button>
-                                ))}
-                            </div>
+                            <span className="old-price">{product.oldPrice}</span>
                         </div>
                         <div className="product-sizes">
                             <p>Размеры:</p>
                             <div>
-                                {product.sizeOptions.map((size, index) => (
-                                    <button
-                                        key={index}
-                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => handleSizeSelect(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                            {productItem?.sizes.map((item, index) => (
+                                <button
+                                    key={index}  
+                                    className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
+                                    onClick={() => handleSizeSelect(item.size)}
+                                    disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
+                                    style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
+                                    
+                                     // Задаем серый цвет для недоступных кнопок
+                                > 
+                                    {item.size}
+                                </button>
+                            ))}
                             </div>
                         </div>
-                        <p>Артикул: {product.article}</p>
-                        <p>Материал: {product.material}</p>
-                        <p>Страна производства: {product.country}</p>
-                        <p>Особенности модели: {product.description}</p>
-                        <p>Декоративные элементы: {product.features}</p>
+                        <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
-                            <button className="add-to-cart">Добавить в корзину</button>
-                            <button className="buy-now">Купить сейчас</button>
+                            <button className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
+                            
                         </div>
                     </div>
                 </div>
