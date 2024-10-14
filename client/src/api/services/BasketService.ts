@@ -11,9 +11,11 @@ export default class BasketService{
         return basketApi.get<ShopResponse>(`/get_all_items_from_cart/`);
     }
 
-    static async removeItemFromBasket(productId: number) {
-        // @ts-ignore
-        return basketApi.delete(`/remove_item_from_cart/${productId}`);
+    static async removeItemFromBasket(productId: number, size: string) {
+        return basketApi.delete(`/remove_item_from_cart/${productId}/`, {
+            params: { size },
+        });
     }
+    
 
 }

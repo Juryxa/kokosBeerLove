@@ -12,7 +12,8 @@ from ...models import CartItem
     operation_description="Удаление товара из корзины по ID",
     tags=['cartHandlers'],
     manual_parameters=[
-        openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER)
+        openapi.Parameter('product_id', openapi.IN_PATH, description="ID товара", type=openapi.TYPE_INTEGER),
+        openapi.Parameter('size', openapi.IN_QUERY, description="Размер товара", type=openapi.TYPE_STRING)
     ],
     responses={
         204: openapi.Response(description="Товар успешно удален из корзины"),
@@ -26,12 +27,15 @@ from ...models import CartItem
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
 def remove_item_from_cart(request, product_id):
-    # Получаем ID пользователя из токена
     user_id = request.user.id
+    size = request.query_params.get('size', '').upper()  # Получаем размер товара из запроса
+
+    if not size:
+        return Response({"error": "Размер товара должен быть указан"}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        # Пытаемся найти товар в корзине по user_id и product_id
-        cart_item = CartItem.objects.get(user_id=user_id, product_id=product_id)
+        # Пытаемся найти товар в корзине по user_id, product_id и размеру
+        cart_item = CartItem.objects.get(user_id=user_id, product_id=product_id, size__size=size)
 
         # Если количество товара больше 1, уменьшаем количество
         if cart_item.quantity > 1:

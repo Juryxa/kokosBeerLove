@@ -67,25 +67,22 @@ const fetchBacket = async () => {
 
 
 
-const removeItemFromCart = async ({
-  productId,
-  size,
-}: RemoveItemFromCartProps) => {
-  try {
-    // Отправляем DELETE запрос на сервер с productId и размером
-    const response = await axios.delete(`http://localhost:8003/api/shop/remove_item_from_cart/${productId}/`, {
-      params: { size },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,  // Если требуется авторизация
-      },
-    });
+const handleRemoveItem = async (productId: number, size: string) => {
+    try {
+        setIsLoading(true);
+        // Вызываем API для удаления товара с переданным productId и size
+        await BasketService.removeItemFromBasket(productId, size);
 
-    // Если запрос успешен, вызываем onSuccess
-    
-  } catch (error) {
-    setErrorMessage('Ошибка загрузки товаров.');
-  }
-}
+        // Обновляем состояние корзины, удаляя товар по ID и размеру
+        setBuying((prevItems) => prevItems.filter((item) => !(item.id === productId && item.size === size)));
+    } catch (error) {
+        setErrorMessage('Ошибка при удалении товара из корзины.');
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
 
 
 
@@ -136,11 +133,22 @@ const removeItemFromCart = async ({
                                 <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                                     <img src={item.url_images[0] || img} alt="error" style={{ width: '50px', marginRight: '15px' }} />
                                     <ListItemText
-                                        primary={`Название:${item.product_name}`}
-                                        // secondary={`Цена: ${item.price} руб.`}
+                                        primary={`Название: ${item.product_name}`}
+                                        secondary={
+                                            <>
+                                                <Typography component="span" variant="body2" color="text.secondary">
+                                                    Размер: {item.size}
+                                                </Typography>
+                                                <br />
+                                                <Typography component="span" variant="body2" color="text.secondary">
+                                                    Количество: {item.quantity}
+                                                </Typography>
+                                            </>
+                                        }
                                     />
+
                                     <ListItemSecondaryAction >
-                                        <IconButton edge="end" onClick={() => removeItemFromCart(item.id,item.size)}>
+                                        <IconButton edge="end" onClick={() => handleRemoveItem(item.id,item.size)}>
                                                                                                         
                                                                                                         
                                             <DeleteIcon sx={{ color: '#E62526' }} />
