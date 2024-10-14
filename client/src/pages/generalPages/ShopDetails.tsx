@@ -90,17 +90,17 @@ const ShopDetails = () => {
     };
 
     const handleNextImage = () => {
-        if (productItem?.url_images && productItem?.url_images.length > 0) {
+        if (productItem?.url_images && imgarr.length > 0) {
             setCurrentImageIndex((prevIndex) =>
-                prevIndex === productItem?.url_images.length - 1 ? 0 : prevIndex + 1
+                prevIndex === imgarr.length - 1 ? 0 : prevIndex + 1
             );
         }
     };
     
     const handlePrevImage = () => {
-        if (productItem?.url_images && productItem?.url_images.length > 0) {
+        if (productItem?.url_images && imgarr.length > 0) {
             setCurrentImageIndex((prevIndex) =>
-                prevIndex === 0 ? productItem?.url_images.length - 1 : prevIndex - 1
+                prevIndex === 0 ? imgarr.length - 1 : prevIndex - 1
             );
         }
     };
@@ -109,21 +109,22 @@ const ShopDetails = () => {
     const addToBasket = async () => {
         try{
         if(selectedSize){
-            await BasketService.addToBasket(productId,1, selectedSize)
+            await BasketService.addToBasket(productId, 1 , selectedSize)
             
         } else {
-            setErrorMessage('Пожалуйста, выберите размер перед добавлением в корзину');
+            
         }
     } catch (error) {
         setErrorMessage('Ошибка при сохранении игрока.');
     }
 };
     
-function calculateDiscountedPrice(originalPrice:number, discountPercentage:number):number {
+function calculateDiscountedPrice(originalPrice: number, discountPercentage: number): number {
     const discountAmount = (originalPrice * discountPercentage) / 100;
     const newPrice = originalPrice - discountAmount;
-    return newPrice;
+    return Math.floor(newPrice); // Отбрасывает дробную часть
 }
+
 
 
     return (
@@ -148,7 +149,10 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
                             <span>({product.reviewsCount} отзывов)</span>
                         </div>
                         <div className="product-price">
-                        {
+
+
+                       
+                         {
                             productItem?.price !== undefined && productItem?.discount !== undefined && productItem?.discount !==0 ? (
                                 <>
                                     <span className="new-price">
@@ -159,7 +163,7 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
                             ) : (
                                 <span className="new-price">{productItem?.price} ₽</span>
                             )
-                        }
+                        } 
                         </div>
                         <div className="product-sizes">
                             <p>Размеры:</p>
