@@ -14,18 +14,24 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
-import img from '../images/T-shirt Mockup.png';
+
 import BasketService from '../api/services/BasketService';
-interface ShopItem {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: any;
+import { ShopResponse } from "../api/models/response/ShopResponse"
+import img from '../images/T-shirt Mockup.png'
+
+interface Basket  {
+    product_name: number,
+    description: string,
+    url_images: string[],
+    size: string,
+    quantity: number
 }
+
+
+
 const Basket: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
-    const { store } = useContext(Context);
-    const[isBuying,setBuying]=useState<ShopItem[]>([])
+   
+    const[isBuying,setBuying]=useState<Basket[]>([])
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -53,17 +59,17 @@ const fetchBacket = async () => {
 
 
 
-const handleRemoveItem = async (itemId: number) => {
-    try {
-        setIsLoading(true);
-        await BasketService.removeItemFromBasket(itemId);
-        setBuying((prevItems) => prevItems.filter((item) => item.id !== itemId));
-    } catch (error: any) {
-        setErrorMessage('Ошибка при удалении товара из корзины.');
-    } finally {
-        setIsLoading(false);
-    }
-};
+// const handleRemoveItem = async (itemId: number) => {
+//     try {
+//         setIsLoading(true);
+//         await BasketService.removeItemFromBasket(itemId);
+//         setBuying((prevItems) => prevItems.filter((item) => item.id !== itemId));
+//     } catch (error: any) {
+//         setErrorMessage('Ошибка при удалении товара из корзины.');
+//     } finally {
+//         setIsLoading(false);
+//     }
+// };
 
     // Функция для перехода к оформлению заказа
     const handleCheckout = () => {
@@ -106,15 +112,15 @@ const handleRemoveItem = async (itemId: number) => {
                 {isBuying.length > 0 ? (
                     <>
                         <List>
-                            {isBuying.map((item) => (
-                                <ListItem key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <img src={item.image} alt={item.name} style={{ width: '50px', marginRight: '15px' }} />
+                            {isBuying.map((item,index) => (
+                                <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                                    <img src={item.url_images[0] || img} alt={item.product_name} style={{ width: '50px', marginRight: '15px' }} />
                                     <ListItemText
-                                        primary={item.name}
-                                        secondary={`Цена: ${item.price} руб.`}
+                                        primary={`Название:${item.product_name}`}
+                                        // secondary={`Цена: ${item.price} руб.`}
                                     />
                                     <ListItemSecondaryAction>
-                                        <IconButton edge="end" onClick={() => handleRemoveItem(item.id)}>
+                                        <IconButton edge="end" onClick={() => handleRemoveItem(index)}>
                                             <DeleteIcon sx={{ color: '#E62526' }} />
                                         </IconButton>
                                     </ListItemSecondaryAction>

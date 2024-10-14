@@ -8,7 +8,7 @@ export default class BasketService{
     }
     static async getAllBasket() {
         // @ts-ignore
-        return basketApi.get<ShopResponse>(`/get_all_items_from_cart/${productId}`);
+        return basketApi.get<ShopResponse>(`/get_all_items_from_cart/`);
     }
 
     static async removeItemFromBasket(productId: number) {
