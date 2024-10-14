@@ -31,7 +31,7 @@ def add_to_cart(request):
     if serializer.is_valid():
         product = serializer.validated_data['product']
         quantity = serializer.validated_data['quantity']
-        size = serializer.validated_data['size_instance']  # Это объект ProductSize
+        size = serializer.validated_data['size_instance']
 
         # Проверяем наличие товара с указанным размером в корзине
         cart_item, created = CartItem.objects.get_or_create(user_id=user_id, product=product, size=size)

@@ -14,11 +14,22 @@ class ProductSerializer(serializers.ModelSerializer):
         return ProductSizeSerializer(sizes, many=True).data
 
 
+
 class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductSize
-        fields = ['size', 'quantity']
+        fields = ['size']
 
+
+class CartItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name', read_only=True)
+    description = serializers.CharField(source='product.description', read_only=True)
+    url_images = serializers.ListField(source='product.url_images', read_only=True)
+    size = serializers.CharField(source='size.size', read_only=True)  # Плоская структура для размера
+
+    class Meta:
+        model = CartItem
+        fields = ['product_name', 'description', 'url_images', 'size', 'quantity']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     sizes = ProductSizeSerializer(many=True)
