@@ -120,10 +120,19 @@ docker-compose exec auth_microservice python manage.py createsuperuser
 ```bash
 https://localhost
 ```
-API-документация (Swagger) для микросервисов доступна по следующему пути(port от 8000 до 8004):
+API-документация (Swagger) для микросервисов доступна по следующему пути (port от 8000 до 8004):  
 ```bash
 https://localhost:port/swagger/
 ```
+
+Либо можно скачать файлы:
+
+[Скачать Swagger файл для auth_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/auth_microservice)  
+[Скачать Swagger файл для kokoc_team_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/kokoc_team_microservice)  
+[Скачать Swagger файл для match_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/match_microservice)  
+[Скачать Swagger файл для news_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/news_microservice)  
+[Скачать Swagger файл для shop_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/shop_microservice)
+
 ## Сервисы
 ### Frontend (React + TypeScript)
 Фронтенд построен с использованием React и TypeScript. Он собирается с помощью npm и обслуживается через Nginx. Вся статика хранится в контейнере Nginx.
