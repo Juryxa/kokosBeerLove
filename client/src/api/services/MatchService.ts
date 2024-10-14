@@ -12,11 +12,11 @@ export default class MatchService{
     }
     static async getLastOne(){
         // @ts-ignore
-        return matchApi.get<MatchService>('/get_last/')
+        return matchApi.get<MatchResponse[]>('/get_last/')
     }
     static async getNext(cur_cnt_video: number){
         // @ts-ignore
-        return matchApi.get<MatchService[]>(`get_next/?cur_cnt_video=${cur_cnt_video}`)
+        return matchApi.get<MatchResponse[]>(`get_next/?cur_cnt_video=${cur_cnt_video}`)
     }
     static async getUpComing(){
         // @ts-ignore
