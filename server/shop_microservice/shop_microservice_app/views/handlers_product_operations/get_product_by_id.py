@@ -1,4 +1,4 @@
- 
+from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -18,6 +18,7 @@ from ...serializers import ProductSerializer
         404: openapi.Response(description="Товар не найден")
     }
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_product_by_id(request, product_id):
     try:

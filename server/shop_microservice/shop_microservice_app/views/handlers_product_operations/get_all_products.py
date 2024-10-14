@@ -17,6 +17,7 @@ from ...serializers import ProductSerializer
         200: openapi.Response(description="Успешный ответ с данными всех товаров", schema=ProductSerializer(many=True)),
     }
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_all_products(request):
     # Получаем все товары из базы данных

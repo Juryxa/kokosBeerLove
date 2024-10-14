@@ -33,6 +33,7 @@ from ...serializers import PlayerSerializer
         )
     }
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_all_players(request):
     players = Player.objects.all()
