@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AppBar, Toolbar, Box, IconButton, MenuItem, Typography,Drawer, Menu, Button} from '@mui/material';
 import {YouTube, Telegram, WhatsApp,Menu as MenuIcon , AccountCircle} from '@mui/icons-material';
 import {Link, useNavigate} from 'react-router-dom';
@@ -9,6 +9,15 @@ import logo from '../images/logo.jpg';
 import Basket from './Basket';
 import {  Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BasketService from '../api/services/BasketService';
+interface Basket  {
+    id:number;
+    product_name: number,
+    description: string,
+    url_images: string[],
+    size: string,
+    quantity: number
+}
 
 const Header = () => {
     const [open, setOpen] = useState(false);
@@ -16,7 +25,9 @@ const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
-
+    const[isBuying,setBuying]=useState<Basket[]>([])
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const handleOpenCart = () => {
         setIsCartOpen(true);
     };
@@ -56,7 +67,26 @@ const Header = () => {
         setDrawerOpen(!drawerOpen);
     };
 
-
+    useEffect(()=>{
+        fetchBacket()
+    },[])
+    
+    
+    const fetchBacket = async () => {
+        setIsLoading(true);
+        try {
+            const response = await BasketService.getAllBasket();
+            setBuying(response.data);
+        } catch (error: any) {
+            if (error.response && error.response.status === 404) {
+                setErrorMessage('Товары не найдены.');
+            } else {
+                setErrorMessage('Ошибка загрузки товаров.');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <AppBar position="static" color="transparent" elevation={0}>
@@ -147,7 +177,7 @@ const Header = () => {
                             {store.isAuth ? (
                                 <>
                                 <IconButton onClick={handleOpenCart} color="primary" aria-label="Корзина">
-                <Badge badgeContent={8} color="error">
+                <Badge badgeContent={isBuying.length} color="error">
                     <ShoppingCartIcon style={{color:"red"}}/>
                 </Badge>
             </IconButton>

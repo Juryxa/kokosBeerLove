@@ -38,8 +38,8 @@ const ShopPreview = () => {
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
                     {shopData.slice(0, 3).map((item) => (
                         <ShopCard
-                            key={item.id}
                             id={item.id}
+                            key={item.id}
                             name={item.name}
                             description={item.description}
                             price={item.price}

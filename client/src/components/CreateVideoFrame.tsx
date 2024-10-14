@@ -15,8 +15,8 @@ interface IframeType {
 const CreateVideoFrame: React.FC<IframeType> = ({ video_url, hd , width, height,autoplay }) => {
     const link = extractNumbersFromUrl(video_url)
 
-    const iframeSrc = `https://vk.com/video_ext.php?oid=-${link?.firstNumber}&id=${link?.secondNumber}&hd=${hd}&autoplay=${autoplay ? 1 : 0}&js_api=1`;
-    
+     const iframeSrc = `https://vk.com/video_ext.php?oid=-${link?.firstNumber}&id=${link?.secondNumber}&hd=${hd}&autoplay=${autoplay ? 1 : 0}&js_api=1`;
+    // const iframeSrc = `https://vk.com/video-${link?.firstNumber}_${link?.secondNumber}` 
 
 
     return (  

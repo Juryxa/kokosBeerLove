@@ -14,12 +14,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
-
+import axios from 'axios';
 import BasketService from '../api/services/BasketService';
 import { ShopResponse } from "../api/models/response/ShopResponse"
 import img from '../images/T-shirt Mockup.png'
 
 interface Basket  {
+    id:number;
     product_name: number,
     description: string,
     url_images: string[],
@@ -27,7 +28,10 @@ interface Basket  {
     quantity: number
 }
 
-
+interface RemoveItemFromCartProps {
+    productId: number;
+    size: string;
+  }
 
 const Basket: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
    
@@ -59,17 +63,33 @@ const fetchBacket = async () => {
 
 
 
-// const handleRemoveItem = async (itemId: number) => {
-//     try {
-//         setIsLoading(true);
-//         await BasketService.removeItemFromBasket(itemId);
-//         setBuying((prevItems) => prevItems.filter((item) => item.id !== itemId));
-//     } catch (error: any) {
-//         setErrorMessage('Ошибка при удалении товара из корзины.');
-//     } finally {
-//         setIsLoading(false);
-//     }
-// };
+
+
+
+
+const removeItemFromCart = async ({
+  productId,
+  size,
+}: RemoveItemFromCartProps) => {
+  try {
+    // Отправляем DELETE запрос на сервер с productId и размером
+    const response = await axios.delete(`http://localhost:8003/api/shop/remove_item_from_cart/${productId}/`, {
+      params: { size },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,  // Если требуется авторизация
+      },
+    });
+
+    // Если запрос успешен, вызываем onSuccess
+    
+  } catch (error) {
+    setErrorMessage('Ошибка загрузки товаров.');
+  }
+}
+
+
+
+
 
     // Функция для перехода к оформлению заказа
     const handleCheckout = () => {
@@ -114,13 +134,15 @@ const fetchBacket = async () => {
                         <List>
                             {isBuying.map((item,index) => (
                                 <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <img src={item.url_images[0] || img} alt={item.product_name} style={{ width: '50px', marginRight: '15px' }} />
+                                    <img src={item.url_images[0] || img} alt="error" style={{ width: '50px', marginRight: '15px' }} />
                                     <ListItemText
                                         primary={`Название:${item.product_name}`}
                                         // secondary={`Цена: ${item.price} руб.`}
                                     />
-                                    <ListItemSecondaryAction>
-                                        <IconButton edge="end" onClick={() => handleRemoveItem(index)}>
+                                    <ListItemSecondaryAction >
+                                        <IconButton edge="end" onClick={() => removeItemFromCart(item.id,item.size)}>
+                                                                                                        
+                                                                                                        
                                             <DeleteIcon sx={{ color: '#E62526' }} />
                                         </IconButton>
                                     </ListItemSecondaryAction>

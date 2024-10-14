@@ -8,7 +8,7 @@ import { AltRoute } from '@mui/icons-material';
 import imgredline from '../images/Rectangle40.png'
 import tshirt from '../images/T-shirt Mockup.png'
 
-const ShopCard: React.FC<ShopResponse> = ({ id, name, description, price, url_images }) => {
+const ShopCard: React.FC<ShopResponse> = ({ id, name, description }) => {
     return (
         <Link to={`/shop/${id}`} className="shop-card">
             <div className='shopcard-container'>

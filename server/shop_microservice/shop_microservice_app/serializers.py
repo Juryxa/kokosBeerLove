@@ -7,7 +7,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
+        fields = ['id','name', 'description', 'price', 'discount', 'category', 'url_images', 'sizes']
 
     def get_sizes(self, obj):
         sizes = ProductSize.objects.filter(product=obj)
@@ -26,10 +26,11 @@ class CartItemSerializer(serializers.ModelSerializer):
     description = serializers.CharField(source='product.description', read_only=True)
     url_images = serializers.ListField(source='product.url_images', read_only=True)
     size = serializers.CharField(source='size.size', read_only=True)  # Плоская структура для размера
+    price = serializers.DecimalField(source='product.price', max_digits=10, decimal_places=2, read_only=True)  # Добавлено поле цены
 
     class Meta:
         model = CartItem
-        fields = ['product_name', 'description', 'url_images', 'size', 'quantity']
+        fields = ['product_name', 'description', 'url_images', 'size', 'price', 'quantity']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     sizes = ProductSizeSerializer(many=True)
