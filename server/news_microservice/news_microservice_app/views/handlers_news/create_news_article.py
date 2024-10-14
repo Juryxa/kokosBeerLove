@@ -1,47 +1,63 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 
 from ...models import NewsArticle
 
 
 @swagger_auto_schema(
-    method='post',
+    method="post",
     operation_description="Создание новой новости с указанием URL изображения. ВАЖНО ПЕРЕДАТЬ access token, если в payload будет is_superuser == true(то пользователь-администратор), иначе ответит 401 или 403",
     tags=['NewsArticle'],
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
-        required=['title', 'text', 'image_url'],
+        required=[
+            "title",
+            "text",
+            "image_url"],
         properties={
-            'title': openapi.Schema(type=openapi.TYPE_STRING, description='Заголовок новости'),
-            'text': openapi.Schema(type=openapi.TYPE_STRING, description='Текст новости'),
-            'image_url': openapi.Schema(type=openapi.TYPE_STRING, description='URL изображения новости')
+            "title": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Заголовок новости"),
+            "text": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Текст новости"),
+            "image_url": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="URL изображения новости"),
         },
     ),
     responses={
-        201: openapi.Response(description="Новость успешно создана"),
-        400: openapi.Response(description="Неправильные данные"),
-        401: openapi.Response(description="Неавторизован, нужно перенаправить со стороны frontend в перехватчик api/refresh/ другого микросервиса"),
-        403: openapi.Response(description="Нет прав доступа"),
-    }
+        201: openapi.Response(
+            description="Новость успешно создана"),
+        400: openapi.Response(
+            description="Неправильные данные"),
+        401: openapi.Response(
+            description="Неавторизован, нужно перенаправить со стороны frontend в перехватчик api/refresh/ другого микросервиса"),
+        403: openapi.Response(
+            description="Нет прав доступа"),
+    },
 )
-@api_view(['POST'])
+@api_view(["POST"])
 @authentication_classes([JWTTokenUserAuthentication])
 @permission_classes([IsAuthenticated])
 def create_news_article(request):
     # Проверка наличия is_superuser в токене
     if not request.user.is_superuser:
-        return Response({'error': 'У вас нет прав доступа для создания новостей'}, status=status.HTTP_403_FORBIDDEN)
+        return Response(
+            {"error": "У вас нет прав доступа для создания новостей"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
 
     # Проверка на наличие всех необходимых полей
-    title = request.data.get('title')
-    text = request.data.get('text')
-    image_url = request.data.get('image_url')  # Получаем URL изображения
+    title = request.data.get("title")
+    text = request.data.get("text")
+    image_url = request.data.get("image_url")  # Получаем URL изображения
 
     if title or text or image_url:
         # Сохранение новости в базе данных с URL изображения
@@ -49,4 +65,5 @@ def create_news_article(request):
         return Response(status=status.HTTP_201_CREATED)
 
     # Если отсутствуют обязательные поля, возвращаем ошибку
-    return Response({'error': 'Отсутствуют обязательные поля'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"error": "Отсутствуют обязательные поля"},
+                    status=status.HTTP_400_BAD_REQUEST)

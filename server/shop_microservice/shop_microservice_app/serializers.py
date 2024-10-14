@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Product, ProductSize, CartItem
+
+from .models import CartItem, Product, ProductSize
+
 
 
 class ProductSerializer(serializers.ModelSerializer):

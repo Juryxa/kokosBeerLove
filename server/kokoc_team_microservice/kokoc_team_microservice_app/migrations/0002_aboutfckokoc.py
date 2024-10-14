@@ -6,23 +6,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('kokoc_team_microservice_app', '0001_initial'),
+        ("kokoc_team_microservice_app", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AboutFcKokoc',
+            name="AboutFcKokoc",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('games_played', models.IntegerField(default=0, verbose_name='Количество игр')),
-                ('wins', models.IntegerField(default=0, verbose_name='Победы')),
-                ('goals_scored', models.IntegerField(default=0, verbose_name='Голы')),
-                ('tournaments', models.IntegerField(default=0, verbose_name='Турниры')),
-                ('about_text', models.TextField(blank=True, null=True, verbose_name='Информация о команде')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "games_played",
+                    models.IntegerField(default=0, verbose_name="Количество игр"),
+                ),
+                ("wins", models.IntegerField(default=0, verbose_name="Победы")),
+                ("goals_scored", models.IntegerField(default=0, verbose_name="Голы")),
+                ("tournaments", models.IntegerField(default=0, verbose_name="Турниры")),
+                (
+                    "about_text",
+                    models.TextField(
+                        blank=True, null=True, verbose_name="Информация о команде"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'О клубе',
-                'verbose_name_plural': 'О клубе',
+                "verbose_name": "О клубе",
+                "verbose_name_plural": "О клубе",
             },
         ),
     ]

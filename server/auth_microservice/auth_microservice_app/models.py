@@ -1,6 +1,7 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
+from django.db import models
 from django.utils import timezone
 
 
@@ -29,20 +30,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
         error_messages={
-            'unique': "Email уже занят.",
-        }
+            "unique": "Email уже занят.",
+        },
     )
     username = models.CharField(
         max_length=150,
         unique=True,
         error_messages={
-            'unique': "Никнейм уже занят.",
-        }
+            "unique": "Никнейм уже занят.",
+        },
     )
     password = models.CharField(max_length=128)  # Хешированный пароль
     first_name = models.CharField(max_length=150, blank=True)  # Имя
-    last_name = models.CharField(max_length=150, blank=True)   # Фамилия
-    phone_number = models.CharField(max_length=15, blank=True)  # Номер телефона
+    last_name = models.CharField(max_length=150, blank=True)  # Фамилия
+    phone_number = models.CharField(
+        max_length=15, blank=True)  # Номер телефона
     telegram = models.CharField(max_length=100, blank=True)  # Telegram
     avatar_url = models.URLField(blank=True)  # URL для аватара
     is_active = models.BooleanField(default=True)
@@ -51,18 +53,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
-        db_table = 'site_users'
+        db_table = "site_users"
 
     def __str__(self):
         return self.email
 
 
 class RefreshToken(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE)
     token = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
