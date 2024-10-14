@@ -9,8 +9,7 @@ import { ProfileEdit } from '../../api/models/ProfileEdit';
 
 
 const fieldNames: Record<keyof ProfileEdit, string> = {
-  username:"Username",
-  first_name: 'Имя',
+  name: 'Имя',
   last_name: 'Фамилия',
   phone_number: 'Номер телефона',
   telegram: 'Телеграм',
@@ -58,8 +57,7 @@ const UserProfile: React.FC = () => {
       if (hasImageChanged) {
         try {
           await AuthService.profileEdit(
-            user.username,
-            user.first_name,
+            user.name,
             user.last_name,
             user.phone_number,
             user.telegram,
@@ -123,7 +121,7 @@ const UserProfile: React.FC = () => {
                 {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
                 <Typography variant="h5" gutterBottom>
-                  {user?.first_name} {user?.last_name}
+                  {user?.username} {user?.last_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
@@ -134,7 +132,7 @@ const UserProfile: React.FC = () => {
             <Box flex="2" display="flex" justifyContent="center">
               <Card sx={{ padding: 2, backgroundColor: '#ffffff', width: '100%' }}>
                 <CardContent>
-                  {(['username','first_name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
+                  {(['name', 'last_name',  'phone_number', 'telegram'] as Array<keyof ProfileEdit>).map((field) => (
                     <Box key={field} mb={2}>
                       <Typography variant="h6" gutterBottom>
                         {fieldNames[field]}
