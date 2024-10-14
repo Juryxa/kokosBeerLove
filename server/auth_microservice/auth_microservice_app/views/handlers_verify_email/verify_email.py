@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
                 "code": "123456"
             }
         }),
-        400: openapi.Response(description="Некорректный email или email уже существует"),
+        400: openapi.Response(description="Некорректный email, email уже существует или имя уже занято"),
         500: openapi.Response(description="Внутренняя ошибка сервера (Internal Server Error)")
     }
 )
@@ -37,11 +37,19 @@ def verify_email(request):
 
     if serializer.is_valid():
         email = serializer.validated_data['email']
+        username = serializer.validated_data.get('username', None)
 
-        # Проверка, существует ли email в базе данных
+        # Проверка, существует ли пользователь с таким email в базе данных
         if CustomUser.objects.filter(email=email).exists():
             return Response(
                 {"detail": "Пользователь с таким email уже зарегистрирован."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Проверка, существует ли пользователь с таким именем в базе данных
+        if username and CustomUser.objects.filter(username=username).exists():
+            return Response(
+                {"detail": "Пользователь с таким именем уже зарегистрирован."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
