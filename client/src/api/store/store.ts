@@ -72,9 +72,9 @@ export default class Store {
         }
     }
 
-    async verify(email: string) {
+    async verify(email: string, username: string) {
         try {
-            const response = await AuthService.verify(email);
+            const response = await AuthService.verify(email, username);
             this.setCode(response.data.code);
             return Promise.resolve();
         } catch (e) {
