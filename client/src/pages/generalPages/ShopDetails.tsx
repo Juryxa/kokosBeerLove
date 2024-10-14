@@ -112,7 +112,11 @@ const ShopDetails = () => {
     }
 };
     
-
+function calculateDiscountedPrice(originalPrice:number, discountPercentage:number):number {
+    const discountAmount = (originalPrice * discountPercentage) / 100;
+    const newPrice = originalPrice - discountAmount;
+    return newPrice;
+}
 
 
     return (
@@ -136,8 +140,18 @@ const ShopDetails = () => {
                             <span>({product.reviewsCount} отзывов)</span>
                         </div>
                         <div className="product-price">
-                            <span className="new-price">{product.price} ₽</span>
-                            <span className="old-price">{product.oldPrice}</span>
+                        {
+                            productItem?.price !== undefined && productItem?.discount !== undefined && productItem?.discount !==0 ? (
+                                <>
+                                    <span className="new-price">
+                                        {calculateDiscountedPrice(productItem.price, productItem.discount)} ₽
+                                    </span>
+                                    <span className="old-price">{productItem.price} ₽</span>
+                                </>
+                            ) : (
+                                <span className="new-price">{productItem?.price} ₽</span>
+                            )
+                        }
                         </div>
                         <div className="product-sizes">
                             <p>Размеры:</p>

@@ -118,14 +118,16 @@ const UserProfile: React.FC = () => {
                                 {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                                 {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
-                                <Typography variant="h5" gutterBottom>
-                                    {user?.first_name} {user?.last_name}
-                                </Typography>
-                                <Typography variant="subtitle1" color="textSecondary">
-                                    Болельщик
-                                </Typography>
-                            </Card>
-                        </Box>
+
+                <Typography variant="h5" gutterBottom>
+                  {user?.name} {user?.last_name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  Kokos fan
+                </Typography>
+              </Card>
+            </Box>
+
 
                         <Box flex="2" display="flex" justifyContent="center">
                             <Card sx={{padding: 2, backgroundColor: '#ffffff', width: '100%'}}>
