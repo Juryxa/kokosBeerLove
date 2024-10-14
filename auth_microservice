@@ -1,0 +1,254 @@
+swagger: '2.0'
+info:
+  title: API Documentation
+  description: Все запросы начинаются с http://127.0.0.1:8000/api/auth/ если сервер
+    локальный и на порту 8000
+  version: v1
+host: localhost:8000
+schemes:
+- http
+basePath: /api/auth
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /login/:
+    post:
+      operationId: login_create
+      description: Логин пользователя
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Успешная аутентификация
+        '401':
+          description: Неверный email или пароль
+      tags:
+      - authHandlers
+    parameters: []
+  /logout/:
+    post:
+      operationId: logout_create
+      description: Выход пользователя. Refresh токен передаётся в cookie.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Logout'
+      responses:
+        '204':
+          description: Успешный выход
+        '400':
+          description: Токен не предоставлен
+      tags:
+      - authHandlers
+    parameters: []
+  /profile/get_user_data/:
+    get:
+      operationId: profile_get_user_data_list
+      description: Получение данных пользователя по access токену. Важно передать
+        валидный токен.
+      parameters: []
+      responses:
+        '200':
+          description: Успешное получение данных пользователя
+          examples:
+            application/json:
+              email: exmaple@mail.ru
+              username: example
+              first_name: Иван
+              last_name: Иванов
+              phone_number: '+79991234567'
+              telegram: '@ivanov'
+              avatar_url: http://example.com/avatar.jpg
+        '404':
+          description: Пользователь не найден
+        '401':
+          description: Неавторизован
+      tags:
+      - userHandlers
+    parameters: []
+  /profile/update/:
+    patch:
+      operationId: profile_update_partial_update
+      description: Обновление профиля пользователя. Можно обновить имя, фамилию, номер
+        телефона, Telegram, и URL аватара.
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserProfile'
+      responses:
+        '200':
+          description: Профиль обновлен
+          examples:
+            application/json:
+              first_name: Иван
+              last_name: Иванов
+              phone_number: '+79991234567'
+              telegram: '@ivanov'
+              avatar_url: http://example.com/avatar.jpg
+        '400':
+          description: Некорректные данные
+      tags:
+      - userHandlers
+    parameters: []
+  /refresh/:
+    post:
+      operationId: refresh_create
+      description: Обновление access токена с использованием refresh токена, который
+        передается в Cookie. Refresh токен должен быть передан в cookie с именем 'refresh_token'.
+      parameters: []
+      responses:
+        '200':
+          description: Новый access токен
+          examples:
+            application/json:
+              access: новый access токен
+        '401':
+          description: Недействительный или отсутствующий refresh токен
+      tags:
+      - tokenHandlers
+    parameters: []
+  /signup/:
+    post:
+      operationId: signup_create
+      description: Регистрация нового пользователя
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Signup'
+      responses:
+        '201':
+          description: Пользователь успешно зарегистрирован
+        '400':
+          description: Некорректные данные запроса
+        '409':
+          description: Email уже существует
+      tags:
+      - authHandlers
+    parameters: []
+  /verify-email/:
+    post:
+      operationId: verify-email_create
+      description: Отправка кода подтверждения на email. Код отправляется только на
+        @mail.ru
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/EmailVerification'
+      responses:
+        '200':
+          description: Код отправлен на почту
+          examples:
+            application/json:
+              code: '123456'
+        '400':
+          description: Некорректный email, email уже существует или имя уже занято
+        '500':
+          description: Внутренняя ошибка сервера (Internal Server Error)
+      tags:
+      - verifyEmailHandlers
+    parameters: []
+definitions:
+  Login:
+    required:
+    - email
+    - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  Logout:
+    required:
+    - refresh_token
+    type: object
+    properties:
+      refresh_token:
+        title: Refresh token
+        type: string
+        minLength: 1
+  UserProfile:
+    type: object
+    properties:
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      phone_number:
+        title: Phone number
+        type: string
+        maxLength: 15
+      telegram:
+        title: Telegram
+        type: string
+        maxLength: 100
+      avatar_url:
+        title: Avatar url
+        type: string
+        format: uri
+        maxLength: 200
+  Signup:
+    required:
+    - username
+    - email
+    - password
+    type: object
+    properties:
+      username:
+        title: Username
+        type: string
+        maxLength: 150
+        minLength: 1
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  EmailVerification:
+    required:
+    - email
+    - username
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+      username:
+        title: Username
+        type: string
+        minLength: 1

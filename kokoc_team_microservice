@@ -1,0 +1,333 @@
+swagger: '2.0'
+info:
+  title: API Documentation
+  description: Все запросы начинаются с http://127.0.0.1:8000/api/kokoc_team/ если
+    сервер локальный и на порту 8000
+  version: v1
+host: localhost:8004
+schemes:
+- http
+basePath: /api/kokoc_team
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /create_player/:
+    post:
+      operationId: create_player_create
+      description: Создание нового игрока. Доступно только администраторам (is_superuser
+        == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        '201':
+          description: Игрок успешно создан
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован
+        '403':
+          description: Нет прав доступа
+      tags:
+      - playerHandlers
+    parameters: []
+  /delete_player/{id}/:
+    delete:
+      operationId: delete_player_delete
+      description: Удаление игрока по его ID. Доступно только администраторам (is_superuser
+        == true).
+      parameters:
+      - name: id
+        in: path
+        description: ID игрока
+        type: integer
+        required: true
+      responses:
+        '204':
+          description: Игрок успешно удален
+        '404':
+          description: Игрок не найден
+        '403':
+          description: Нет прав доступа
+      tags:
+      - playerHandlers
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+  /get_all_players/:
+    get:
+      operationId: get_all_players_list
+      description: Получение списка всех игроков. Данные кэшируются на 15 минут.
+      parameters: []
+      responses:
+        '200':
+          description: Успешный ответ с данными игроков
+          examples:
+            application/json:
+            - id: 1
+              first_name: Иван
+              last_name: Иванов
+              middle_name: Иванович
+              role: защитник
+              games_played: 10
+              goals_scored: 3
+              assists_made: 2
+              yellow_cards: 1
+              red_cards: 0
+              photo_url: http://example.com/photos/ivanov.jpg
+      tags:
+      - playerHandlers
+    parameters: []
+  /get_info_club/:
+    get:
+      operationId: get_info_club_list
+      description: Получение информации о клубе. Для просмотра данных авторизация
+        не обязательна.
+      parameters: []
+      responses:
+        '200':
+          description: Информация о клубе успешно получена
+        '404':
+          description: Информация о клубе не найдена
+      tags:
+      - aboutKokocHandlers
+    parameters: []
+  /get_player/{player_id}/:
+    get:
+      operationId: get_player_read
+      description: Получение информации об игроке по ID.
+      parameters:
+      - name: player_id
+        in: path
+        description: ID игрока
+        type: integer
+        required: true
+      responses:
+        '200':
+          description: Успешный ответ с данными игрока
+          examples:
+            application/json:
+              id: 1
+              first_name: Иван
+              last_name: Иванов
+              middle_name: Иванович
+              role: защитник
+              games_played: 10
+              goals_scored: 3
+              assists_made: 2
+              yellow_cards: 1
+              red_cards: 0
+              photo_url: http://example.com/photos/ivanov.jpg
+        '404':
+          description: Игрок не найден
+      tags:
+      - playerHandlers
+    parameters:
+    - name: player_id
+      in: path
+      required: true
+      type: string
+  /info_club/update/:
+    put:
+      operationId: info_club_update_update
+      description: Полное обновление информации о клубе. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/AboutFcKokoc'
+      responses:
+        '200':
+          description: Информация о клубе успешно обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Информация о клубе не найдена
+      tags:
+      - aboutKokocHandlers
+    patch:
+      operationId: info_club_update_partial_update
+      description: Частичное обновление информации о клубе. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/AboutFcKokoc'
+      responses:
+        '200':
+          description: Информация о клубе успешно частично обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Информация о клубе не найдена
+      tags:
+      - aboutKokocHandlers
+    parameters: []
+  /update_player/{player_id}/:
+    put:
+      operationId: update_player_update
+      description: Полное обновление информации об игроке. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        '200':
+          description: Информация об игроке успешно обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Игрок не найден
+      tags:
+      - playerHandlers
+    patch:
+      operationId: update_player_partial_update
+      description: Частичное обновление информации об игроке. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        '200':
+          description: Информация об игроке успешно частично обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Игрок не найден
+      tags:
+      - playerHandlers
+    parameters:
+    - name: player_id
+      in: path
+      required: true
+      type: string
+definitions:
+  Player:
+    required:
+    - first_name
+    - last_name
+    - role
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 100
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 100
+        minLength: 1
+      middle_name:
+        title: Middle name
+        type: string
+        maxLength: 100
+        x-nullable: true
+      role:
+        title: Role
+        type: string
+        enum:
+        - защитник
+        - нападающий
+        - вратарь
+        - полузащитник
+      games_played:
+        title: Games played
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      goals_scored:
+        title: Goals scored
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      assists_made:
+        title: Assists made
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      yellow_cards:
+        title: Yellow cards
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      red_cards:
+        title: Red cards
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      photo_url:
+        title: Photo url
+        type: string
+        format: uri
+        maxLength: 500
+  AboutFcKokoc:
+    type: object
+    properties:
+      games_played:
+        title: Количество игр
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      wins:
+        title: Победы
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      goals_scored:
+        title: Голы
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      tournaments:
+        title: Турниры
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      about_text:
+        title: Информация о команде
+        type: string
+        x-nullable: true
