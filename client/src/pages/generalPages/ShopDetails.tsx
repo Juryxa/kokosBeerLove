@@ -4,7 +4,6 @@ import {ShopResponse} from "../../api/models/response/ShopResponse";
 import ShopService from "../../api/services/ShopService";
 import img1 from '../../images/T-shirt Mockup.png';
 import img2 from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
-import {ProductSize} from "../../api/models/ProductSize";
 import './ShopDetails.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -12,22 +11,8 @@ import BasketService from '../../api/services/BasketService';
 import {store} from "../../index";
 
 interface Product {
-    name: string;
-    price: number;
-    oldPrice: number;
-    image: string;
     rating: number;
     reviewsCount: number;
-    colorOptions: string[];
-    sizeOptions: string[];
-    description: string;
-    article: string;
-    material: string;
-    country: string;
-    features: string;
-    availability: string;
-    storeRating: number;
-    deliveryDate: string;
 }
 
 const ShopDetails = () => {
@@ -44,22 +29,8 @@ const ShopDetails = () => {
     const productImages = [img1, img2]; // Массив изображений
 
     const product: Product = {
-        name: 'Футболка оверсайз с принтом черная',
-        price: 997,
-        oldPrice: 3500,
-        image: '/path/to/image.jpg',
         rating: 4.8,
         reviewsCount: 1018,
-        colorOptions: ['Черный', 'Белый'],
-        sizeOptions: ['S', 'M', 'L', 'XL', 'XXL'],
-        description: 'Износостойкость, тренд',
-        article: '154087085',
-        material: '95% хлопок, 5% эластан',
-        country: 'Китай',
-        features: 'Без карманов, круглый вырез',
-        availability: '12 октября, склад WB',
-        storeRating: 4.7,
-        deliveryDate: '14 дней на возврат',
     };
 
     useEffect(() => {
@@ -123,7 +94,7 @@ const ShopDetails = () => {
     function calculateDiscountedPrice(originalPrice: number, discountPercentage: number): number {
         const discountAmount = (originalPrice * discountPercentage) / 100;
         const newPrice = originalPrice - discountAmount;
-        return newPrice;
+        return Math.floor(newPrice); // Отбрасывает дробную часть
     }
 
 
@@ -135,7 +106,7 @@ const ShopDetails = () => {
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className='content-shop-details'>
                     <div className="product-image">
-                        <img src={productItem?.url_images[currentImageIndex]} alt={product.name}/>
+                        <img src={productItem?.url_images[currentImageIndex]} alt={productItem?.name}/>
                         <div className="image-navigation-buttons">
                             <button onClick={handlePrevImage} className="prev-image-button">Назад</button>
                             <button onClick={handleNextImage} className="next-image-button">Вперед</button>
@@ -155,49 +126,46 @@ const ShopDetails = () => {
                                     <span className="new-price">
                                         {calculateDiscountedPrice(productItem.price, productItem.discount)} ₽
                                     </span>
-                                            <span className="old-price">{productItem.price} ₽</span>
-                                        </>
-                                    ) : (
-                                        <span className="new-price">{productItem?.price} ₽</span>
-                                    )
-                                }
-                            </div>
-                            <div className="product-sizes">
-                                <p>Размеры:</p>
-                                <div>
-                                    {productItem?.sizes.map((item, index) => (
-                                        <button
-                                            key={index}
-                                            className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
-                                            onClick={() => handleSizeSelect(item.size)}
-                                            disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
-                                            style={{backgroundColor: item.quantity === 0 ? 'gray' : ''}}
+                                    <span className="old-price">{productItem.price} ₽</span>
+                                </>
+                            ) : (
+                                <span className="new-price">{productItem?.price} ₽</span>
+                            )
+                        }
+                        </div>
+                        <div className="product-sizes">
+                            <p>Размеры:</p>
+                            <div>
+                            {productItem?.sizes.map((item, index) => (
+                                <button
+                                    key={index}
+                                    className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
+                                    onClick={() => handleSizeSelect(item.size)}
+                                    disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
+                                    style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
 
-                                            // Задаем серый цвет для недоступных кнопок
-                                        >
-                                            {item.size}
-                                        </button>
-                                    ))}
-                                </div>
+                                     // Задаем серый цвет для недоступных кнопок
+                                >
+                                    {item.size}
+                                </button>
+                            ))}
                             </div>
-                            <p>Описание: {productItem?.description}</p>
-                            <div className="product-buttons">
-                                {
-                                    selectedSize !== '' ? (
-                                        <button className="add-to-cart" onClick={addToBasket}>Добавить в
-                                            корзину</button>
-                                    ) : (
-                                        <button disabled={true} style={{backgroundColor: 'gray'}}
-                                                className="add-to-cart" onClick={addToBasket}>Добавить в
-                                            корзину</button>
-                                    )}
-                            </div>
+                        </div>
+                        <p>Описание: {productItem?.description}</p>
+                        <div className="product-buttons">
+                            {
+                            selectedSize !== '' ?(
+                            <button className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
+                            ):(
+                                <button disabled={true} style={{ backgroundColor:  'gray'}} className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
+                            )}
                         </div>
                     </div>
                 </div>
-
             </div>
-            <Footer/>
+
+        </div>
+        <Footer />
         </>
     );
 };
