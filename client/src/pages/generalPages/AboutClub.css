@@ -50,6 +50,7 @@
     text-align: justify;
     word-wrap: break-word; /* Перенос длинных слов */
     overflow-wrap: break-word; /* Поддержка для старых браузеров */
+    font-size: 18px;
 }
 
 /* Стиль для текстового блока поверх изображения */

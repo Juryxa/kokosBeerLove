@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
 
 
           <div className='icon_section'>
-            <h3><img src={phone} alt="error"/><a href="tel:+7988552222222">+7 (988) 552 - 22 - 22</a></h3>
+            <h3><img src={phone} alt="error"/><a href="tel:+70000000000">+7 (000) 000 - 00 - 00</a></h3>
             <Box sx={{display: 'flex', alignItems: 'center' }}>
           <IconButton color="inherit">
               <MailOutline />
