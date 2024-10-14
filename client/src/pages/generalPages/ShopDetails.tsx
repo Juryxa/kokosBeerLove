@@ -105,7 +105,7 @@ const ShopDetails = () => {
             await BasketService.addToBasket(productId,1, selectedSize)
 
         } else {
-            alert('Пожалуйста, выберите размер перед добавлением в корзину');
+            setErrorMessage('Пожалуйста, выберите размер перед добавлением в корзину');
         }
     } catch (error) {
         setErrorMessage('Ошибка при сохранении игрока.');
@@ -173,8 +173,12 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
                         </div>
                         <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
+                            {
+                            selectedSize !== '' ?(
                             <button className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
-
+                            ):(
+                                <button disabled={true} style={{ backgroundColor:  'gray'}} className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
+                            )}
                         </div>
                     </div>
                 </div>
