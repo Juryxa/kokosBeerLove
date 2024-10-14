@@ -20,12 +20,9 @@ from ...serializers import ProductSerializer
         ),
     },
 )
-<<<<<<< HEAD
-@api_view(["GET"])
-=======
+
 @cache_page(60 * 20)
 @api_view(['GET'])
->>>>>>> b12af1f995f6b144372af8a8e816486f4c1911a7
 def get_all_products(request):
     # Получаем все товары из базы данных
     products = Product.objects.all()

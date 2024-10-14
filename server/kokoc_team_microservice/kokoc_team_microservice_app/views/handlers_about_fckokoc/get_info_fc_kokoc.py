@@ -19,12 +19,9 @@ from ...serializers import AboutFcKokocSerializer
             description="Информация о клубе не найдена"),
     },
 )
-<<<<<<< HEAD
-@api_view(["GET"])
-=======
+
 @cache_page(60 * 20)
 @api_view(['GET'])
->>>>>>> b12af1f995f6b144372af8a8e816486f4c1911a7
 def get_info_fc_kokoc(request):
     about_fc_kokoc = AboutFcKokoc.get_instance()  # Получаем единственную запись
     serializer = AboutFcKokocSerializer(about_fc_kokoc)
