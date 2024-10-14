@@ -30,6 +30,7 @@ from drf_yasg import openapi
         }
     )}
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_all_matches(request):
     # Получаем все матчи, отсортированные по дате и времени (сначала предстоящие, затем прошедшие)

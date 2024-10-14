@@ -15,6 +15,7 @@ from drf_yasg import openapi
         404: openapi.Response(description="Информация о клубе не найдена")
     }
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_info_fc_kokoc(request):
     about_fc_kokoc = AboutFcKokoc.get_instance()  # Получаем единственную запись

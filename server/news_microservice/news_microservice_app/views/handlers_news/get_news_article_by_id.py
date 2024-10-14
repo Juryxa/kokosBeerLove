@@ -1,3 +1,4 @@
+from django.views.decorators.cache import cache_page
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.decorators import api_view
@@ -21,7 +22,7 @@ from rest_framework import status
     }
 )
 
-# Новый эндпоинт для получения статьи по ID
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_news_article_by_id(request, article_id):
     try:

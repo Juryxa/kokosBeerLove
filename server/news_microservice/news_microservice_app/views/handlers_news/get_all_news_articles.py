@@ -24,6 +24,7 @@ from ...serializers import NewsArticleSerializer
         ]
     })}
 )
+@cache_page(60 * 20)
 @api_view(['GET'])
 def get_all_news_articles(request):
     articles = NewsArticle.objects.all()
