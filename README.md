@@ -126,7 +126,7 @@ API-документация (Swagger) для микросервисов дос�
 [Скачать Swagger файл для kokoc_team_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/kokoc_team_microservice)
 [Скачать Swagger файл для match_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/match_microservice)
 [Скачать Swagger файл для news_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/news_microservice)
-[Скачать Swagger файл для auth_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/shop_microservice)
+[Скачать Swagger файл для shop_microservice](https://github.com/Juryxa/kokosBeerLove/blob/main/shop_microservice)
 ```bash
 https://localhost:port/swagger/
 ```
