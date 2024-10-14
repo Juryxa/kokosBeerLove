@@ -70,17 +70,33 @@ const fetchBacket = async () => {
 const handleRemoveItem = async (productId: number, size: string) => {
     try {
         setIsLoading(true);
-        // Вызываем API для удаления товара с переданным productId и size
+        
+        // Вызываем API для удаления одного товара с переданным productId и size
         await BasketService.removeItemFromBasket(productId, size);
 
-        // Обновляем состояние корзины, удаляя товар по ID и размеру
-        setBuying((prevItems) => prevItems.filter((item) => !(item.id === productId && item.size === size)));
+        // Обновляем состояние корзины, уменьшая количество товара
+        setBuying((prevItems) => {
+            return prevItems
+                .map((item) => {
+                    if (item.id === productId && item.size === size) {
+                        // Если количество больше 1, уменьшаем его
+                        if (item.quantity > 1) {
+                            return { ...item, quantity: item.quantity - 1 };
+                        }
+                        // Если количество равно 1, возвращаем `undefined`, чтобы удалить элемент
+                        return undefined; // Возвращаем undefined для удаления элемента
+                    }
+                    return item; // Возвращаем неизменённый элемент
+                })
+                .filter((item): item is Basket => item !== undefined); // Фильтруем undefined
+        });
     } catch (error) {
         setErrorMessage('Ошибка при удалении товара из корзины.');
     } finally {
         setIsLoading(false);
     }
 };
+
 
 
 
