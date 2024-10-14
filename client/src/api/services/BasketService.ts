@@ -6,7 +6,7 @@ export default class BasketService{
         // @ts-ignore
         return basketApi.post<ProductToAdd>('/add_to_cart/', {product, quantity,size});
     }
-    static async getAllBasket(productId: number) {
+    static async getAllBasket() {
         // @ts-ignore
         return basketApi.get<ShopResponse>(`/get_all_items_from_cart/${productId}`);
     }

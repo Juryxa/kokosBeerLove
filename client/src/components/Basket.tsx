@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 import img from '../images/T-shirt Mockup.png';
+import BasketService from '../api/services/BasketService';
 interface ShopItem {
     id: number;
     name: string;
@@ -25,52 +26,44 @@ interface ShopItem {
 const Basket: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
     const { store } = useContext(Context);
     const[isBuying,setBuying]=useState<ShopItem[]>([])
-    const shopItems:ShopItem[] = [
-        {
-            id: 1,
-            name: 'Кокосовое пиво',
-            description: 'Освежающее пиво с легким кокосовым привкусом, идеально для летних вечеров.',
-            price: 350,
-            image: img
-        },
-        {
-            id: 2,
-            name: 'Пшеничное пиво',
-            description: 'Традиционное пшеничное пиво с насыщенным вкусом и мягким ароматом.',
-            price: 300,
-            image: img
-        },
-        {
-            id: 3,
-            name: 'Темное стаут',
-            description: 'Классический стаут с нотками кофе и шоколада, созданный для истинных гурманов.',
-            price: 450,
-            image: img
-        },
-        {
-            id: 4,
-            name: 'IPA с цитрусами',
-            description: 'Интенсивное IPA с выраженным цитрусовым ароматом и горьким послевкусием.',
-            price: 400,
-            image: img
-        },
-        {
-            id: 5,
-            name: 'Классическое лагер',
-            description: 'Легкое и освежающее лагер пиво, которое подходит к любому случаю.',
-            price: 280,
-            image: img
-        }
-    ];
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
 useEffect(()=>{
-    setBuying(shopItems)
+    fetchBacket()
 },[])
-    // Функция для удаления товара из корзины
-    const handleRemoveItem = (itemId: number) => {
-        // Логика удаления товара из корзины через store
-        
-    };
+
+
+const fetchBacket = async () => {
+    setIsLoading(true);
+    try {
+        const response = await BasketService.getAllBasket();
+        setBuying(response.data);
+    } catch (error: any) {
+        if (error.response && error.response.status === 404) {
+            setErrorMessage('Товары не найдены.');
+        } else {
+            setErrorMessage('Ошибка загрузки товаров.');
+        }
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
+
+
+const handleRemoveItem = async (itemId: number) => {
+    try {
+        setIsLoading(true);
+        await BasketService.removeItemFromBasket(itemId);
+        setBuying((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    } catch (error: any) {
+        setErrorMessage('Ошибка при удалении товара из корзины.');
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     // Функция для перехода к оформлению заказа
     const handleCheckout = () => {
@@ -110,10 +103,10 @@ useEffect(()=>{
                     Корзина
                 </Typography>
 
-                {shopItems.length > 0 ? (
+                {isBuying.length > 0 ? (
                     <>
                         <List>
-                            {shopItems.map((item) => (
+                            {isBuying.map((item) => (
                                 <ListItem key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
                                     <img src={item.image} alt={item.name} style={{ width: '50px', marginRight: '15px' }} />
                                     <ListItemText
