@@ -64,7 +64,7 @@ const Matches: FC = () => {
         setIsLoading(true);
         try {
             const response = await MatchService.getLastOne();
-            setTranslationData(response)
+            setTranslationData(response.data)
         } catch (error) {
             setErrorMessage('Ошибка загрузки товаров.');
         } finally {
