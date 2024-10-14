@@ -36,7 +36,7 @@ const ShopDetails = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    
+
     const [selectedSize, setSelectedSize] = useState<string>('');
 
     const productImages = [img1, img2]; // Массив изображений
@@ -88,13 +88,13 @@ const ShopDetails = () => {
 
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
-            prevIndex === productImages.length - 1 ? 0 : prevIndex + 1
+            prevIndex === productImages.length ? 0 : prevIndex + 1
         );
     };
 
     const handlePrevImage = () => {
         setCurrentImageIndex((prevIndex) =>
-            prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
+            prevIndex === 0 ? productImages.length : prevIndex - 1
         );
     };
 
@@ -103,7 +103,7 @@ const ShopDetails = () => {
         try{
         if(selectedSize){
             await BasketService.addToBasket(productId,1, selectedSize)
-            
+
         } else {
             alert('Пожалуйста, выберите размер перед добавлением в корзину');
         }
@@ -111,7 +111,7 @@ const ShopDetails = () => {
         setErrorMessage('Ошибка при сохранении игрока.');
     }
 };
-    
+
 function calculateDiscountedPrice(originalPrice:number, discountPercentage:number):number {
     const discountAmount = (originalPrice * discountPercentage) / 100;
     const newPrice = originalPrice - discountAmount;
@@ -123,7 +123,7 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
         <>
         <Header />
         <div className='container-shop-details'>
-            
+
             <div className='content-shop-details'>
                 <div className="product-image">
                     <img src={productItem?.url_images[currentImageIndex]} alt={product.name} />
@@ -158,14 +158,14 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
                             <div>
                             {productItem?.sizes.map((item, index) => (
                                 <button
-                                    key={index}  
+                                    key={index}
                                     className={`size-option ${selectedSize === item.size ? 'selected' : ''}`}
                                     onClick={() => handleSizeSelect(item.size)}
                                     disabled={item.quantity === 0} // Блокируем кнопку, если количество равно 0
                                     style={{ backgroundColor: item.quantity === 0 ? 'gray' : '' }}
-                                    
+
                                      // Задаем серый цвет для недоступных кнопок
-                                > 
+                                >
                                     {item.size}
                                 </button>
                             ))}
@@ -174,12 +174,12 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
                         <p>Описание: {productItem?.description}</p>
                         <div className="product-buttons">
                             <button className="add-to-cart" onClick={addToBasket}>Добавить в корзину</button>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <Footer />
         </>
