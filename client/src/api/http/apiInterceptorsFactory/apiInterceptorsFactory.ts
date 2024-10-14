@@ -6,7 +6,8 @@ export const createApiInstance = (
     baseURL: string,
     deleteRegex: RegExp,
     updateRegex: RegExp,
-    createString: string
+    createString: string,
+    getRegex?: RegExp,
 ): any => {
     const api = axios.create({
         withCredentials: true,
@@ -25,7 +26,10 @@ export const createApiInstance = (
                 // @ts-ignore
                 config.headers.Authorization = `Bearer ${token}`;
             }
-        } else if ((config.url === createString || deleteRegex.test(config.url || '') || updateRegex.test(config.url || '')) && token) {
+        } else if ((config.url === createString
+            || deleteRegex.test(config.url || '') ||
+            updateRegex.test(config.url || '') ||
+            getRegex?.test(config.url|| '')) && token) {
             // @ts-ignore
             config.headers.Authorization = `Bearer ${token}`;
         }
