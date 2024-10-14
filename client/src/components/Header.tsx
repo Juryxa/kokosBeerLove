@@ -10,7 +10,8 @@ import Basket from './Basket';
 import {  Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BasketService from '../api/services/BasketService';
-interface Basket  {
+
+interface BasketType{
     id:number;
     product_name: number,
     description: string,
@@ -25,7 +26,7 @@ const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const[isBuying,setBuying]=useState<Basket[]>([])
+    const[isBuying,setBuying]=useState<BasketType[]>([])
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const handleOpenCart = () => {
@@ -215,6 +216,11 @@ const Header = () => {
 
                         {store.isAuth ? (
                             <>
+                            <IconButton onClick={handleOpenCart} color="primary" aria-label="Корзина">
+                <Badge badgeContent={isBuying.length} color="error">
+                    <ShoppingCartIcon style={{color:"red"}}/>
+                </Badge>
+            </IconButton>
                                 <IconButton onClick={handleProfileClick}>
                                     <AccountCircle style={{color: '#E62526'}}/>
                                 </IconButton>

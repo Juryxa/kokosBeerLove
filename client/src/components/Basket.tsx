@@ -19,7 +19,7 @@ import BasketService from '../api/services/BasketService';
 import { ShopResponse } from "../api/models/response/ShopResponse"
 import img from '../images/T-shirt Mockup.png'
 
-interface Basket  {
+interface BasketType  {
     id:number;
     product_name: number,
     description: string,
@@ -28,14 +28,11 @@ interface Basket  {
     quantity: number
 }
 
-interface RemoveItemFromCartProps {
-    productId: number;
-    size: string;
-  }
+
 
 const Basket: React.FC<{ open: boolean, handleClose: () => void }> = ({ open, handleClose }) => {
    
-    const[isBuying,setBuying]=useState<Basket[]>([])
+    const[isBuying,setBuying]=useState<BasketType[]>([])
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -88,7 +85,7 @@ const handleRemoveItem = async (productId: number, size: string) => {
                     }
                     return item; // Возвращаем неизменённый элемент
                 })
-                .filter((item): item is Basket => item !== undefined); // Фильтруем undefined
+                .filter((item): item is BasketType => item !== undefined); // Фильтруем undefined
         });
     } catch (error) {
         setErrorMessage('Ошибка при удалении товара из корзины.');

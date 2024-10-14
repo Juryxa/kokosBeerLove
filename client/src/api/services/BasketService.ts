@@ -1,5 +1,6 @@
 import {basketApi} from "../http/basket";
 import {ProductToAdd} from "../models/ProductToAdd";
+import { ShopResponse } from "../models/response/ShopResponse";
 
 export default class BasketService{
     static async addToBasket(product: number, quantity: number, size:string) {
