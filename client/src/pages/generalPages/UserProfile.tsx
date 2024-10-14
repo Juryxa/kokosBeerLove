@@ -121,7 +121,7 @@ const UserProfile: React.FC = () => {
                 {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
                 <Typography variant="h5" gutterBottom>
-                  {user?.username} {user?.last_name}
+                  {user?.name} {user?.last_name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                   Kokos fan
