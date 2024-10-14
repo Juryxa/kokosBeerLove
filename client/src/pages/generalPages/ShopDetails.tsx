@@ -4,6 +4,8 @@ import { ShopResponse } from "../../api/models/response/ShopResponse";
 import ShopService from "../../api/services/ShopService";
 import img1 from '../../images/T-shirt Mockup.png';
 import img2 from '../../images/Kangaroo Pocket Pullover Hoodie Mockup.png';
+import img3 from '../../images/memories-on-35mm-d8cwbw41IO8-unsplash.jpg'
+import img4 from '../../images/image14.png'
 import {ProductSize} from "../../api/models/ProductSize";
 import './ShopDetails.css';
 import Header from '../../components/Header';
@@ -28,6 +30,7 @@ interface Product {
     storeRating: number;
     deliveryDate: string;
 }
+const imgarr:string[] = [img1,img2,img3,img4]
 
 const ShopDetails = () => {
     const { id } = useParams<{ id: string }>();
@@ -39,7 +42,7 @@ const ShopDetails = () => {
     
     const [selectedSize, setSelectedSize] = useState<string>('');
 
-    const productImages = [img1, img2]; // Массив изображений
+    
 
     const product: Product = {
         name: 'Футболка оверсайз с принтом черная',
@@ -87,15 +90,19 @@ const ShopDetails = () => {
     };
 
     const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex === productImages.length - 1 ? 0 : prevIndex + 1
-        );
+        if (productItem?.url_images && productItem?.url_images.length > 0) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex === productItem?.url_images.length - 1 ? 0 : prevIndex + 1
+            );
+        }
     };
-
+    
     const handlePrevImage = () => {
-        setCurrentImageIndex((prevIndex) =>
-            prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
-        );
+        if (productItem?.url_images && productItem?.url_images.length > 0) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex === 0 ? productItem?.url_images.length - 1 : prevIndex - 1
+            );
+        }
     };
 
 
@@ -126,7 +133,8 @@ function calculateDiscountedPrice(originalPrice:number, discountPercentage:numbe
             
             <div className='content-shop-details'>
                 <div className="product-image">
-                    <img src={productItem?.url_images[currentImageIndex]} alt={product.name} />
+                    {/* <img src={productItem?.url_images[currentImageIndex]} alt={product.name} /> */}
+                    <img src={imgarr[currentImageIndex]} alt='error'/>
                     <div className="image-navigation-buttons">
                         <button onClick={handlePrevImage} className="prev-image-button">Назад</button>
                         <button onClick={handleNextImage} className="next-image-button">Вперед</button>
