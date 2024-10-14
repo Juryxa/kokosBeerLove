@@ -1,0 +1,387 @@
+swagger: '2.0'
+info:
+  title: API Documentation
+  description: Все запросы начинаются с http://127.0.0.1:8000/api/match/ если сервер
+    локальный и на порту 8000
+  version: v1
+host: localhost:8002
+schemes:
+- http
+basePath: /api/match
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+- Basic: []
+paths:
+  /create/:
+    post:
+      operationId: create_create
+      description: Создание нового матча с указанием названия и логотипа гостевой
+        команды в формате JSON (name и logo_url). ВАЖНО ПЕРЕДАТЬ access token, если
+        в payload будет is_superuser == true (то пользователь-администратор).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/MatchCreate'
+      responses:
+        '201':
+          description: Матч успешно создан
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован
+        '403':
+          description: Нет прав доступа
+      tags:
+      - 'Create Update Delete '
+    parameters: []
+  /delete/{match_id}/:
+    delete:
+      operationId: delete_delete
+      description: Удаление матча по его ID. Доступно только администраторам (is_superuser
+        == true).
+      parameters: []
+      responses:
+        '204':
+          description: Матч успешно удален
+        '404':
+          description: Матч не найден
+        '403':
+          description: Нет прав доступа
+      tags:
+      - Create Update Delete
+    parameters:
+    - name: match_id
+      in: path
+      required: true
+      type: string
+  /get_all/:
+    get:
+      operationId: get_all_list
+      description: Получение списка всех матчей, отсортированных по дате и времени
+        (от ближайшего к прошедшему).
+      parameters: []
+      responses:
+        '200':
+          description: Успешный ответ с данными всех матчей
+          examples:
+            application/json:
+            - team_home: Команда Х
+              team_away_name: Команда Y
+              team_away_logo_url: http://example.com/logo_y.jpg
+              score_home: 2
+              score_away: 1
+              location: Стадион 1
+              division: Премьер-лига
+              video_url: http://example.com/match_video
+              match_date: '2024-10-09'
+              match_time: '14:00:00'
+      tags:
+      - getHandlers
+    parameters: []
+  /get_by_id/{id}/:
+    get:
+      operationId: get_by_id_read
+      description: Получение информации о конкретном матче по ID
+      parameters:
+      - name: id
+        in: path
+        description: ID матча
+        type: integer
+        required: true
+      responses:
+        '200':
+          description: Информация о матче успешно получена
+          schema:
+            $ref: '#/definitions/Match'
+        '404':
+          description: Матч не найден
+      tags:
+      - getHandlers
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+  /get_last/:
+    get:
+      operationId: get_last_list
+      description: Получение последнего завершенного матча. Данные о team_away включают
+        название и логотип команды.
+      parameters: []
+      responses:
+        '200':
+          description: Успешный ответ с данными последнего завершенного матча
+          examples:
+            application/json:
+              team_home: Команда Х
+              team_away_name: Команда Y
+              team_away_logo_url: http://example.com/logo_y.jpg
+              score_home: 2
+              score_away: 1
+              location: Стадион 1
+              division: Премьер-лига
+              video_url: http://example.com/match_video
+              match_date: '2024-11-10'
+              match_time: '14:00:00'
+      tags:
+      - getHandlers
+    parameters: []
+  /get_last_three/:
+    get:
+      operationId: get_last_three_list
+      description: Получение последних 2 матчей. Данные о team_away включают название
+        и логотип команды.
+      parameters: []
+      responses:
+        '200':
+          description: Успешный ответ с данными последних 2 матчей
+          examples:
+            application/json:
+            - team_home: Команда Х
+              team_away_name: Команда Y
+              team_away_logo_url: http://example.com/logo_y.jpg
+              score_home: 2
+              score_away: 1
+              location: Стадион 1
+              division: Премьер-лига
+              video_url: http://example.com/match_video
+              match_date: '2024-11-10'
+              match_time: '14:00:00'
+      tags:
+      - getHandlers
+    parameters: []
+  /get_next/:
+    get:
+      operationId: get_next_list
+      description: Получение следующих 4 матчей, начиная с указанного количества открытых
+        видео.
+      parameters:
+      - name: cur_cnt_video
+        in: query
+        description: Текущее количество открытых видео
+        type: integer
+      responses:
+        '200':
+          description: Успешный ответ с данными матчей
+          examples:
+            application/json:
+            - team_home: Команда Х
+              team_away_name: Команда Y
+              team_away_logo_url: http://example.com/logo_y.jpg
+              score_home: 2
+              score_away: 1
+              location: Стадион 1
+              division: Премьер-лига
+              video_url: http://example.com/match_video
+              match_date: '2024-11-10'
+              match_time: '14:00:00'
+      tags:
+      - getHandlers
+    parameters: []
+  /get_upcoming/:
+    get:
+      operationId: get_upcoming_list
+      description: Получение списка предстоящих матчей. Данные включают название команд,
+        логотипы и другую информацию о матче.
+      parameters: []
+      responses:
+        '200':
+          description: Успешный ответ с данными предстоящих матчей
+          examples:
+            application/json:
+            - team_home: Команда Х
+              team_away_name: Команда Y
+              team_away_logo_url: http://example.com/logo_y.jpg
+              score_home: 2
+              score_away: 1
+              location: Стадион 1
+              division: Премьер-лига
+              video_url: http://example.com/match_video
+              match_date: '2024-11-10'
+              match_time: '14:00:00'
+      tags:
+      - getHandlers
+    parameters: []
+  /update/{match_id}/:
+    put:
+      operationId: update_update
+      description: Полное обновление информации о матче. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/MatchCreate'
+      responses:
+        '200':
+          description: Информация о матче успешно обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Матч не найден
+      tags:
+      - Create Update Delete
+    patch:
+      operationId: update_partial_update
+      description: Частичное обновление информации о матче. Доступно только администраторам
+        (is_superuser == true).
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/MatchCreate'
+      responses:
+        '200':
+          description: Информация о матче успешно частично обновлена
+        '400':
+          description: Неправильные данные
+        '401':
+          description: Неавторизован. Необходимо передать токен доступа.
+        '403':
+          description: У вас нет прав для изменения информации (нужен is_superuser).
+        '404':
+          description: Матч не найден
+      tags:
+      - Create Update Delete
+    parameters:
+    - name: match_id
+      in: path
+      required: true
+      type: string
+definitions:
+  MatchCreate:
+    required:
+    - team_home
+    - team_away_name
+    - score_home
+    - score_away
+    - location
+    - division
+    type: object
+    properties:
+      team_home:
+        title: Team home
+        type: string
+        maxLength: 500
+        minLength: 1
+      team_away_name:
+        title: Team away name
+        type: string
+        maxLength: 500
+        minLength: 1
+      team_away_logo_url:
+        title: Team away logo url
+        type: string
+        format: uri
+        maxLength: 1000
+        x-nullable: true
+      score_home:
+        title: Score home
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      score_away:
+        title: Score away
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      location:
+        title: Location
+        type: string
+        maxLength: 500
+        minLength: 1
+      division:
+        title: Division
+        type: string
+        maxLength: 500
+        minLength: 1
+      video_url:
+        title: Video url
+        type: string
+        format: uri
+        maxLength: 1000
+        x-nullable: true
+      match_date:
+        title: Дата матча
+        type: string
+        format: date
+        x-nullable: true
+      match_time:
+        title: Время матча
+        type: string
+        x-nullable: true
+  Match:
+    required:
+    - team_home
+    - score_home
+    - score_away
+    - location
+    - division
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      team_home:
+        title: Team home
+        type: string
+        maxLength: 500
+        minLength: 1
+      team_away_name:
+        title: Team away name
+        type: string
+        readOnly: true
+      team_away_logo_url:
+        title: Team away logo url
+        type: string
+        readOnly: true
+      score_home:
+        title: Score home
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      score_away:
+        title: Score away
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+      location:
+        title: Location
+        type: string
+        maxLength: 500
+        minLength: 1
+      division:
+        title: Division
+        type: string
+        maxLength: 500
+        minLength: 1
+      video_url:
+        title: Video url
+        type: string
+        format: uri
+        maxLength: 1000
+        x-nullable: true
+      match_date:
+        title: Дата матча
+        type: string
+        format: date
+        x-nullable: true
+      match_time:
+        title: Время матча
+        type: string
+        x-nullable: true
