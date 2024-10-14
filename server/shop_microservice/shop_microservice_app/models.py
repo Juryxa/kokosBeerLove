@@ -69,10 +69,11 @@ class OrderItem(models.Model):
 class CartItem(models.Model):
     user_id = models.PositiveIntegerField()  # ID пользователя из JWT
     product = models.ForeignKey(Product, on_delete=models.CASCADE)  # Связь с таблицей Product
+    size = models.ForeignKey(ProductSize, on_delete=models.CASCADE)  # Связь с таблицей ProductSize
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
         db_table = 'cart_items'
 
     def __str__(self):
-        return f'{self.quantity} x {self.product.name} for user {self.user_id}'
+        return f'{self.quantity} x {self.product.name} (Size: {self.size.size}) for user {self.user_id}'

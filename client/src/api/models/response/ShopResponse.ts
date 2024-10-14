@@ -1,7 +1,7 @@
 import {ProductSize} from "../ProductSize";
 
 export interface ShopResponse {
-    id: number,
+    id: string,
     name: string,
     description: string,
     price: number,

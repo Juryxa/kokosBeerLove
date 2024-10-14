@@ -1,8 +1,8 @@
 body {
-    font-family: 'Inter', sans-serif; /* Установка шрифта Inter */
+    font-family: 'Inter', sans-serif;
 }
 
 body, html {
-    margin: 0; /* Убираем отступы */
-    padding: 0; /* Убираем отступы */
+    margin: 0;
+    padding: 0;
   }

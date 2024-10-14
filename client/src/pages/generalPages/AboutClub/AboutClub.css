@@ -1,0 +1,130 @@
+.about-club-container {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.aboutclub-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px; /* Отступы для мобильных устройств */
+}
+
+.aboutclub-h1 {
+    display: flex;
+    margin-left: 20px;
+}
+
+.aboutclub-top-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Ограничиваем максимальную ширину */
+    padding: 20px;
+}
+
+.aboutclub-club-image {
+    width: 100%;
+    max-width: 600px; /* Ограничиваем максимальный размер изображения */
+    height: auto;
+}
+
+.aboutclub-content-low {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.aboutclub-content-low p {
+    width: 60%;
+    text-align: justify;
+    word-wrap: break-word; /* Перенос длинных слов */
+    overflow-wrap: break-word; /* Поддержка для старых браузеров */
+    font-size: 18px;
+}
+
+/* Стиль для текстового блока поверх изображения */
+.aboutclub-text-overlay {
+    width: 30%;
+    top: -50px; /* Сдвиг блока вверх */
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-right: -20px;
+    z-index: 1; /* Текст поверх изображения */
+}
+
+.aboutclub-text-overlay h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.aboutclub-text-overlay p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Адаптация для экранов шириной до 1024px */
+@media screen and (max-width: 1024px) {
+    .aboutclub-content-low p {
+        width: 70%; /* Увеличиваем ширину текста */
+    }
+}
+
+/* Адаптация для экранов шириной до 768px (планшеты) */
+@media screen and (max-width: 768px) {
+    .aboutclub-club-image {
+        max-width: 80%; /* Уменьшаем изображение на планшетах */
+    }
+
+    .aboutclub-content-low p {
+        width: 80%; /* Текст становится шире для планшетов */
+    }
+
+    .aboutclub-text-overlay {
+        width: 80%;
+        top: 0;
+        margin-right: 0;
+        box-shadow: none;
+        padding: 10px;
+    }
+}
+
+/* Адаптация для экранов шириной до 600px (мобильные устройства) */
+@media screen and (max-width: 600px) {
+    .aboutclub-h1 {
+        margin-left: 10px;
+    }
+
+    .aboutclub-top-container {
+        max-width: 300px; /* Ограничение на мобильных устройствах */
+    }
+
+    .aboutclub-club-image {
+        max-width: 100%; /* Изображение занимает всю ширину */
+    }
+
+    .aboutclub-content-low p {
+        width: 90%; /* Почти полный экран для текста */
+    }
+
+    .aboutclub-text-overlay {
+        width: 100%;
+        top: 0;
+        margin-right: 0;
+        box-shadow: none;
+        padding: 10px;
+    }
+}

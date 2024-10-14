@@ -12,7 +12,7 @@ export default class AuthService {
 
     static async registration(username: string, email: string, password: string) {
         // @ts-ignore
-        return authApi.post<AuthResponse>('/signup/', {username, email, password})
+        return authApi.post<AuthResponse>('/signup/', {username, email, password, first_name: username})
     }
 
     static async logout(): Promise<unknown> {
@@ -24,14 +24,20 @@ export default class AuthService {
         return authApi.post<CodeResponse>('/verify-email/', {email})
     }
 
-    static async getUserData(){
+    static async getUserData() {
         // @ts-ignore
         return authApi.get<ProfileEdit>('/profile/get_user_data/')
     }
 
-    static async profileEdit(first_name: string, last_name: string, phone_number: string, telegram: string, avatar_url: string){
+    static async profileEdit(first_name: string, last_name: string, phone_number: string, telegram: string, avatar_url: string) {
         // @ts-ignore
-        return authApi.patch<ProfileEdit>('/profile/update/', {first_name, last_name, phone_number, telegram, avatar_url})
+        return authApi.patch<ProfileEdit>('/profile/update/', {
+            first_name,
+            last_name,
+            phone_number,
+            telegram,
+            avatar_url
+        })
     }
 
 }
